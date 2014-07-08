@@ -81,6 +81,11 @@
             </intent-filter>
         </receiver>
         
+        <activity
+            android:name="com.codepath.healthpact.activity.SignUpActivity"
+            android:label="@string/title_activity_sign_up" >
+        </activity>
+        
     </application>
 
 </manifest>
