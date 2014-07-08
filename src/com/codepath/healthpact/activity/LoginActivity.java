@@ -86,5 +86,10 @@ public class LoginActivity extends OAuthLoginActivity<RestClient> {
 			}
 		});
 	}
+	
+		public void onSignUp(View v) {
+		Intent i = new Intent(this,SignUpActivity.class);
+		startActivity(i);
+	}
 
 }
