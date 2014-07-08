@@ -19,7 +19,7 @@
 
     <!--
   IMPORTANT: Change "com.parse.starter.permission.C2D_MESSAGE" in the lines below
-  to match your app's package name + ".permission.C2D_MESSAGE".
+  to match your app's package name + ".permission.C2D_MESSAGE".
     -->
     <permission
         android:name="com.codepath.healthpact.permission.C2D_MESSAGE"
@@ -28,7 +28,7 @@
     <uses-permission android:name="com.codepath.healthpact.permission.C2D_MESSAGE" />
 
     <application
-        android:name=".app.HealthPactApp"
+        android:name="com.codepath.healthpact.app.HealthPactApp"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -41,7 +41,7 @@
             android:value="1" />
 
         <activity
-            android:name=".activity.LoginActivity"
+            android:name="com.codepath.healthpact.activity.LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -59,7 +59,7 @@
                     android:scheme="oauth" />
             </intent-filter>
         </activity>
-        
+
         <!-- Push service added -->
         <service android:name="com.parse.PushService" />
 
@@ -80,12 +80,15 @@
                 <category android:name="com.codepath.healthpact" />
             </intent-filter>
         </receiver>
-        
+
         <activity
             android:name="com.codepath.healthpact.activity.SignUpActivity"
             android:label="@string/title_activity_sign_up" >
         </activity>
-        
+        <activity
+            android:name="com.codepath.healthpact.activity.HomeViewActivity"
+            android:label="@string/title_activity_home_view" >
+        </activity>
     </application>
 
 </manifest>
