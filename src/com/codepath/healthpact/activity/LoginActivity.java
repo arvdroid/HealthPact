@@ -2,6 +2,7 @@ package com.codepath.healthpact.activity;
 
 import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -55,7 +56,7 @@ public class LoginActivity extends OAuthLoginActivity<RestClient> {
         getClient().connect();
     }
 
-	public void parseLogin(View view) {
+	public void parseLogin(final View view) {
 		String strUser = HealthPactApp.strUser;
 		String strPwd = HealthPactApp.strPwd;
 		
@@ -64,6 +65,7 @@ public class LoginActivity extends OAuthLoginActivity<RestClient> {
 					public void done(ParseUser user, ParseException e) {
 						if (user != null) {
 							Toast.makeText(getApplicationContext(), "Logged in successful!", Toast.LENGTH_SHORT).show();
+							onHomeView(view);
 						} else {
 							Toast.makeText(getApplicationContext(), "Logged failed", Toast.LENGTH_SHORT).show();
 						}
@@ -87,9 +89,13 @@ public class LoginActivity extends OAuthLoginActivity<RestClient> {
 		});
 	}
 	
-		public void onSignUp(View v) {
-		Intent i = new Intent(this,SignUpActivity.class);
+	public void onSignUp(View v) {
+		Intent i = new Intent(this, SignUpActivity.class);
 		startActivity(i);
 	}
 
+	public void onHomeView(View v) {
+		Intent i = new Intent(this,HomeViewActivity.class);
+		startActivity(i);
+	}
 }
