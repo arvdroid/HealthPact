@@ -1,1 +1,1 @@
-![video walkthrough] healthPactViews.gif
+![video walkthrough]healthPactViews.gif
