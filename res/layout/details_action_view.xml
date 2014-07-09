@@ -1,0 +1,150 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/planViewRootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.project.healthpact.HealthPactActivity" >
+
+    <RelativeLayout
+        android:id="@+id/layoutWeeks"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="200dp" >
+
+        <!-- android:background="@drawable/custom_week_parent_layout" -->
+
+        <ToggleButton
+            android:id="@+id/toggleButtonM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="43dp"
+            android:layout_marginTop="17dp"
+            android:background="@drawable/custom_week_layout"
+            android:maxHeight="@dimen/week_toggle_button"
+            android:maxWidth="@dimen/week_toggle_button"
+            android:minHeight="@dimen/week_toggle_button"
+            android:minWidth="@dimen/week_toggle_button"
+            android:textOff="M"
+            android:textOn="M" />
+
+        <ToggleButton
+            android:id="@+id/toggleButtonT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/toggleButtonM"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="23dp"
+            android:background="@drawable/custom_week_layout"
+            android:maxHeight="@dimen/week_toggle_button"
+            android:maxWidth="@dimen/week_toggle_button"
+            android:minHeight="@dimen/week_toggle_button"
+            android:minWidth="@dimen/week_toggle_button"
+            android:textOff="T"
+            android:textOn="T" />
+
+        <ToggleButton
+            android:id="@+id/toggleButtonW"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/toggleButtonT"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="23dp"
+            android:background="@drawable/custom_week_layout"
+            android:maxHeight="@dimen/week_toggle_button"
+            android:maxWidth="@dimen/week_toggle_button"
+            android:minHeight="@dimen/week_toggle_button"
+            android:minWidth="@dimen/week_toggle_button"
+            android:textOff="W"
+            android:textOn="W" />
+
+        <ToggleButton
+            android:id="@+id/toggleButtonTh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/custom_week_layout"
+            android:maxHeight="@dimen/week_toggle_button"
+            android:maxWidth="@dimen/week_toggle_button"
+            android:minHeight="@dimen/week_toggle_button"
+            android:minWidth="@dimen/week_toggle_button"
+            android:textOff="Th"
+            android:textOn="Th" />
+
+        <ToggleButton
+            android:id="@+id/toggleButtonF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toggleButtonS"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/custom_week_layout"
+            android:maxHeight="@dimen/week_toggle_button"
+            android:maxWidth="@dimen/week_toggle_button"
+            android:minHeight="@dimen/week_toggle_button"
+            android:minWidth="@dimen/week_toggle_button"
+            android:textOff="F"
+            android:textOn="F" />
+
+        <ToggleButton
+            android:id="@+id/toggleButtonS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toggleButtonSu"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="23dp"
+            android:background="@drawable/custom_week_layout"
+            android:maxHeight="@dimen/week_toggle_button"
+            android:maxWidth="@dimen/week_toggle_button"
+            android:minHeight="@dimen/week_toggle_button"
+            android:minWidth="@dimen/week_toggle_button"
+            android:textOff="S"
+            android:textOn="S" />
+
+        <ToggleButton
+            android:id="@+id/toggleButtonSu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="43dp"
+            android:layout_marginTop="17dp"
+            android:background="@drawable/custom_week_layout"
+            android:maxHeight="@dimen/week_toggle_button"
+            android:maxWidth="@dimen/week_toggle_button"
+            android:minHeight="@dimen/week_toggle_button"
+            android:minWidth="@dimen/week_toggle_button"
+            android:textOff="Su"
+            android:textOn="Su" />
+
+        <TextView
+            android:id="@+id/tvActionStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="0/7"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/actionProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="100dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:max="100"
+        android:minHeight="20dp"
+        android:progress="30" />
+
+</LinearLayout>
