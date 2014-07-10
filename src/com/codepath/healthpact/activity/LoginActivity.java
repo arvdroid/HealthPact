@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.healthpact.R;
 import com.codepath.healthpact.app.HealthPactApp;
 import com.codepath.healthpact.models.AppUser;
+import com.codepath.healthpact.parseUtils.ParseUtils;
 import com.codepath.healthpact.restclient.RestClient;
 import com.codepath.oauth.OAuthLoginActivity;
 import com.parse.FindCallback;
@@ -20,6 +22,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 public class LoginActivity extends OAuthLoginActivity<RestClient> {
+
+	private ParseUser currentUser;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,17 +64,23 @@ public class LoginActivity extends OAuthLoginActivity<RestClient> {
 		String strUser = HealthPactApp.strUser;
 		String strPwd = HealthPactApp.strPwd;
 		
-		ParseUser.logInInBackground(strUser, strPwd, new LogInCallback() {
+		TextView tvUserName = (TextView) findViewById(R.id.etUserName);
+		TextView tvPassword = (TextView) findViewById(R.id.etPass);
+		
+		strUser = tvUserName.getText().toString();
+		strPwd = tvPassword.getText().toString();
 
-					public void done(ParseUser user, ParseException e) {
-						if (user != null) {
-							Toast.makeText(getApplicationContext(), "Logged in successful!", Toast.LENGTH_SHORT).show();
-							onHomeView(view);
-						} else {
-							Toast.makeText(getApplicationContext(), "Logged failed", Toast.LENGTH_SHORT).show();
-						}
-					}
-				});
+		ParseUser.logInInBackground(strUser, strPwd, new LogInCallback() {
+			  public void done(ParseUser user, ParseException e) {
+			    if (user != null) {
+			      // Hooray! The user is logged in.
+			    	onHomeView(view);
+				} else {
+					// Signup failed. Look at the ParseException to see what happened.
+					Toast.makeText(getApplicationContext(), "Login failed",	Toast.LENGTH_SHORT).show();
+				}
+			  }
+			});
 	}
 	
 	public void queryData(View v) {

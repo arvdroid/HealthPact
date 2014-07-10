@@ -1,23 +1,23 @@
 package com.codepath.healthpact.parseUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.Toast;
 
 import com.activeandroid.util.Log;
 import com.codepath.healthpact.models.AppUser;
 import com.codepath.healthpact.models.UserPlan;
+import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class ParseUtils {
 	
-	public static AppUser getAppUserDetails(View v, final Context context, String appUserName) {
+	public static ParseUser getAppUserDetails(View v, final Context context, String appUserName) {
 
-		ParseQuery<AppUser> query = ParseQuery.getQuery(AppUser.class);
+		ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
 		query.whereEqualTo("name", appUserName);
 		try {
 			return query.getFirst();
