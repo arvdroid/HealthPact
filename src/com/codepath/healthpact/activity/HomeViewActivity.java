@@ -49,6 +49,11 @@ public class HomeViewActivity extends Activity {
 		startActivity(i);
 	}
 	
+	public void onFindPlan(){
+		Intent i = new Intent(this, FindPlansActivity.class);
+		startActivity(i);
+	}
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -66,6 +71,9 @@ public class HomeViewActivity extends Activity {
 		int id = item.getItemId();
 		if (id == R.id.action_add) {
 			onCreatePlan();
+			return true;
+		}else if(id == R.id.action_find){
+			onFindPlan();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
