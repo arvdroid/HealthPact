@@ -13,6 +13,6 @@
     <string name="title_activity_create_plan">CreatePlan</string>
     <string name="title_activity_plan_view">PlanView</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_find_plans">FindPlansActivity</string>
+    <string name="title_activity_find_plans">FindPlans</string>
 
 </resources>
