@@ -19,7 +19,7 @@
 
     <!--
   IMPORTANT: Change "com.parse.starter.permission.C2D_MESSAGE" in the lines below
-  to match your app's package name + ".permission.C2D_MESSAGE".
+  to match your app's package name + ".permission.C2D_MESSAGE".
     -->
     <permission
         android:name="com.codepath.healthpact.permission.C2D_MESSAGE"
@@ -89,7 +89,7 @@
             android:name="com.codepath.healthpact.activity.HomeViewActivity"
             android:label="@string/title_activity_home_view" >
         </activity>
-         <activity
+        <activity
             android:name="com.codepath.healthpact.activity.CreatePlanActivity"
             android:label="@string/title_activity_create_plan" >
         </activity>
@@ -100,6 +100,10 @@
         <activity
             android:name="com.codepath.healthpact.activity.ActionDetailActivity"
             android:label="@string/title_activity_action_detail" >
+        </activity>
+        <activity
+            android:name="com.codepath.healthpact.FindPlansActivity"
+            android:label="@string/title_activity_find_plans" >
         </activity>
     </application>
 
