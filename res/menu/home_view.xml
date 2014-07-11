@@ -17,4 +17,9 @@
         android:icon="@drawable/ic_userprofile"
         android:showAsAction="always"
         android:title="@string/profile"/>
+    <item 
+        android:id="@+id/action_find"
+        android:icon="@drawable/ic_search"
+        android:showAsAction="always"
+        android:title="@string/find"/>
 </menu>
