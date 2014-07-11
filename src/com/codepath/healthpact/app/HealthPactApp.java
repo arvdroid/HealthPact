@@ -5,6 +5,9 @@ import android.widget.Toast;
 
 import com.codepath.healthpact.activity.ParseStarterProjectActivity;
 import com.codepath.healthpact.models.AppUser;
+import com.codepath.healthpact.models.Plan;
+import com.codepath.healthpact.models.PlanShared;
+import com.codepath.healthpact.models.UserPlan;
 import com.codepath.healthpact.restclient.RestClient;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -98,7 +101,9 @@ public class HealthPactApp extends com.activeandroid.app.Application {
 	}
 	
 	private void registerParseAppTables() {
-	    ParseObject.registerSubclass(AppUser.class);
+	    ParseObject.registerSubclass(Plan.class);
+	    ParseObject.registerSubclass(UserPlan.class);
+	    ParseObject.registerSubclass(PlanShared.class);
 	}
 	
 	@SuppressWarnings("unused")
