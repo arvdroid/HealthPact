@@ -95,7 +95,7 @@
         </activity>
         <activity
             android:name="com.codepath.healthpact.activity.PlanViewActivity"
-            android:label="@string/title_activity_action_detail" >
+            android:label="@string/title_activity_plan_view" >
         </activity>
         <activity
             android:name="com.codepath.healthpact.activity.ActionDetailActivity"

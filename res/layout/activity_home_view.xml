@@ -3,22 +3,16 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical"
     tools:context="com.codepath.healthpact.activity.HomeViewActivity"
     tools:ignore="MergeRootFrame" >
 
-    <Button
-        android:id="@+id/button11"
-        style="?android:attr/buttonStyleSmall"
+    <FrameLayout
+        android:id="@+id/flContainer"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="PlanView" />
+        android:layout_height="wrap_content">
+    </FrameLayout>
 
-    <Button
-        android:id="@+id/button22"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ActionDetailView" />
 
 </LinearLayout>

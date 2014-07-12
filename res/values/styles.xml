@@ -19,10 +19,15 @@
     
     <style name="HealthPactTheme" parent="AppTheme">
         <item name="android:actionBarStyle">@style/HealthPactTheme.ActionBar</item>
+      <!--   <item name="android:actionBarTabStyle">@style/HealthPactTheme.ActionBar.Tab</item> --> 
         <item name="android:actionButtonStyle">@style/HealthPactTheme.ActionButtonStyle</item>
     </style>
     
-    <style name="HealthPactTheme.ActionBar" parent="@android:style/Widget.Holo.ActionBar">
+    <style name="HealthPactTheme.ActionBar.Tab">
+        <item name="android:titleTextStyle">@style/HealthPactTheme.ActionBarText</item>
+    </style>
+    
+    <style name="HealthPactTheme.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:background">@color/metatallic</item>
         <item name="android:titleTextStyle">@style/HealthPactTheme.ActionBarText</item>
     </style>

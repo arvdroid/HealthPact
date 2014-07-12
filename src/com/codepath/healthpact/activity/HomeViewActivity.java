@@ -1,47 +1,53 @@
 package com.codepath.healthpact.activity;
 
-import android.app.Activity;
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 
 import com.codepath.healthpact.R;
+import com.codepath.healthpact.fragments.PlansFollowedFragment;
+import com.codepath.healthpact.fragments.PlansSharedFragment;
+import com.codepath.healthpact.listeners.FragmentTabListener;
 
-public class HomeViewActivity extends Activity {
-	Button pv;
-	Button av;
+public class HomeViewActivity extends FragmentActivity {
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home_view);
+		setupTabs();
 		
-		pv = (Button)findViewById(R.id.button11);
-		av = (Button)findViewById(R.id.button22);
 		
-		pv.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent i = new Intent(HomeViewActivity.this, PlanViewActivity.class);
-				startActivity(i);
-				
-			}
-		});
 		
-		av.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent i = new Intent(HomeViewActivity.this, ActionDetailActivity.class);
-				startActivity(i);
-				
-			}
-		});
+	}
+	
+	private void setupTabs() {
+		ActionBar actionBar = getActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		actionBar.setDisplayShowTitleEnabled(true);
+
+		Tab tab1 = actionBar
+		    .newTab()
+		    .setText("Followed")
+		    .setTag("PlansFollowedFragment")
+		    .setTabListener(new FragmentTabListener<PlansFollowedFragment>(R.id.flContainer, this,
+                        "PlansFollowed", PlansFollowedFragment.class));
+
+		actionBar.addTab(tab1);
+		actionBar.selectTab(tab1);
+
+		Tab tab2 = actionBar
+		    .newTab()
+		    .setText("Shared")
+		    .setTag("PlansSharedFragment")
+		    .setTabListener(new FragmentTabListener<PlansSharedFragment>(R.id.flContainer, this,
+                        "PlansShared", PlansSharedFragment.class));
+		actionBar.addTab(tab2);
 	}
 	
 	public void onCreatePlan(){
