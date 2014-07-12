@@ -102,7 +102,7 @@
             android:label="@string/title_activity_action_detail" >
         </activity>
         <activity
-            android:name="com.codepath.healthpact.FindPlansActivity"
+            android:name="com.codepath.healthpact.activity.FindPlansActivity"
             android:label="@string/title_activity_find_plans" >
         </activity>
     </application>
