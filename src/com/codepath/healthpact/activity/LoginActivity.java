@@ -32,11 +32,11 @@ public class LoginActivity extends OAuthLoginActivity<RestClient> {
 	}
 
 	// Inflate the menu; this adds items to the action bar if it is present.
-	@Override
+	/*@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
-	}
+	}*/
 	
 	// OAuth authenticated successfully, launch primary authenticated activity
 	// i.e Display application "homepage"
