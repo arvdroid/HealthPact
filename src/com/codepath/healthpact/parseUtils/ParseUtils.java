@@ -6,23 +6,22 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.activeandroid.util.Log;
-import com.codepath.healthpact.R;
-import com.codepath.healthpact.activity.LoginActivity;
-import com.codepath.healthpact.app.HealthPactApp;
 import com.codepath.healthpact.models.Plan;
+import com.codepath.healthpact.models.PlanAction;
 import com.codepath.healthpact.models.PlanShared;
 import com.codepath.healthpact.models.UserPlan;
+import com.codepath.healthpact.models.UserPlanRelation;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 public class ParseUtils {
+	protected static final String TAG = "HealthPact";
 	public static ArrayList<UserPlan> userPlansList;
 	
 	public static void parseLoginForTesting() {
@@ -219,6 +218,64 @@ public class ParseUtils {
 		return plansShared;		
 	}
 
+	public static void createPlan(final Plan plan, final UserPlan userplan, final ArrayList<PlanAction> planactions, final ArrayList<UserPlanRelation> userplanactions) {
+		if ((plan != null) && (userplan != null) && (userplanactions != null)) {
+			if ((plan.getPlanDesc() == null) || (plan.getPlanDesc().isEmpty())) {
+				return;
+			}
+			
+			plan.saveInBackground(new SaveCallback() {
+		        public void done(ParseException e) {
+		            if (e == null) {
+		                // Saved successfully.
+		                Log.d(TAG, "Plan created and saved in database!");
+		                final String plan_id = plan.getObjectId();
+		                Log.d(TAG, "The object id is: " + plan_id);
+		                if (plan_id != null) {
+		                	userplan.setPlan_id(plan_id);
+		                	userplan.setUser_id(ParseUser.getCurrentUser().getObjectId());
+		                	
+							userplan.saveInBackground(new SaveCallback() {
+								public void done(ParseException e) {
+									if (e == null) {
+										String user_plan_id = userplan.getObjectId();
+										
+										if (planactions != null) {
+											for (PlanAction pa : planactions) {
+												pa.setPlanId(plan_id);
+												pa.saveEventually();
+											}
+										}
+
+										if (userplanactions != null) {
+											for (UserPlanRelation upr : userplanactions) {
+												upr.setUserPlanId(user_plan_id);
+												upr.saveEventually();
+											}
+										}
+									} else {
+						                // The save failed.
+						                Log.d(TAG, "User Plan save error: " + e);
+									}
+								}
+							});
+		                }
+		            } else {
+		                // The save failed.
+		                Log.d(TAG, "Plan save error: " + e);
+		            }
+		        }
+		    });			
+		}		
+		
+	}
+	
+	public static void updateProfile(String expertise) {
+		ParseUser user = ParseUser.getCurrentUser();
+		user.put("Expertise", expertise);
+		user.saveEventually();
+	}
+	
 	/**
 	 * Log message for any parse message with log level
 	 * @param ex exception
