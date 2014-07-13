@@ -1,20 +1,79 @@
 package com.codepath.healthpact.activity;
 
+import java.util.Date;
+
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.codepath.healthpact.R;
+import com.codepath.healthpact.models.Plan;
+import com.codepath.healthpact.models.UserPlan;
 
 public class CreatePlanActivity extends FragmentActivity {
-
+	EditText etPlanName; 
+	Button btnSave;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_plan);
+		
+		etPlanName = (EditText) findViewById(R.id.lblcPPlanNameEditText);
+		btnSave = (Button) findViewById(R.id.cpBSavePlan);
+
+		PlanTextChange();
+		PlanSave();
+	}
+	
+	private void PlanSave() {
+		btnSave.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				UserPlan userPlan = new UserPlan();
+				Plan plan = new Plan();
+				plan.setPlanDesc(etPlanName.getText().toString());
+				plan.saveEventually();
+			}
+		});
+	}
+
+	private void PlanTextChange() {
+		etPlanName.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				searchPlan();
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+	}
+	
+	private void searchPlan() {
+		
 	}
 	
 	public void onAddAction(View v) {
