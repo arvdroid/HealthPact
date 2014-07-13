@@ -20,11 +20,11 @@ public class UserPlanRelation extends ParseObject {
 		put("action_date", date);
 	}
 	
-	public String getPlanId() {
+	public String getUserPlanId() {
 		return getString("user_plan_id");
 	}
 	
-	public void setPlan_id(Object plan_id) {
+	public void setUserPlanId(Object plan_id) {
 		put("user_plan_id", plan_id);
 	}
 
@@ -34,6 +34,14 @@ public class UserPlanRelation extends ParseObject {
 	
 	public void setCompletionDate(String date) {
 		put("completion_date", date);
+	}
+	
+	public String getActionId() {
+		return getString("action_id");
+	}
+	
+	public void setActionId(String action_id) {
+		put("action_id", action_id);
 	}
 	
 	public boolean isUpdated () {

@@ -273,6 +273,7 @@ public class ParseUtils {
 	public static void updateProfile(String expertise) {
 		ParseUser user = ParseUser.getCurrentUser();
 		user.put("Expertise", expertise);
+		user.get("Expertise");
 		user.saveEventually();
 	}
 	

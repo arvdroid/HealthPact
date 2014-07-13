@@ -1,5 +1,6 @@
 package com.codepath.healthpact.activity;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import android.os.Bundle;
@@ -13,11 +14,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.codepath.healthpact.R;
 import com.codepath.healthpact.models.Plan;
+import com.codepath.healthpact.models.PlanAction;
 import com.codepath.healthpact.models.UserPlan;
+import com.codepath.healthpact.models.UserPlanRelation;
+import com.codepath.healthpact.parseUtils.ParseUtils;
 
 public class CreatePlanActivity extends FragmentActivity {
 	EditText etPlanName; 
@@ -41,9 +44,22 @@ public class CreatePlanActivity extends FragmentActivity {
 			@Override
 			public void onClick(View v) {
 				UserPlan userPlan = new UserPlan();
+				ArrayList<PlanAction> paList = new ArrayList<PlanAction>();
+				PlanAction pa = new PlanAction();
 				Plan plan = new Plan();
 				plan.setPlanDesc(etPlanName.getText().toString());
-				plan.saveEventually();
+				userPlan.setPlan_end_date(new Date());
+				UserPlanRelation upr = new UserPlanRelation();
+				ArrayList<UserPlanRelation> uprList = new ArrayList<UserPlanRelation>();
+				upr.setActionId("iJr8KK8pXi");
+				uprList.add(upr);
+				pa.setActionId("iJr8KK8pXi");
+				paList.add(pa);
+				upr.setActionId("fU0cf2sK8h");
+				pa.setActionId("fU0cf2sK8h");
+				paList.add(pa);
+				uprList.add(upr);
+				ParseUtils.createPlan(plan, userPlan, paList, uprList);
 			}
 		});
 	}
