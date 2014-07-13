@@ -110,7 +110,7 @@
             android:label="@string/title_activity_new_user_profile" >
         </activity>
         <activity
-            android:name="com.codepath.healthpact.UserProfileActivity"
+            android:name="com.codepath.healthpact.activity.UserProfileActivity"
             android:label="@string/title_activity_user_profile" >
         </activity>
     </application>
