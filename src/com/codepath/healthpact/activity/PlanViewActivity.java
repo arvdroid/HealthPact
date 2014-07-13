@@ -19,6 +19,8 @@ import com.codepath.healthpact.models.AppPlan;
 
 public class PlanViewActivity extends FragmentActivity {
 	Calendar calender = Calendar.getInstance();
+	OnDateSetListener ondate;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -32,6 +34,15 @@ public class PlanViewActivity extends FragmentActivity {
 		pName.setText(result.getName());
 		pDesc.setText(result.getDesc());
 		pDuration.setText("Duration:"+ result.getDuration() + " weeks");
+		
+		ondate = new OnDateSetListener() {
+			@Override
+			public void onDateSet(DatePicker view, int year, int monthOfYear,
+					int dayOfMonth) {
+				calender.set(year, monthOfYear, dayOfMonth, 0, 0);
+				Toast.makeText(PlanViewActivity.this,String.valueOf(year) + "-" + String.valueOf(monthOfYear+1)+ "-" + String.valueOf(dayOfMonth),Toast.LENGTH_LONG).show();
+			}
+		};
 		
 		UserActionsFragment fragmentDemo = (UserActionsFragment) 
                 getSupportFragmentManager().findFragmentById(R.id.actionViewFragment);
@@ -55,15 +66,6 @@ public class PlanViewActivity extends FragmentActivity {
 		date.setCallBack(ondate);
 		date.show(getSupportFragmentManager(), "Date Picker");
 	}
-
-	OnDateSetListener ondate = new OnDateSetListener() {
-		@Override
-		public void onDateSet(DatePicker view, int year, int monthOfYear,
-				int dayOfMonth) {
-			calender.set(year, monthOfYear, dayOfMonth, 0, 0);
-			Toast.makeText(PlanViewActivity.this,String.valueOf(year) + "-" + String.valueOf(monthOfYear+1)+ "-" + String.valueOf(dayOfMonth),Toast.LENGTH_LONG).show();
-		}
-	};
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
