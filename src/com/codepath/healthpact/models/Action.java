@@ -18,4 +18,19 @@ public class Action extends ParseObject {
 		return getString("action_name");
 	}
 
+	public void setActionDesc(String desc) {
+		put("action_desc", desc);
+	}
+
+	public String getActionDesc() {
+		return getString("action_desc");
+	}
+	
+	public void setActionServing(String serving) {
+		put("serving", serving);
+	}
+
+	public String getActionServing() {
+		return getString("serving");
+	}
 }
