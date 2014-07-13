@@ -105,6 +105,10 @@
             android:name="com.codepath.healthpact.activity.FindPlansActivity"
             android:label="@string/title_activity_find_plans" >
         </activity>
+        <activity
+            android:name="com.codepath.healthpact.activity.NewUserProfileActivity"
+            android:label="@string/title_activity_new_user_profile" >
+        </activity>
     </application>
 
 </manifest>
