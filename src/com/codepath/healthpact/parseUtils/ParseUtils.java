@@ -6,11 +6,17 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.activeandroid.util.Log;
+import com.codepath.healthpact.R;
+import com.codepath.healthpact.activity.LoginActivity;
+import com.codepath.healthpact.app.HealthPactApp;
 import com.codepath.healthpact.models.Plan;
 import com.codepath.healthpact.models.PlanShared;
 import com.codepath.healthpact.models.UserPlan;
+import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -18,6 +24,18 @@ import com.parse.ParseUser;
 
 public class ParseUtils {
 	public static ArrayList<UserPlan> userPlansList;
+	
+	public static void parseLoginForTesting() {
+		ParseUser.logInInBackground("dipankar", "dipankar", new LogInCallback() {
+			  public void done(ParseUser user, ParseException e) {
+			    if (user != null) {
+			      // Hooray! The user is logged in.
+				} else {
+					// Signup failed. Look at the ParseException to see what happened.
+				}
+			  }
+			});
+	}
 	
 	public static ParseUser getAppUserDetails(View v, final Context context, String appUserName) {
 
