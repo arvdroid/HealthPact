@@ -8,6 +8,7 @@ import android.content.Context;
 import android.view.View;
 
 import com.activeandroid.util.Log;
+import com.codepath.healthpact.models.Action;
 import com.codepath.healthpact.models.Plan;
 import com.codepath.healthpact.models.PlanAction;
 import com.codepath.healthpact.models.PlanShared;
@@ -49,6 +50,19 @@ public class ParseUtils {
 		return null;
 	}
 
+	public static Action getAction(String name) {
+		Action action = null;
+		ParseQuery<Action> query = ParseQuery.getQuery(Action.class);
+		query.whereEqualTo("action_name", name);
+		try {
+			action = query.getFirst();
+		} catch (ParseException parseEx) {
+			parseEx.printStackTrace();
+			Log.d("getAction failed");
+		}
+		return action;
+	}
+	
 	/**
 	 * Get plan detail for the provided user from UserPlan table
 	 * @param v View
@@ -218,8 +232,9 @@ public class ParseUtils {
 		return plansShared;		
 	}
 
-	public static void createPlan(final Plan plan, final UserPlan userplan, final ArrayList<PlanAction> planactions, final ArrayList<UserPlanRelation> userplanactions) {
-		if ((plan != null) && (userplan != null) && (userplanactions != null)) {
+	public static void createPlan(final Plan plan, final ArrayList<Action> actions) {
+		String action_id;
+		if ((plan != null) && (actions != null)) {
 			if ((plan.getPlanDesc() == null) || (plan.getPlanDesc().isEmpty())) {
 				return;
 			}
@@ -232,27 +247,39 @@ public class ParseUtils {
 		                final String plan_id = plan.getObjectId();
 		                Log.d(TAG, "The object id is: " + plan_id);
 		                if (plan_id != null) {
+		                	
+		                	final UserPlan userplan = new UserPlan();
 		                	userplan.setPlan_id(plan_id);
 		                	userplan.setUser_id(ParseUser.getCurrentUser().getObjectId());
 		                	
 							userplan.saveInBackground(new SaveCallback() {
 								public void done(ParseException e) {
 									if (e == null) {
-										String user_plan_id = userplan.getObjectId();
 										
-										if (planactions != null) {
-											for (PlanAction pa : planactions) {
-												pa.setPlanId(plan_id);
-												pa.saveEventually();
+										//get Actions
+										if (actions != null) {
+											for (final Action action : actions) {
+												action.saveInBackground(new SaveCallback() {
+													public void done(ParseException e) {
+														if (e == null) {
+															PlanAction pa = new PlanAction();
+
+															String action_id = action.getObjectId();
+															//String user_plan_id = userplan.getObjectId();
+
+															pa.setPlanId(plan_id);
+															pa.setActionId(action_id);
+															pa.saveEventually();
+
+														} else {
+											                // The save failed for user plan
+											                Log.d(TAG, "User Plan save error: " + e);
+														}
+													}
+												});									
 											}
 										}
 
-										if (userplanactions != null) {
-											for (UserPlanRelation upr : userplanactions) {
-												upr.setUserPlanId(user_plan_id);
-												upr.saveEventually();
-											}
-										}
 									} else {
 						                // The save failed.
 						                Log.d(TAG, "User Plan save error: " + e);
