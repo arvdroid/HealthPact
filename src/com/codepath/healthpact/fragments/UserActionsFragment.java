@@ -1,6 +1,7 @@
 package com.codepath.healthpact.fragments;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,13 +12,12 @@ import android.widget.ListView;
 
 import com.codepath.healthpact.R;
 import com.codepath.healthpact.adapters.ActionArrayAdapter;
-import com.codepath.healthpact.adapters.PlanArrayAdapter;
-import com.codepath.healthpact.models.Plan;
+import com.codepath.healthpact.models.Action;
 
 public class UserActionsFragment extends PlanListFragment{
 	
-	private ArrayList<Plan> userplans;
-	private ArrayAdapter<Plan> actionarrayadapter;
+	private ArrayList<Action> planActions;
+	private ArrayAdapter<Action> actionarrayadapter;
 	private ListView lvPlanActions;
 	
 	@Override
@@ -26,6 +26,8 @@ public class UserActionsFragment extends PlanListFragment{
 		// TODO Auto-generated method stub
 		View v = inflater.inflate(com.codepath.healthpact.R.layout.fragments_action_list, container, false);
 		lvPlanActions = (ListView) v.findViewById(R.id.lvPlanActions);
+		planActions = new ArrayList<Action>();
+		actionarrayadapter = new ActionArrayAdapter(getActivity(),planActions);
 		lvPlanActions.setAdapter(actionarrayadapter);
 		return v;
 
@@ -41,7 +43,7 @@ public class UserActionsFragment extends PlanListFragment{
      }
 	
 	public void populateActions() {
-        userplans = new ArrayList<Plan>();
+        /*userplans = new ArrayList<Plan>();
 		
 		Plan userplan1 = new Plan();
 		Plan userplan2 = new Plan();
@@ -57,9 +59,21 @@ public class UserActionsFragment extends PlanListFragment{
         
 		userplan3.setPlanDesc("Action 3");
 		userplan3.setPlanDuration(4);
-        userplans.add(userplan3);
+        userplans.add(userplan3);*/
         
-        actionarrayadapter = new ActionArrayAdapter(getActivity(),userplans);
+        //actionarrayadapter = new ActionArrayAdapter(getActivity(),userplans);
+	}
+	
+	public void populateAction(Action action){
+		actionarrayadapter.add(action);
+	}
+	
+	public List<Action> getActions(){
+		List<Action> actions = new ArrayList<Action>();
+		for(int i=0; i<actionarrayadapter.getCount(); i++){
+			actions.add(actionarrayadapter.getItem(i));
+		}
+		return actions;
 	}
 	
 }

@@ -74,14 +74,20 @@
 
         </LinearLayout>
 
-        <ListView
-            android:id="@+id/cpLvActions"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/lblcPDuration"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp" >
+            android:layout_marginTop="5dp"
+            android:text="Duration"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        </ListView>
-
+        <fragment
+            android:id="@+id/cpActionViewFragment"
+            android:name="com.codepath.healthpact.fragments.UserActionsFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp" />
     </LinearLayout>
     
     <LinearLayout

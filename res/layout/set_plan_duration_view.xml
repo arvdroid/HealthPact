@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/pdtextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -21,21 +21,21 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <NumberPicker
-        android:id="@+id/numberPicker1"
+        android:id="@+id/pdnumberPicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
+        android:layout_alignLeft="@+id/pdtextView"
+        android:layout_below="@+id/pdtextView"
         android:orientation="vertical" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/pdDonebutton"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
-        android:layout_alignLeft="@+id/numberPicker1"
-        android:layout_below="@+id/numberPicker1"        
+        android:layout_alignLeft="@+id/pdnumberPicker"
+        android:layout_below="@+id/pdnumberPicker"        
         android:text="Done"
         android:background="@drawable/action_button_layout" />
 

@@ -1,7 +1,7 @@
 package com.codepath.healthpact.activity;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -14,54 +14,80 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.codepath.healthpact.R;
+import com.codepath.healthpact.activity.AddActionDialog.AddActionDialogListener;
+import com.codepath.healthpact.activity.SetDurationDialog.SetDurationDialogListener;
+import com.codepath.healthpact.fragments.UserActionsFragment;
+import com.codepath.healthpact.models.Action;
 import com.codepath.healthpact.models.Plan;
 import com.codepath.healthpact.models.PlanAction;
 import com.codepath.healthpact.models.UserPlan;
-import com.codepath.healthpact.models.UserPlanRelation;
-import com.codepath.healthpact.parseUtils.ParseUtils;
+import com.parse.ParseUser;
 
-public class CreatePlanActivity extends FragmentActivity {
+public class CreatePlanActivity extends FragmentActivity implements AddActionDialogListener, SetDurationDialogListener{
 	EditText etPlanName; 
 	Button btnSave;
-	
+	TextView tvduration;
+	List<Action> actionsList = new ArrayList<Action>();
+	UserActionsFragment fragmentDemo;
+	int duration;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_plan);
 		
+		fragmentDemo = (UserActionsFragment) 
+                getSupportFragmentManager().findFragmentById(R.id.cpActionViewFragment);
+            
 		etPlanName = (EditText) findViewById(R.id.lblcPPlanNameEditText);
 		btnSave = (Button) findViewById(R.id.cpBSavePlan);
-
-		PlanTextChange();
-		PlanSave();
-	}
-	
-	private void PlanSave() {
+		tvduration = (TextView)findViewById(R.id.lblcPDuration);
+		
 		btnSave.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				UserPlan userPlan = new UserPlan();
-				ArrayList<PlanAction> paList = new ArrayList<PlanAction>();
-				PlanAction pa = new PlanAction();
-				Plan plan = new Plan();
-				plan.setPlanDesc(etPlanName.getText().toString());
-				userPlan.setPlan_end_date(new Date());
-				UserPlanRelation upr = new UserPlanRelation();
-				ArrayList<UserPlanRelation> uprList = new ArrayList<UserPlanRelation>();
-				upr.setActionId("iJr8KK8pXi");
-				uprList.add(upr);
-				pa.setActionId("iJr8KK8pXi");
-				paList.add(pa);
-				upr.setActionId("fU0cf2sK8h");
-				pa.setActionId("fU0cf2sK8h");
-				paList.add(pa);
-				uprList.add(upr);
-				ParseUtils.createPlan(plan, userPlan, paList, uprList);
+				PlanSave();				
 			}
 		});
+		
+		//PlanTextChange();
+		//PlanSave();
+	}
+	
+	private void PlanSave() {
+		UserPlan userPlan = new UserPlan();
+		userPlan.setUser_id(ParseUser.getCurrentUser().getObjectId());
+		
+		String planName = etPlanName.getText().toString();
+		List<Action> actions = fragmentDemo.getActions();
+		
+		Plan plan = new Plan();
+		plan.setPlanName(planName);
+		plan.setPlanDuration(duration);
+		plan.setPlanDesc(planName+ " descrip");
+		
+		List<PlanAction> planActions = new ArrayList<PlanAction>();
+		PlanAction planAction = new PlanAction();
+		
+		/*ArrayList<PlanAction> paList = new ArrayList<PlanAction>();
+		PlanAction pa = new PlanAction();
+		Plan plan = new Plan();
+		plan.setPlanDesc(etPlanName.getText().toString());
+		userPlan.setPlan_end_date(new Date());
+		UserPlanRelation upr = new UserPlanRelation();
+		ArrayList<UserPlanRelation> uprList = new ArrayList<UserPlanRelation>();
+		upr.setActionId("iJr8KK8pXi");
+		uprList.add(upr);
+		pa.setActionId("iJr8KK8pXi");
+		paList.add(pa);
+		upr.setActionId("fU0cf2sK8h");
+		pa.setActionId("fU0cf2sK8h");
+		paList.add(pa);
+		uprList.add(upr);
+		ParseUtils.createPlan(plan, userPlan, paList, uprList);*/
 	}
 
 	private void PlanTextChange() {
@@ -103,6 +129,8 @@ public class CreatePlanActivity extends FragmentActivity {
 		SetDurationDialog compose = new SetDurationDialog();
 		compose.show(fm, "");
 	}
+	
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -122,5 +150,16 @@ public class CreatePlanActivity extends FragmentActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void finishToActivity(Action result) {
+		fragmentDemo.populateAction(result);
+	}
+
+	@Override
+	public void finishToActivityFromDuration(int result) {
+		duration = result;
+		tvduration.setText("Duration: "+result);
 	}
 }

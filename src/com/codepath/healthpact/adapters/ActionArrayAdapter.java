@@ -11,22 +11,22 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.codepath.healthpact.R;
 import com.codepath.healthpact.activity.ActionDetailActivity;
+import com.codepath.healthpact.models.Action;
 import com.codepath.healthpact.models.Plan;
 
-public class ActionArrayAdapter extends ArrayAdapter<Plan> {
+public class ActionArrayAdapter extends ArrayAdapter<Action> {
 	
-	public ActionArrayAdapter(Context context,List<Plan> userplans) {
+	public ActionArrayAdapter(Context context,List<Action> userplans) {
 		super(context, com.codepath.healthpact.R.layout.action_item, userplans);
 	}
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-	    final Plan useraction = getItem(position);
+	    final Action useraction = getItem(position);
 		View view;
 		if(convertView == null) {
 			LayoutInflater inflator = LayoutInflater.from(getContext());
@@ -34,33 +34,34 @@ public class ActionArrayAdapter extends ArrayAdapter<Plan> {
 		} else {
 			view = convertView;
 		}
-
-		TextView tvUserActionName = (TextView) view.findViewById(com.codepath.healthpact.R.id.tvUserActionName);
+		TextView tvUserActionName = (TextView) view.findViewById(com.codepath.healthpact.R.id.tvUserActionName);		
 		ToggleButton tbActionDone = (ToggleButton) view.findViewById(R.id.tbactionDone);
 		final Drawable onD = (Drawable) view.getResources().getDrawable(R.drawable.custom_action_done_pressed);
 		final Drawable offD = (Drawable)view.getResources().getDrawable(R.drawable.custom_action_done);
-      
+
 		tvUserActionName.setText("Action A");
-		
+
 		tbActionDone.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				boolean on = ((ToggleButton) v).isChecked();
-			    if (on) {
-			        ((ToggleButton) v).setBackground(onD);
-			    } else {
-			    	((ToggleButton) v).setBackground(offD);
-			    }				
-				
+				if (on) {
+					((ToggleButton) v).setBackground(onD);
+				} else {
+					((ToggleButton) v).setBackground(offD);
+				}				
+
 			}
 		});
+      
+		tvUserActionName.setText(useraction.getActionName());
 
         view.setOnClickListener(new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			launchDetailsActivity(useraction);
+			//launchDetailsActivity(useraction);
 		}
 	});
 
