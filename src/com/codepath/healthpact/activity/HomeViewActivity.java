@@ -21,9 +21,6 @@ public class HomeViewActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home_view);
 		setupTabs();
-		
-		
-		
 	}
 	
 	private void setupTabs() {
@@ -60,6 +57,11 @@ public class HomeViewActivity extends FragmentActivity {
 		startActivity(i);
 	}
 	
+	public void onShowProdile(){
+		Intent i = new Intent(this, NewUserProfileActivity.class);
+		startActivity(i);
+	}
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -81,7 +83,11 @@ public class HomeViewActivity extends FragmentActivity {
 		}else if(id == R.id.action_find){
 			onFindPlan();
 			return true;
+		}else if(id == R.id.action_profile){
+			onShowProdile();
+			return true;
 		}
+		
 		return super.onOptionsItemSelected(item);
 	}
 }
