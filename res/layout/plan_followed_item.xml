@@ -5,14 +5,13 @@
     android:background="@drawable/states_selector_list">
 
     <TextView
-        android:id="@+id/pitvUserPlanName"
+        android:id="@+id/pftvUserPlanName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="2dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
         android:textColor="#040404"
         android:typeface="sans"
         android:textSize="15sp"
@@ -20,13 +19,31 @@
         android:text="PlanName" />
 
     <TextView
-        android:id="@+id/pitvUserPlanDuration"
+        android:id="@+id/pftvUserPlanStartDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:text="StartDate" />
+
+    <ProgressBar
+        android:id="@+id/pfpbUserPlanProgress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pftvUserPlanName"
+        android:layout_marginLeft="2dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/pftvUserPlanDurationLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pftvUserPlanStartDate"
+        android:layout_alignParentRight="true"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="Duration" />
+        android:layout_marginBottom="10dp"  
+        android:text="DurationLeft" />
 
 </RelativeLayout>

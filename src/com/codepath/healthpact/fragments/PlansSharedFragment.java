@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.codepath.healthpact.R;
 import com.codepath.healthpact.adapters.PlanArrayAdapter;
+import com.codepath.healthpact.models.AppPlan;
 import com.codepath.healthpact.models.Plan;
 import com.codepath.healthpact.models.PlanShared;
 import com.codepath.healthpact.parseUtils.ParseUtils;
@@ -19,7 +20,7 @@ import com.codepath.healthpact.parseUtils.ParseUtils;
 public class PlansSharedFragment extends PlanListFragment{
 	
 	
-	private ArrayAdapter<Plan> userplanadapter;
+	private ArrayAdapter<AppPlan> userplanadapter;
 	private ListView lvUserPlans;
 	
 	@Override
@@ -39,12 +40,15 @@ public class PlansSharedFragment extends PlanListFragment{
 		
 
 		ArrayList<PlanShared> sharedplans = ParseUtils.getUserSharedPlans(null);
-		List<Plan> plans = new ArrayList<Plan>();
+		List<AppPlan> plans = new ArrayList<AppPlan>();
 		
 		for (PlanShared sp : sharedplans) {
 			String plan_id = sp.getPlanId();	
 			Plan p = ParseUtils.getPlanDetail(null, plan_id);
-			plans.add(p);
+			AppPlan ap = new AppPlan();
+			ap.setName(p.getPlanName());
+			ap.setDuration(p.getPlanDuration());
+			plans.add(ap);
 		}
     	userplanadapter = new PlanArrayAdapter(getActivity(),plans);
 		super.onCreate(savedInstanceState);
