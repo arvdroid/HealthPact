@@ -19,12 +19,12 @@ public class Plan extends ParseObject {
 		return getString("plan_desc");
 	}
 
-	public void setPlanDuration(String plan_duration) {
+	public void setPlanDuration(Integer plan_duration) {
 		put("plan_duration", plan_duration);
 	}
 
-	public String getPlanDuration() {
-		return getString("plan_duration");
+	public int getPlanDuration() {
+		return getInt("plan_duration");
 	}
 
 	public void setPlanName(String plan_name) {

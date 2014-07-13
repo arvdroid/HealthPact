@@ -48,15 +48,15 @@ public class UserActionsFragment extends PlanListFragment{
 		Plan userplan3 = new Plan();
 		
 		userplan1.setPlanDesc("Action 1");
-		userplan1.setPlanDuration("2 months");
+		userplan1.setPlanDuration(2);
         userplans.add(userplan1);
         
 		userplan2.setPlanDesc("Action 2");
-		userplan2.setPlanDuration("3 months");
+		userplan2.setPlanDuration(3);
         userplans.add(userplan2);
         
 		userplan3.setPlanDesc("Action 3");
-		userplan3.setPlanDuration("1 month");
+		userplan3.setPlanDuration(4);
         userplans.add(userplan3);
         
         actionarrayadapter = new ActionArrayAdapter(getActivity(),userplans);
