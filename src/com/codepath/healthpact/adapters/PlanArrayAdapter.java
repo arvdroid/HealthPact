@@ -9,22 +9,21 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.codepath.healthpact.activity.PlanViewActivity;
-import com.codepath.healthpact.models.Plan;
+import com.codepath.healthpact.models.AppPlan;
 
 
-public class PlanArrayAdapter extends ArrayAdapter<Plan>{
-	
-	public PlanArrayAdapter(Context context,List<Plan> userplans) {
+public class PlanArrayAdapter extends ArrayAdapter<AppPlan>{
+		
+	public PlanArrayAdapter(Context context,List<AppPlan> userplans) {
 		super(context, com.codepath.healthpact.R.layout.plan_item, userplans);
 	}
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-	    final Plan userPlan = getItem(position);
+	    final AppPlan userPlan = getItem(position);
 		View view;
 		if(convertView == null) {
 			LayoutInflater inflator = LayoutInflater.from(getContext());
@@ -32,31 +31,28 @@ public class PlanArrayAdapter extends ArrayAdapter<Plan>{
 		} else {
 			view = convertView;
 		}
-		TextView tvUserPlanName = (TextView) view.findViewById(com.codepath.healthpact.R.id.tvUserPlanName);
-		TextView tvUserPlanStartDate = (TextView) view.findViewById(com.codepath.healthpact.R.id.tvUserPlanStartDate);
-		TextView tvUserPlanDurationLeft = (TextView) view.findViewById(com.codepath.healthpact.R.id.tvUserPlanDurationLeft);
-		ProgressBar pbUserPlanProgress = (ProgressBar) view.findViewById(com.codepath.healthpact.R.id.pbUserPlanProgress);
+		TextView tvUserPlanName = (TextView) view.findViewById(com.codepath.healthpact.R.id.pitvUserPlanName);
+		TextView tvUserPlanDuration = (TextView) view.findViewById(com.codepath.healthpact.R.id.pitvUserPlanDuration);
+		
 		
 		//To-do get plan details
       
-		tvUserPlanName.setText(userPlan.getPlanName());
-		//tvUserPlanStartDate.setText(userPlan.getPlanDuration());
-		//tvUserPlanDurationLeft.setText(userPlan.getPlanDuration());
-		pbUserPlanProgress.setProgress(10);
+		tvUserPlanName.setText(userPlan.getName());
+		tvUserPlanDuration.setText("Duration: "+ userPlan.getDuration()+ " weeks");
 
 
         view.setOnClickListener(new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			launchDetailsActivity(userPlan);
+			//launchDetailsActivity(userPlan);
 		}
 	});
 
 		return view;
 	}
 	
-	protected void launchDetailsActivity(Plan userPlan) {
+	protected void launchDetailsActivity(AppPlan userPlan) {
 		Intent showplan = new Intent(getContext(), PlanViewActivity.class);
 		//showplan.putExtra("userplan", userPlan)
 		getContext().startActivity(showplan);

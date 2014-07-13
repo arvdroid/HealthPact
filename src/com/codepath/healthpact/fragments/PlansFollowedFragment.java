@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.codepath.healthpact.R;
-import com.codepath.healthpact.adapters.PlanArrayAdapter;
+import com.codepath.healthpact.adapters.PlanFollowedArrayAdapter;
+import com.codepath.healthpact.models.AppPlan;
 import com.codepath.healthpact.models.Plan;
 import com.codepath.healthpact.models.UserPlan;
 import com.codepath.healthpact.parseUtils.ParseUtils;
@@ -19,7 +21,7 @@ import com.codepath.healthpact.parseUtils.ParseUtils;
 
 public class PlansFollowedFragment extends PlanListFragment{
 	
-	private ArrayAdapter<Plan> userplanadapter;
+	private ArrayAdapter<AppPlan> userplanadapter;
 	private ListView lvUserPlans;
 	
 	@Override
@@ -39,14 +41,18 @@ public class PlansFollowedFragment extends PlanListFragment{
 		
 
 		ArrayList<UserPlan> userplans = ParseUtils.getUserPlans(null);
-		List<Plan> plans = new ArrayList<Plan>();
+		List<AppPlan> plans = new ArrayList<AppPlan>();
 		
 		for (UserPlan up : userplans) {
 			String plan_id = up.getPlanId();	
 			Plan p = ParseUtils.getPlanDetail(null, plan_id);
-			plans.add(p);
+			Log.d("hp", "up st_date: "+ up.getPlan_start_date());
+			if(up.getPlan_start_date()!=null){
+				AppPlan ap = new AppPlan(p.getPlanName(), up.getPlan_start_date(), up.getPlan_end_date());
+				plans.add(ap);
+			}
 		}
-    	userplanadapter = new PlanArrayAdapter(getActivity(),plans);
+    	userplanadapter = new PlanFollowedArrayAdapter(getActivity(),plans);
 		super.onCreate(savedInstanceState);
 	}
 	
