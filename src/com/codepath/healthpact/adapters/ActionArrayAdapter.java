@@ -19,6 +19,7 @@ import com.codepath.healthpact.models.Action;
 import com.codepath.healthpact.models.Plan;
 
 public class ActionArrayAdapter extends ArrayAdapter<Action> {
+	boolean followed;
 	
 	public ActionArrayAdapter(Context context,List<Action> userplans) {
 		super(context, com.codepath.healthpact.R.layout.action_item, userplans);
@@ -36,26 +37,28 @@ public class ActionArrayAdapter extends ArrayAdapter<Action> {
 		}
 		TextView tvUserActionName = (TextView) view.findViewById(com.codepath.healthpact.R.id.tvUserActionName);		
 		ToggleButton tbActionDone = (ToggleButton) view.findViewById(R.id.tbactionDone);
-		final Drawable onD = (Drawable) view.getResources().getDrawable(R.drawable.custom_action_done_pressed);
-		final Drawable offD = (Drawable)view.getResources().getDrawable(R.drawable.custom_action_done);
-
-		tvUserActionName.setText("Action A");
-
-		tbActionDone.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				boolean on = ((ToggleButton) v).isChecked();
-				if (on) {
-					((ToggleButton) v).setBackground(onD);
-				} else {
-					((ToggleButton) v).setBackground(offD);
-				}				
-
-			}
-		});
-      
+		
+		
 		tvUserActionName.setText(useraction.getActionName());
+		if(followed){
+			final Drawable onD = (Drawable) view.getResources().getDrawable(R.drawable.custom_action_done_pressed);
+			final Drawable offD = (Drawable)view.getResources().getDrawable(R.drawable.custom_action_done);
+			tbActionDone.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					boolean on = ((ToggleButton) v).isChecked();
+					if (on) {
+						((ToggleButton) v).setBackground(onD);
+					} else {
+						((ToggleButton) v).setBackground(offD);
+					}				
+
+				}
+			});
+		}else{
+			tbActionDone.setVisibility(View.INVISIBLE);
+		}
 
         view.setOnClickListener(new OnClickListener() {
 		@Override
@@ -66,6 +69,10 @@ public class ActionArrayAdapter extends ArrayAdapter<Action> {
 	});
 
 		return view;
+	}
+	
+	public void setFollowed(boolean followed){
+		this.followed = followed;
 	}
 	
 	protected void launchDetailsActivity(Plan useraction) {

@@ -48,7 +48,8 @@ public class PlansFollowedFragment extends PlanListFragment{
 			Plan p = ParseUtils.getPlanDetail(null, plan_id);
 			Log.d("hp", "up st_date: "+ up.getPlan_start_date());
 			if(up.getPlan_start_date()!=null){
-				AppPlan ap = new AppPlan(p.getPlanName(), up.getPlan_start_date(), up.getPlan_end_date());
+				AppPlan ap = new AppPlan(p.getPlanId(), p.getPlanName(), p.getPlanDesc(), p.getPlanDuration(), up.getPlan_start_date(), up.getPlan_end_date());
+				ap.setFollowed(true);
 				plans.add(ap);
 			}
 		}

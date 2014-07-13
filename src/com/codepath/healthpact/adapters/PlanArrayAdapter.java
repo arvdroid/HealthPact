@@ -44,8 +44,7 @@ public class PlanArrayAdapter extends ArrayAdapter<AppPlan>{
         view.setOnClickListener(new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			//launchDetailsActivity(userPlan);
+			launchDetailsActivity(userPlan);
 		}
 	});
 
@@ -54,7 +53,7 @@ public class PlanArrayAdapter extends ArrayAdapter<AppPlan>{
 	
 	protected void launchDetailsActivity(AppPlan userPlan) {
 		Intent showplan = new Intent(getContext(), PlanViewActivity.class);
-		//showplan.putExtra("userplan", userPlan)
+		showplan.putExtra("userplan", userPlan);
 		getContext().startActivity(showplan);
 	}
 }

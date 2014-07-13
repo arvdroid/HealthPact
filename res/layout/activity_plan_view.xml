@@ -24,7 +24,7 @@
             android:orientation="horizontal" >
 
             <TextView
-                android:id="@+id/tvPlanName"
+                android:id="@+id/pvtvPlanName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -32,7 +32,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <LinearLayout
-                android:id="@+id/planFollowersLayout"
+                android:id="@+id/pvplanFollowersLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
@@ -40,7 +40,7 @@
                 android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/tvFollowingCnt"
+                    android:id="@+id/pvtvFollowingCnt"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -48,7 +48,7 @@
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
-                    android:id="@+id/tvFollowingLbl"
+                    android:id="@+id/pvtvFollowingLbl"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -58,14 +58,14 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/lblDescription"
+            android:id="@+id/pvlblDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Description"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
-            android:id="@+id/tvDescription"
+            android:id="@+id/pvtvDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lines="3"
@@ -82,7 +82,7 @@
             android:orientation="horizontal" >
 
             <TextView
-                android:id="@+id/tvCreatedBy"
+                android:id="@+id/pvtvCreatedBy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -90,7 +90,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <LinearLayout
-                android:id="@+id/planCreatedDateLayout"
+                android:id="@+id/pvplanCreatedDateLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
@@ -98,7 +98,7 @@
                 android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/tvCreatedDate"
+                    android:id="@+id/pvtvCreatedDate"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="end"
@@ -106,7 +106,7 @@
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
-                    android:id="@+id/tvDuration"
+                    android:id="@+id/pvtvDuration"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +14,19 @@ import android.widget.ListView;
 import com.codepath.healthpact.R;
 import com.codepath.healthpact.adapters.ActionArrayAdapter;
 import com.codepath.healthpact.models.Action;
+import com.codepath.healthpact.models.AppPlan;
 
-public class UserActionsFragment extends PlanListFragment{
+public class UserActionsFragment extends Fragment{
 	
 	private ArrayList<Action> planActions;
 	private ArrayAdapter<Action> actionarrayadapter;
 	private ListView lvPlanActions;
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+      super.onCreate(savedInstanceState);
+      //populateActions();
+     }
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,20 +38,34 @@ public class UserActionsFragment extends PlanListFragment{
 		actionarrayadapter = new ActionArrayAdapter(getActivity(),planActions);
 		lvPlanActions.setAdapter(actionarrayadapter);
 		return v;
-
 	}
 	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub		
-		
-       populateActions();
-		
-      super.onCreate(savedInstanceState);
-     }
+	private void showUpdateAction(AppPlan plan){
+		((ActionArrayAdapter)actionarrayadapter).setFollowed(plan.getFollowed());
+	}
 	
-	public void populateActions() {
-        /*userplans = new ArrayList<Plan>();
+	public void populateActions(AppPlan plan) {		
+		showUpdateAction(plan);
+		actionarrayadapter.clear();
+		String id = plan.getId();
+		List<Action> actions = new ArrayList<Action>();
+		Action nA = new Action();
+		nA.setActionName("action 1");
+		actions.add(nA);
+		
+		nA = new Action();
+		nA.setActionName("action 2");
+		actions.add(nA);
+		
+		nA = new Action();
+		nA.setActionName("action 3");
+		actions.add(nA);
+		
+		actionarrayadapter.addAll(actions);
+	}
+	
+	void temp(){
+		/*userplans = new ArrayList<Plan>();
 		
 		Plan userplan1 = new Plan();
 		Plan userplan2 = new Plan();
@@ -64,7 +86,7 @@ public class UserActionsFragment extends PlanListFragment{
         //actionarrayadapter = new ActionArrayAdapter(getActivity(),userplans);
 	}
 	
-	public void populateAction(Action action){
+	public void populateAction(Action action){		
 		actionarrayadapter.add(action);
 	}
 	
