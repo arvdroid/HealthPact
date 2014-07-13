@@ -15,6 +15,7 @@ import com.codepath.healthpact.R;
 import com.codepath.healthpact.adapters.ActionArrayAdapter;
 import com.codepath.healthpact.models.Action;
 import com.codepath.healthpact.models.AppPlan;
+import com.codepath.healthpact.parseUtils.ParseUtils;
 
 public class UserActionsFragment extends Fragment{
 	
@@ -49,18 +50,7 @@ public class UserActionsFragment extends Fragment{
 		actionarrayadapter.clear();
 		String id = plan.getId();
 		List<Action> actions = new ArrayList<Action>();
-		Action nA = new Action();
-		nA.setActionName("action 1");
-		actions.add(nA);
-		
-		nA = new Action();
-		nA.setActionName("action 2");
-		actions.add(nA);
-		
-		nA = new Action();
-		nA.setActionName("action 3");
-		actions.add(nA);
-		
+		actions = ParseUtils.getActionForPlan(id);
 		actionarrayadapter.addAll(actions);
 	}
 	
@@ -84,6 +74,18 @@ public class UserActionsFragment extends Fragment{
         userplans.add(userplan3);*/
         
         //actionarrayadapter = new ActionArrayAdapter(getActivity(),userplans);
+		
+		/*Action nA = new Action();
+		nA.setActionName("action 1");
+		actions.add(nA);
+		
+		nA = new Action();
+		nA.setActionName("action 2");
+		actions.add(nA);
+		
+		nA = new Action();
+		nA.setActionName("action 3");
+		actions.add(nA);*/
 	}
 	
 	public void populateAction(Action action){		
