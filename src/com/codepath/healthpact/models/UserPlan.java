@@ -10,10 +10,20 @@ import java.util.Date;
 @ParseClassName("UserPlan")
 public class UserPlan  extends ParseObject {
 
+	private String planDesc;
+	
 	public UserPlan() {
 		super();
 	}
 
+	public String getPlanDescFromUserPlan() {
+		return planDesc;
+	}
+	
+	public void setPlanDescFromPlan(String planName) {
+		planDesc = planName;
+	}
+	
 	public void setPlan_end_date(Date plan_end_date) {
 		put("plan_end_date", plan_end_date);
 	}

@@ -8,15 +8,16 @@ import android.content.Context;
 import android.view.View;
 
 import com.activeandroid.util.Log;
-import com.codepath.healthpact.models.AppUser;
 import com.codepath.healthpact.models.Plan;
 import com.codepath.healthpact.models.PlanShared;
 import com.codepath.healthpact.models.UserPlan;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 public class ParseUtils {
+	public static ArrayList<UserPlan> userPlansList;
 	
 	public static ParseUser getAppUserDetails(View v, final Context context, String appUserName) {
 
@@ -55,6 +56,59 @@ public class ParseUtils {
 	}
 	
 	/**
+	 * Get plan detail with matching plan name for the current user from UserPlan table
+	 * @param v View
+	 * @return a list of user plans
+	 */
+	public static ArrayList<Plan> getUserPlans(View v, String partialPlanName) {
+		ArrayList<Plan> plans = null;
+
+		ParseQuery<ParseObject> innerUserPlanQuery = new ParseQuery<ParseObject>("UserPlan");
+		innerUserPlanQuery.whereEqualTo("user_id", ParseUser.getCurrentUser().getObjectId());
+
+		ParseQuery<Plan> query = ParseQuery.getQuery(Plan.class);
+		query.whereStartsWith("plan_desc", partialPlanName);
+		query.whereMatchesQuery("plan_id", innerUserPlanQuery);
+
+		
+		try {
+			plans = (ArrayList<Plan>) query.find();
+		} catch (ParseException parseEx) {
+			LogMsg(parseEx, 1);
+		}
+		return plans;
+	}
+
+	/**
+	 * Get plan desc from Plan for user plans and for the current user from UserPlan table
+	 * @param v View
+	 * @return a list of user plans
+	 */
+	public static ArrayList<UserPlan> getUserPlansWithDetails(View v) {
+		return getUserPlansWithDetails();
+	}
+
+	public static ArrayList<UserPlan> getUserPlansWithDetails() {
+		ArrayList<UserPlan> userPlans = null;
+		ParseQuery<UserPlan> userPlanQuery = ParseQuery
+				.getQuery(UserPlan.class);
+		userPlanQuery.whereEqualTo("user_id", ParseUser.getCurrentUser().getObjectId());
+		
+		try {
+			userPlans = (ArrayList<UserPlan>) userPlanQuery.find();
+			for (UserPlan up : userPlans) {
+				Plan p = getPlanDetail(null, up.getPlanId());
+				up.setPlanDescFromPlan(p.getPlanDesc());
+			}
+		} catch (ParseException parseEx) {
+			LogMsg(parseEx, 1);
+		}
+		
+		userPlansList = userPlans;
+		return userPlans;
+	}
+	
+	/**
 	 * Get plan detail for the current user from UserPlan table
 	 * @param v View
 	 * @return a list of user plans
@@ -68,6 +122,7 @@ public class ParseUtils {
 		} catch (ParseException parseEx) {
 			LogMsg(parseEx, 1);
 		}
+		userPlansList = userPlans;
 		return userPlans;
 	}
 

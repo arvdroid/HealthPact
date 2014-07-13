@@ -4,15 +4,16 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.codepath.healthpact.activity.ParseStarterProjectActivity;
-import com.codepath.healthpact.models.AppUser;
+import com.codepath.healthpact.models.Action;
 import com.codepath.healthpact.models.Plan;
+import com.codepath.healthpact.models.PlanAction;
 import com.codepath.healthpact.models.PlanShared;
 import com.codepath.healthpact.models.UserPlan;
+import com.codepath.healthpact.models.UserPlanRelation;
 import com.codepath.healthpact.restclient.RestClient;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseException;
@@ -104,6 +105,9 @@ public class HealthPactApp extends com.activeandroid.app.Application {
 	    ParseObject.registerSubclass(Plan.class);
 	    ParseObject.registerSubclass(UserPlan.class);
 	    ParseObject.registerSubclass(PlanShared.class);
+	    ParseObject.registerSubclass(Action.class);
+	    ParseObject.registerSubclass(UserPlanRelation.class);
+	    ParseObject.registerSubclass(PlanAction.class);
 	}
 	
 	@SuppressWarnings("unused")
