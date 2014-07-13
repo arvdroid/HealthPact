@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,11 @@ public class PlanViewActivity extends FragmentActivity {
 		pName.setText(result.getName());
 		pDesc.setText(result.getDesc());
 		pDuration.setText("Duration:"+ result.getDuration() + " weeks");
+		
+		Button bFollowPlan =  (Button)findViewById(R.id.bFollowPlan);
+		if(result.getFollowed()){
+			bFollowPlan.setVisibility(View.INVISIBLE);
+		}
 		
 		ondate = new OnDateSetListener() {
 			@Override
