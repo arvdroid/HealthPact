@@ -3,6 +3,7 @@ package com.codepath.healthpact.parseUtils;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.view.View;
@@ -13,7 +14,6 @@ import com.codepath.healthpact.models.Plan;
 import com.codepath.healthpact.models.PlanAction;
 import com.codepath.healthpact.models.PlanShared;
 import com.codepath.healthpact.models.UserPlan;
-import com.codepath.healthpact.models.UserPlanRelation;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -62,6 +62,41 @@ public class ParseUtils {
 		}
 		return action;
 	}
+	
+	/**
+	 * Get action for the provided plan
+	 * @param plan_id plan identifier
+	 * @return a list of actions specific to the provided plan
+	 */
+	public static ArrayList<Action> getActionForPlan(String plan_id) {
+		ArrayList<Action> actions = new ArrayList<Action>();
+		ParseQuery<PlanAction> query = ParseQuery.getQuery(PlanAction.class);
+		query.whereEqualTo("plan_id", plan_id);
+		
+		try {
+			ArrayList<PlanAction> plan_actions = (ArrayList<PlanAction>) query.find();
+			for (PlanAction plan_action : plan_actions) {
+				ParseQuery<Action> actionQuery = ParseQuery.getQuery(Action.class);
+				actionQuery.whereEqualTo("objectId", plan_action.getActionId());
+				try {
+					Action action = actionQuery.getFirst();
+					if (action != null) {
+						actions.add(action);
+					}
+				}
+				catch (ParseException parseEx) {
+					LogMsg(parseEx, 1);
+				}
+			}
+
+		} catch (ParseException ex) {
+			LogMsg(ex, 1);
+		}
+
+		return actions;
+	}
+	
+
 	
 	/**
 	 * Get plan detail for the provided user from UserPlan table
@@ -232,8 +267,7 @@ public class ParseUtils {
 		return plansShared;		
 	}
 
-	public static void createPlan(final Plan plan, final ArrayList<Action> actions) {
-		String action_id;
+	public static void createPlan(final Plan plan, final List<Action> actions) {
 		if ((plan != null) && (actions != null)) {
 			if ((plan.getPlanDesc() == null) || (plan.getPlanDesc().isEmpty())) {
 				return;
