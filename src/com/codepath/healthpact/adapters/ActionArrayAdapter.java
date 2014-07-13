@@ -4,17 +4,18 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ProgressBar;
-import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
+import com.codepath.healthpact.R;
 import com.codepath.healthpact.activity.ActionDetailActivity;
-import com.codepath.healthpact.activity.PlanViewActivity;
 import com.codepath.healthpact.models.Plan;
 
 public class ActionArrayAdapter extends ArrayAdapter<Plan> {
@@ -33,10 +34,27 @@ public class ActionArrayAdapter extends ArrayAdapter<Plan> {
 		} else {
 			view = convertView;
 		}
+
 		TextView tvUserActionName = (TextView) view.findViewById(com.codepath.healthpact.R.id.tvUserActionName);
-		Switch s = (Switch) view.findViewById(com.codepath.healthpact.R.id.swActiondone);
+		ToggleButton tbActionDone = (ToggleButton) view.findViewById(R.id.tbactionDone);
+		final Drawable onD = (Drawable) view.getResources().getDrawable(R.drawable.custom_action_done_pressed);
+		final Drawable offD = (Drawable)view.getResources().getDrawable(R.drawable.custom_action_done);
       
 		tvUserActionName.setText("Action A");
+		
+		tbActionDone.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				boolean on = ((ToggleButton) v).isChecked();
+			    if (on) {
+			        ((ToggleButton) v).setBackground(onD);
+			    } else {
+			    	((ToggleButton) v).setBackground(offD);
+			    }				
+				
+			}
+		});
 
         view.setOnClickListener(new OnClickListener() {
 		@Override

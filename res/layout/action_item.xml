@@ -17,12 +17,18 @@
         android:textStyle="bold"
         android:text="Action Name" />
 
-    <Switch
-        android:id="@+id/swActiondone"
+    <ToggleButton
+        android:id="@+id/tbactionDone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:checked="true" />
+        android:layout_alignTop="@+id/tvUserActionName"
+        android:background="@drawable/custom_action_done"
+        android:maxHeight="20dp"
+        android:maxWidth="20dp"
+        android:minHeight="20dp"
+        android:minWidth="20dp"
+        android:textOff="N"
+        android:textOn="Y" />
 
 </RelativeLayout>

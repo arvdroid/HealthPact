@@ -1,15 +1,24 @@
 package com.codepath.healthpact.activity;
 
-import com.codepath.healthpact.R;
-import com.codepath.healthpact.fragments.UserActionsFragment;
+import java.util.Calendar;
 
-import android.app.Activity;
+import android.app.DatePickerDialog.OnDateSetListener;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.SlidingPaneLayout.PanelSlideListener;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.DatePicker;
+import android.widget.Toast;
+
+import com.codepath.healthpact.R;
+import com.codepath.healthpact.fragments.DatePickerFragment;
+import com.codepath.healthpact.fragments.UserActionsFragment;
 
 public class PlanViewActivity extends FragmentActivity {
+	  Calendar calender = Calendar.getInstance();
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +28,34 @@ public class PlanViewActivity extends FragmentActivity {
                 getSupportFragmentManager().findFragmentById(R.id.actionViewFragment);
             fragmentDemo.populateActions();
 	}
+	
+	
+	public void onFollowPlan(View v) {
+		  DatePickerFragment date = new DatePickerFragment();
+		  /**
+		   * Set Up Current Date Into dialog
+		   */
+		  Bundle args = new Bundle();
+		  args.putInt("year", calender.get(Calendar.YEAR));
+		  args.putInt("month", calender.get(Calendar.MONTH));
+		  args.putInt("day", calender.get(Calendar.DAY_OF_MONTH));
+		  date.setArguments(args);
+		  /**
+		   * Set Call back to capture selected date
+		   */
+		  date.setCallBack(ondate);
+		  date.show(getSupportFragmentManager(), "Date Picker");
+		 }
+
+		 OnDateSetListener ondate = new OnDateSetListener() {
+		  @Override
+		  public void onDateSet(DatePicker view, int year, int monthOfYear,
+		    int dayOfMonth) {
+			  calender.set(year, monthOfYear, dayOfMonth, 0, 0);
+		   Toast.makeText(PlanViewActivity.this,String.valueOf(year) + "-" + String.valueOf(monthOfYear+1)+ "-" + String.valueOf(dayOfMonth),Toast.LENGTH_LONG).show();
+		  }
+		 };
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -30,6 +67,8 @@ public class PlanViewActivity extends FragmentActivity {
 		
 		return true;
 	}
+	
+	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

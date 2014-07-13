@@ -161,6 +161,7 @@
              android:layout_height="40dp"
              android:layout_margin="7dp"
              android:background="@drawable/ic_icon_only_button"
+             android:onClick="onFollowPlan"
              android:drawableLeft="@drawable/ic_follow" />
      </LinearLayout>
 
