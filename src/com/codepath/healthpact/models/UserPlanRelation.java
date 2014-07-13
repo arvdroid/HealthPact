@@ -2,8 +2,10 @@ package com.codepath.healthpact.models;
 
 import java.util.Date;
 
+import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
+@ParseClassName("UserPlanRelation")
 public class UserPlanRelation extends ParseObject {
 
 	public UserPlanRelation() {
