@@ -18,7 +18,7 @@
         android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/tvActionName"
+            android:id="@+id/datvActionName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -34,7 +34,7 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/tvActionPerDaylbl"
+                android:id="@+id/datvActionPerDaylbl"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -42,7 +42,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
-                android:id="@+id/tvActionPerDayTime"
+                android:id="@+id/datvActionPerDayTime"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -100,6 +100,23 @@
             android:layout_marginLeft="10dp"
             android:text="Week 1"
             android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <Button
+            android:id="@+id/bRArrow"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"            
+            android:background="@drawable/ic_icon_only_button"
+            android:drawableLeft="@drawable/ic_rarrow" />
+        
+        <Button
+            android:id="@+id/bRDArrow"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="40dp"
+            android:layout_height="40dp"                        
+            android:background="@drawable/ic_icon_only_button"
+            android:drawableLeft="@drawable/ic_rdarrow" />
     </LinearLayout>
     
     <RelativeLayout

@@ -7,9 +7,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.codepath.healthpact.R;
+import com.codepath.healthpact.models.Action;
 
 public class ActionDetailActivity extends Activity {
 	
@@ -18,7 +20,13 @@ public class ActionDetailActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.details_action_view);
-
+		Action result = (Action) getIntent().getSerializableExtra("useraction");
+		
+		TextView aName = (TextView)findViewById(R.id.datvActionName);
+		TextView aDesc = (TextView)findViewById(R.id.aVtvDescription);
+		
+		aName.setText(result.getActionName());
+		
 		final Drawable onD = (Drawable)getResources().getDrawable(R.drawable.custom_week_layout_on);
 		final Drawable offD = (Drawable)getResources().getDrawable(R.drawable.custom_week_layout);
 		

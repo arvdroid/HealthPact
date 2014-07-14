@@ -16,7 +16,6 @@ import android.widget.ToggleButton;
 import com.codepath.healthpact.R;
 import com.codepath.healthpact.activity.ActionDetailActivity;
 import com.codepath.healthpact.models.Action;
-import com.codepath.healthpact.models.Plan;
 
 public class ActionArrayAdapter extends ArrayAdapter<Action> {
 	boolean followed;
@@ -63,8 +62,7 @@ public class ActionArrayAdapter extends ArrayAdapter<Action> {
         view.setOnClickListener(new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			//launchDetailsActivity(useraction);
+			launchDetailsActivity(useraction);
 		}
 	});
 
@@ -75,9 +73,9 @@ public class ActionArrayAdapter extends ArrayAdapter<Action> {
 		this.followed = followed;
 	}
 	
-	protected void launchDetailsActivity(Plan useraction) {
+	protected void launchDetailsActivity(Action useraction) {
 		Intent showplan = new Intent(getContext(), ActionDetailActivity.class);
-		//showplan.putExtra("userplan", userPlan)
+		showplan.putExtra("useraction", useraction);
 		getContext().startActivity(showplan);
 	}
 }
