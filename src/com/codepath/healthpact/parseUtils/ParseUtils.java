@@ -282,6 +282,33 @@ public class ParseUtils {
 	}
 
 	/**
+	 * Get plan for the current user from Plan table
+	 * @param v View
+	 * @return a list of user plans
+	 */
+	public static ArrayList<Plan> getPlansCreatedByCurrentUser() {
+		ArrayList<Plan> allPlans = new ArrayList<Plan>();
+		
+		ParseQuery<UserPlan> userPlanQuery = ParseQuery.getQuery(UserPlan.class);
+		userPlanQuery.whereEqualTo("user_id", ParseUser.getCurrentUser().getObjectId());
+		userPlanQuery.whereEqualTo("plan_following", false);
+		ArrayList<UserPlan> userplans;
+		try {
+			userplans = (ArrayList<UserPlan>) userPlanQuery.find();
+			for (UserPlan ups : userplans) {
+				ParseQuery<Plan> innerquery = new ParseQuery<Plan>("Plan");
+				innerquery.whereEqualTo("objectId", ups.getPlanId());
+				ArrayList<Plan> plans = (ArrayList<Plan>) innerquery.find();
+				allPlans.addAll(plans);
+			}
+		} catch (ParseException e) {
+			LogMsg(e,1);
+		}
+		
+		return allPlans;
+	}
+
+	/**
 	 * Get plan detail for the provided user from UserPlan table
 	 * @param v View
 	 * @return a list of user plans
