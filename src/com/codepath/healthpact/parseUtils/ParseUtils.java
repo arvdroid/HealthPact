@@ -189,6 +189,25 @@ public class ParseUtils {
 		
 		return allPlans;
 	}
+	
+	/**
+	 * Get userplan data for the specific user and plan
+	 * @param user_plan_object_id objectId from userplan table
+	 * @return userplan record
+	 */
+	public static UserPlan getUserPlan(String user_plan_object_id) {
+		ParseQuery<UserPlan> query = new ParseQuery<UserPlan>("UserPlan");
+		UserPlan userplan = null;
+		
+		query.whereEqualTo("objectId", user_plan_object_id);
+		try {
+			userplan = query.getFirst();
+		} catch (ParseException e) {
+			LogMsg(e,1);
+		}
+		
+		return userplan;
+	}
 
 	/**
 	 * Get plan detail with matching plan name for the current user from UserPlan table
@@ -252,6 +271,7 @@ public class ParseUtils {
 		ArrayList<UserPlan> userPlans = null;
 		ParseQuery<UserPlan> userPlanQuery = ParseQuery.getQuery(UserPlan.class);
 		userPlanQuery.whereEqualTo("user_id", ParseUser.getCurrentUser().getObjectId());
+		userPlanQuery.whereEqualTo("plan_following", false);
 		try {
 			userPlans = (ArrayList<UserPlan>) userPlanQuery.find();
 		} catch (ParseException parseEx) {
@@ -260,6 +280,18 @@ public class ParseUtils {
 		userPlansList = userPlans;
 		return userPlans;
 	}
+
+	/**
+	 * Get plan detail for the provided user from UserPlan table
+	 * @param v View
+	 * @return a list of user plans
+	 */
+	public static void convertPlanToShared(String user_plan_object_id) {
+		UserPlan user_plan = getUserPlan(user_plan_object_id);
+
+		return;
+	}
+	
 
 	/**
 	 * Get shared plan detail for the provided user from SharedPlan table
