@@ -1,10 +1,14 @@
 package com.codepath.healthpact.models;
 
+import java.io.Serializable;
+
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
 @ParseClassName("Action")
-public class Action extends ParseObject {
+public class Action extends ParseObject implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	public Action() {
 		super();
@@ -18,19 +22,4 @@ public class Action extends ParseObject {
 		return getString("action_name");
 	}
 
-	public void setActionDesc(String desc) {
-		put("action_desc", desc);
-	}
-
-	public String getActionDesc() {
-		return getString("action_desc");
-	}
-	
-	public void setActionServing(String serving) {
-		put("serving", serving);
-	}
-
-	public String getActionServing() {
-		return getString("serving");
-	}
 }
