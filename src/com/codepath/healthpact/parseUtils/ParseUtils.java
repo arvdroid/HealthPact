@@ -3,6 +3,8 @@ package com.codepath.healthpact.parseUtils;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
@@ -142,32 +144,31 @@ public class ParseUtils {
 	 * @return a list of user plans
 	 */
 	public static ArrayList<Plan> getPlansBasedOnExpertise(String expertise) {
-/*		ParseUser parseUser = new ParseUser();
-		parseUser.put("Expertise", expertise);
-*/		ArrayList<ParseUser> users;
-		ArrayList<Plan> plans = null;
-		ParseQuery<ParseUser> query = new ParseQuery<ParseUser>("ParseUser");
-		query.whereEqualTo("Expertise", expertise);
-		try {
-			users = (ArrayList<ParseUser>) query.find();
+		final ArrayList<Plan> allPlans = new ArrayList<Plan>();
 		
+		try {
+
+			ParseQuery<ParseUser> query = ParseUser.getQuery();
+			query.whereEqualTo("Expertise", expertise);
+			ArrayList<ParseUser> users = (ArrayList<ParseUser>) query.find();
+
 			for (ParseUser user : users) {
 				ParseQuery<UserPlan> innerUserPlanQuery = new ParseQuery<UserPlan>("UserPlan");
 				innerUserPlanQuery.whereEqualTo("user_id", user.getObjectId());
 				ArrayList<UserPlan> userplans = (ArrayList<UserPlan>) innerUserPlanQuery.find();
-				
+
 				for (UserPlan ups : userplans) {
 					ParseQuery<Plan> innerquery = new ParseQuery<Plan>("Plan");
-					innerquery.whereEqualTo("user_id", user.getObjectId());
-					plans = (ArrayList<Plan>) innerquery.find();
-					
+					innerquery.whereEqualTo("objectId", ups.getPlanId());
+					ArrayList<Plan> plans = (ArrayList<Plan>) innerquery.find();
+					allPlans.addAll(plans);
 				}
 			}
 		} catch (ParseException parseEx) {
-				LogMsg(parseEx, 1);
+			LogMsg(parseEx, 1);
 		}
 		
-		return plans;
+		return allPlans;
 	}
 
 	/**
@@ -380,38 +381,85 @@ public class ParseUtils {
 		
 	}
 	
-	public static void updateProfile(String expertise,String location,String description) {
+	public static void createPlanWithDuration(final Plan plan, final List<Action> actions, final int duration) {
+		if ((plan != null) && (actions != null)) {
+			if ((plan.getPlanDesc() == null) || (plan.getPlanDesc().isEmpty())) {
+				return;
+			}
+			
+			plan.saveInBackground(new SaveCallback() {
+		        public void done(ParseException e) {
+		            if (e == null) {
+		                // Saved successfully.
+		                Log.d(TAG, "Plan created and saved in database!");
+		                final String plan_id = plan.getObjectId();
+		                Log.d(TAG, "The object id is: " + plan_id);
+		                if (plan_id != null) {
+		                	
+		                	final UserPlan userplan = new UserPlan();
+		                	userplan.setPlan_id(plan_id);
+		                	userplan.setUser_id(ParseUser.getCurrentUser().getObjectId());
+		                	setupRelation(userplan, duration);
+		                	
+							userplan.saveInBackground(new SaveCallback() {
+								public void done(ParseException e) {
+									if (e == null) {
+										
+										//get Actions
+										if (actions != null) {
+											for (final Action action : actions) {
+												action.saveInBackground(new SaveCallback() {
+													public void done(ParseException e) {
+														if (e == null) {
+															PlanAction pa = new PlanAction();
+
+															String action_id = action.getObjectId();
+															//String user_plan_id = userplan.getObjectId();
+
+															pa.setPlanId(plan_id);
+															pa.setActionId(action_id);
+															pa.saveEventually();
+
+														} else {
+											                // The save failed for user plan
+											                Log.d(TAG, "User Plan save error: " + e);
+														}
+													}
+												});									
+											}
+										}
+
+									} else {
+						                // The save failed.
+						                Log.d(TAG, "User Plan save error: " + e);
+									}
+								}
+							});
+		                }
+		            } else {
+		                // The save failed.
+		                Log.d(TAG, "Plan save error: " + e);
+		            }
+		        }
+
+				private void setupRelation(UserPlan userplan, int duration) {
+					userplan.setPlan_start_date(new Date());
+					Calendar c = Calendar.getInstance();
+					c.setTime(userplan.getPlan_start_date());
+					c.add(Calendar.WEEK_OF_YEAR, duration);
+					userplan.setPlan_end_date(c.getTime());
+					
+				}
+		    });			
+		}		
+		
+	}
+	
+	public static void updateProfile(String expertise) {
 		ParseUser user = ParseUser.getCurrentUser();
-		user.getUsername();
 		user.put("Expertise", expertise);
-		user.put("location", location);
-		user.put("desc", description);
 		user.get("Expertise");
 		user.saveEventually();
-	}
-	
-	public static String getUserName() {
-		ParseUser user = ParseUser.getCurrentUser();
-		String userName = user.getUsername();
-		return userName;
-	}
-	
-	public static String getExpertise() {
-		ParseUser user = ParseUser.getCurrentUser();
-		String expertise = (String) user.get("Expertise");		
-		return expertise;
-	}
-	
-	public static String getLocation() {
-		ParseUser user = ParseUser.getCurrentUser();
-		String location = (String) user.get("location");		
-		return location;
-	}
-	
-	public static String getDescription() {
-		ParseUser user = ParseUser.getCurrentUser();
-		String description = (String) user.get("desc");		
-		return description;
 	}
 	
 	/**
