@@ -69,9 +69,7 @@ public class HomeViewActivity extends FragmentActivity {
 			Intent i = new Intent(this, UserProfileActivity.class);
 			startActivity(i);
 		}
-
 	}
-	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

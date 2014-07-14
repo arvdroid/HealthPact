@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,7 @@ import com.codepath.healthpact.models.UserPlan;
 import com.codepath.healthpact.parseUtils.ParseUtils;
 
 
-public class PlansFollowedFragment extends PlanListFragment{
+public class PlansFollowedFragment extends Fragment{
 	
 	private ArrayAdapter<AppPlan> userplanadapter;
 	private ListView lvUserPlans;
@@ -44,7 +45,8 @@ public class PlansFollowedFragment extends PlanListFragment{
 		List<AppPlan> plans = new ArrayList<AppPlan>();
 		
 		for (UserPlan up : userplans) {
-			String plan_id = up.getPlanId();	
+			String plan_id = up.getPlanId();
+			String usrPlanId = up.getObjectId();
 			Plan p = ParseUtils.getPlanDetail(null, plan_id);
 			Log.d("hp", "up st_date: "+ up.getPlan_start_date());
 			if(up.getPlan_start_date()!=null){

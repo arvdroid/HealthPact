@@ -455,11 +455,38 @@ public class ParseUtils {
 		
 	}
 	
-	public static void updateProfile(String expertise) {
+	public static void updateProfile(String expertise,String location,String description) {
 		ParseUser user = ParseUser.getCurrentUser();
+		user.getUsername();
 		user.put("Expertise", expertise);
+		user.put("location", location);
+		user.put("desc", description);
 		user.get("Expertise");
 		user.saveEventually();
+	}
+
+	public static String getUserName() {
+		ParseUser user = ParseUser.getCurrentUser();
+		String userName = user.getUsername();
+		return userName;
+	}
+
+	public static String getExpertise() {
+		ParseUser user = ParseUser.getCurrentUser();
+		String expertise = (String) user.get("Expertise");		
+		return expertise;
+	}
+
+	public static String getLocation() {
+		ParseUser user = ParseUser.getCurrentUser();
+		String location = (String) user.get("location");		
+		return location;
+	}
+
+	public static String getDescription() {
+		ParseUser user = ParseUser.getCurrentUser();
+		String description = (String) user.get("desc");		
+		return description;
 	}
 	
 	/**
