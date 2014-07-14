@@ -53,6 +53,25 @@ public class ParseUtils {
 		return null;
 	}
 
+	
+	/**
+	 * Get all HealthPact users including the user requesting the information
+	 * @return ArrayList of ParseUsers
+	 */
+	public static ArrayList<ParseUser> getAllUsers() {
+
+		ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
+		ArrayList<ParseUser> allUsers = null;
+		
+		try {
+			allUsers = (ArrayList<ParseUser>) query.find();
+		} catch (ParseException parseEx) {
+			LogMsg(parseEx, 1);
+		}
+		
+		return allUsers;
+	}
+
 	public static UserPlanRelation getActionWeeksStatus(String user_plan_id, String action_id) {
 		UserPlanRelation user_plan_relation = null;
 		ParseQuery<UserPlanRelation> query = ParseQuery.getQuery(UserPlanRelation.class);
