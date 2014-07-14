@@ -291,7 +291,6 @@ public class ParseUtils {
 		
 		ParseQuery<UserPlan> userPlanQuery = ParseQuery.getQuery(UserPlan.class);
 		userPlanQuery.whereEqualTo("user_id", ParseUser.getCurrentUser().getObjectId());
-		userPlanQuery.whereEqualTo("plan_following", false);
 		ArrayList<UserPlan> userplans;
 		try {
 			userplans = (ArrayList<UserPlan>) userPlanQuery.find();
