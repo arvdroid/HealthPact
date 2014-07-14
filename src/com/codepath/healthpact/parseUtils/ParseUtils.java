@@ -14,6 +14,7 @@ import com.codepath.healthpact.models.Plan;
 import com.codepath.healthpact.models.PlanAction;
 import com.codepath.healthpact.models.PlanShared;
 import com.codepath.healthpact.models.UserPlan;
+import com.codepath.healthpact.models.UserPlanRelation;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -50,6 +51,20 @@ public class ParseUtils {
 		return null;
 	}
 
+	public static UserPlanRelation getActionWeeksStatus(String user_plan_id, String action_id) {
+		UserPlanRelation user_plan_relation = null;
+		ParseQuery<UserPlanRelation> query = ParseQuery.getQuery(UserPlanRelation.class);
+		query.whereEqualTo("action_id", action_id);
+		query.whereEqualTo("user_plan_id", action_id);
+		try {
+			user_plan_relation = (UserPlanRelation) query.find();
+		} catch (ParseException parseEx) {
+			parseEx.printStackTrace();
+			Log.d("getUserPlanRelation failed");
+		}
+		return user_plan_relation;
+	}
+	
 	public static Action getAction(String name) {
 		Action action = null;
 		ParseQuery<Action> query = ParseQuery.getQuery(Action.class);
@@ -121,6 +136,40 @@ public class ParseUtils {
 		return userPlans;
 	}
 	
+	/**
+	 * Get plan detail for specific expertise
+	 * @param v View
+	 * @return a list of user plans
+	 */
+	public static ArrayList<Plan> getPlansBasedOnExpertise(String expertise) {
+/*		ParseUser parseUser = new ParseUser();
+		parseUser.put("Expertise", expertise);
+*/		ArrayList<ParseUser> users;
+		ArrayList<Plan> plans = null;
+		ParseQuery<ParseUser> query = new ParseQuery<ParseUser>("ParseUser");
+		query.whereEqualTo("Expertise", expertise);
+		try {
+			users = (ArrayList<ParseUser>) query.find();
+		
+			for (ParseUser user : users) {
+				ParseQuery<UserPlan> innerUserPlanQuery = new ParseQuery<UserPlan>("UserPlan");
+				innerUserPlanQuery.whereEqualTo("user_id", user.getObjectId());
+				ArrayList<UserPlan> userplans = (ArrayList<UserPlan>) innerUserPlanQuery.find();
+				
+				for (UserPlan ups : userplans) {
+					ParseQuery<Plan> innerquery = new ParseQuery<Plan>("Plan");
+					innerquery.whereEqualTo("user_id", user.getObjectId());
+					plans = (ArrayList<Plan>) innerquery.find();
+					
+				}
+			}
+		} catch (ParseException parseEx) {
+				LogMsg(parseEx, 1);
+		}
+		
+		return plans;
+	}
+
 	/**
 	 * Get plan detail with matching plan name for the current user from UserPlan table
 	 * @param v View
