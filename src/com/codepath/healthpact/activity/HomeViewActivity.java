@@ -5,13 +5,16 @@ import android.app.ActionBar.Tab;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.codepath.healthpact.R;
+import com.codepath.healthpact.dialogs.AddProfileDialog;
 import com.codepath.healthpact.fragments.PlansFollowedFragment;
 import com.codepath.healthpact.fragments.PlansSharedFragment;
 import com.codepath.healthpact.listeners.FragmentTabListener;
+import com.codepath.healthpact.parseUtils.ParseUtils;
 
 public class HomeViewActivity extends FragmentActivity {
 	
@@ -58,8 +61,15 @@ public class HomeViewActivity extends FragmentActivity {
 	}
 	
 	public void onShowProdile(){
-		Intent i = new Intent(this, NewUserProfileActivity.class);
-		startActivity(i);
+		String expertise = ParseUtils.getExpertise();
+		if(expertise == null || expertise.equals("")) {
+			Intent i = new Intent(this, NewUserProfileActivity.class);
+			startActivity(i);
+		} else {
+			Intent i = new Intent(this, UserProfileActivity.class);
+			startActivity(i);
+		}
+
 	}
 	
 
