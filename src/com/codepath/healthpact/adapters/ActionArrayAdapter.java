@@ -16,6 +16,7 @@ import android.widget.ToggleButton;
 import com.codepath.healthpact.R;
 import com.codepath.healthpact.activity.ActionDetailActivity;
 import com.codepath.healthpact.models.Action;
+import com.codepath.healthpact.models.ParseProxyObject;
 
 public class ActionArrayAdapter extends ArrayAdapter<Action> {
 	boolean followed;
@@ -74,8 +75,12 @@ public class ActionArrayAdapter extends ArrayAdapter<Action> {
 	}
 	
 	protected void launchDetailsActivity(Action useraction) {
+		String actionname = useraction.getActionName();
 		Intent showplan = new Intent(getContext(), ActionDetailActivity.class);
-		showplan.putExtra("useraction", useraction);
+		// using proxy class for serialization and transfer using putExtra
+        ParseProxyObject proxyProject = new ParseProxyObject(useraction);
+
+		showplan.putExtra("useraction", proxyProject);
 		getContext().startActivity(showplan);
 	}
 }
