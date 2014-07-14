@@ -32,6 +32,7 @@ public class PlansSharedFragment extends PlanListFragment{
 			Plan p = ParseUtils.getPlanDetail(null, plan_id);
 			AppPlan ap = new AppPlan();
 			ap.setName(p.getPlanName());
+			ap.setId(p.getPlanId());
 			ap.setDuration(p.getPlanDuration());
 			plans.add(ap);
 		}

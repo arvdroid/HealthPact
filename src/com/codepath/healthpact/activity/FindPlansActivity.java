@@ -60,6 +60,7 @@ public class FindPlansActivity extends FragmentActivity {
 					AppPlan ap = new AppPlan();
 					ap.setName(plan.getPlanName());
 					ap.setDuration(plan.getPlanDuration());
+					ap.setId(plan.getPlanId());
 					appPlans.add(ap);
 				}
 				planFragment.populatePlans(appPlans);				
