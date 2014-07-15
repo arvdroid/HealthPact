@@ -32,7 +32,7 @@ public class UserPlanRelation extends ParseObject {
 		return getDate("completion_date");
 	}
 	
-	public void setCompletionDate(String date) {
+	public void setCompletionDate(Date date) {
 		put("completion_date", date);
 	}
 	

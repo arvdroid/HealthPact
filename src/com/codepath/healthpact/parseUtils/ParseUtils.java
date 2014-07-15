@@ -2,9 +2,11 @@ package com.codepath.healthpact.parseUtils;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import android.content.Context;
@@ -543,13 +545,16 @@ public class ParseUtils {
 		
 	}
 	
+	
 	public static void updatePlanFollowedByUser(String plan_id, Date start_date, int duration) {
 		
 		ArrayList<UserPlan> userPlans = null;
 		
-		Calendar c = Calendar.getInstance();
+		//Calendar c = Calendar.getInstance();
+	    GregorianCalendar c = new GregorianCalendar();
+
 		c.setTime(start_date);
-		c.add(Calendar.DATE, -1);
+		//c.add(Calendar.DATE, -1);
 		start_date = c.getTime();
 		
 		c.add(Calendar.WEEK_OF_YEAR, duration);
@@ -564,8 +569,9 @@ public class ParseUtils {
 				for (UserPlan up : userPlans) {
 					up.setPlan_start_date(start_date);
 					up.setPlan_end_date(end_date);
-					up.setPlan_following(true);
-					up.saveEventually();
+					up.setPlan_following(true);   
+					up.saveEventually();  
+					//ajfjla
 				}
 			}
 			else {
@@ -579,6 +585,33 @@ public class ParseUtils {
 			}
 		} catch (ParseException parseEx) {
 			LogMsg(parseEx, 1);
+		}
+	}
+	
+	public static void updatePlanRelation(String user_plan_id_param, String action_id_param, Date start_date_param, int duration) {
+		
+	    GregorianCalendar gcal = new GregorianCalendar();
+		gcal.setTime(start_date_param);
+		
+		gcal.add(Calendar.WEEK_OF_YEAR, duration);
+		Date end_date = gcal.getTime();
+		gcal.setTime(start_date_param);
+
+		Date currentDate = start_date_param;
+		while (true) {
+			if (currentDate.getTime() >= end_date.getTime()) {
+				break;
+			}
+			UserPlanRelation upr = new UserPlanRelation();
+			upr.setCompletionDate(currentDate);
+			upr.setUserPlanId(user_plan_id_param);
+			upr.setActionId(action_id_param);
+			upr.setUpdated(false);
+
+			upr.saveEventually();
+
+			gcal.add(Calendar.DATE, 1);
+			currentDate = gcal.getTime();
 		}
 	}
 	
