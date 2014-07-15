@@ -541,7 +541,9 @@ public class ParseUtils {
 		
 	}
 	
-	public static void updateToFromDate(String plan_id, Date start_date, int duration) {
+	public static void updatePlanFollowedByUser(String plan_id, Date start_date, int duration) {
+		
+		ArrayList<UserPlan> userPlans = null;
 		
 		Calendar c = Calendar.getInstance();
 		c.setTime(start_date);
@@ -551,17 +553,27 @@ public class ParseUtils {
 		c.add(Calendar.WEEK_OF_YEAR, duration);
 		Date end_date = c.getTime();
 
-		ArrayList<UserPlan> userPlans = null;
 		ParseQuery<UserPlan> userPlanQuery = ParseQuery.getQuery(UserPlan.class);
 		userPlanQuery.whereEqualTo("user_id", currentUserId);
 		userPlanQuery.whereEqualTo("plan_id", plan_id);
-		userPlanQuery.whereEqualTo("plan_following", false);
 		try {
 			userPlans = (ArrayList<UserPlan>) userPlanQuery.find();
-			for (UserPlan up : userPlans) {
-				up.setPlan_start_date(start_date);
-				up.setPlan_end_date(end_date);
-				up.saveEventually();
+			if ((userPlans != null) && (!userPlans.isEmpty())) {
+				for (UserPlan up : userPlans) {
+					up.setPlan_start_date(start_date);
+					up.setPlan_end_date(end_date);
+					up.setPlan_following(true);
+					up.saveEventually();
+				}
+			}
+			else {
+				UserPlan userPlan = new UserPlan();
+				userPlan.setUser_id(currentUserId);
+				userPlan.setPlan_id(plan_id);
+				userPlan.setPlan_following(true);
+				userPlan.setPlan_start_date(start_date);
+				userPlan.setPlan_end_date(end_date);
+				userPlan.saveEventually();				
 			}
 		} catch (ParseException parseEx) {
 			LogMsg(parseEx, 1);
