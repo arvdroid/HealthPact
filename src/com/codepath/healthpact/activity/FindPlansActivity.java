@@ -39,6 +39,7 @@ public class FindPlansActivity extends FragmentActivity {
 		TextView textView =(TextView)findViewById(R.id.tvFilter);
 		Button findButton = (Button)findViewById(R.id.fpBSearch);
 		searchText = (EditText)findViewById(R.id.fpSearchEditText);
+		pb = (ProgressBar) findViewById(R.id.pbLoading);
 		planFragment = (PlanListFragment) 
                 getSupportFragmentManager().findFragmentById(R.id.fpPlanViewFragment);
 
@@ -56,7 +57,7 @@ public class FindPlansActivity extends FragmentActivity {
 		findButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
+				showProgressBar();
 				ArrayList<Plan> plans = ParseUtils.getPlansBasedOnExpertise(searchText.getText().toString());
 				List<AppPlan> appPlans = new ArrayList<AppPlan>();
 				
@@ -68,7 +69,7 @@ public class FindPlansActivity extends FragmentActivity {
 					appPlans.add(ap);
 				}
 				planFragment.populatePlans(appPlans);
-				
+				clearProgressBar();
 			}
 		});	
 	}
@@ -80,7 +81,7 @@ public class FindPlansActivity extends FragmentActivity {
 		return true;
 	}
 
-		@Override
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long

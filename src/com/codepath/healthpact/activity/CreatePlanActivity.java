@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,21 +23,17 @@ import com.codepath.healthpact.activity.SetDurationDialog.SetDurationDialogListe
 import com.codepath.healthpact.fragments.UserActionsFragment;
 import com.codepath.healthpact.models.Action;
 import com.codepath.healthpact.models.Plan;
+import com.codepath.healthpact.models.PlanAction;
 import com.codepath.healthpact.models.UserPlan;
-import com.codepath.healthpact.parseUtils.ParseUtils;
 import com.parse.ParseUser;
 
 public class CreatePlanActivity extends FragmentActivity implements AddActionDialogListener, SetDurationDialogListener{
-	EditText etPlanName;
-	EditText etPlanDesc;
+	EditText etPlanName; 
 	Button btnSave;
-	Button btnShare;
-	Button btnFollow;
 	TextView tvduration;
 	List<Action> actionsList = new ArrayList<Action>();
 	UserActionsFragment fragmentDemo;
 	int duration;
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,25 +41,21 @@ public class CreatePlanActivity extends FragmentActivity implements AddActionDia
 		
 		fragmentDemo = (UserActionsFragment) 
                 getSupportFragmentManager().findFragmentById(R.id.cpActionViewFragment);
-		fragmentDemo.disableDetailAction(true);
             
 		etPlanName = (EditText) findViewById(R.id.lblcPPlanNameEditText);
-		etPlanDesc = (EditText) findViewById(R.id.tv_cPTvDescEdit);
-		
 		btnSave = (Button) findViewById(R.id.cpBSavePlan);
-		btnShare = (Button) findViewById(R.id.cpBSharePlan);
-		btnFollow = (Button) findViewById(R.id.cpBFollowPlan);
-		btnShare.setVisibility(View.INVISIBLE);
-		btnFollow.setVisibility(View.INVISIBLE);
-		
 		tvduration = (TextView)findViewById(R.id.lblcPDuration);
 		
-		btnSave.setOnClickListener(new OnClickListener() {			
+		btnSave.setOnClickListener(new OnClickListener() {
+			
 			@Override
 			public void onClick(View v) {
 				PlanSave();				
 			}
-		});		
+		});
+		
+		//PlanTextChange();
+		//PlanSave();
 	}
 	
 	private void PlanSave() {
@@ -74,10 +68,55 @@ public class CreatePlanActivity extends FragmentActivity implements AddActionDia
 		Plan plan = new Plan();
 		plan.setPlanName(planName);
 		plan.setPlanDuration(duration);
-		plan.setPlanDesc(etPlanDesc.getText().toString());
-		ParseUtils.createPlan(plan, actions);
-		btnShare.setVisibility(View.VISIBLE);
-		btnFollow.setVisibility(View.VISIBLE);
+		plan.setPlanDesc(planName+ " descrip");
+		
+		List<PlanAction> planActions = new ArrayList<PlanAction>();
+		PlanAction planAction = new PlanAction();
+		
+		/*ArrayList<PlanAction> paList = new ArrayList<PlanAction>();
+		PlanAction pa = new PlanAction();
+		Plan plan = new Plan();
+		plan.setPlanDesc(etPlanName.getText().toString());
+		userPlan.setPlan_end_date(new Date());
+		UserPlanRelation upr = new UserPlanRelation();
+		ArrayList<UserPlanRelation> uprList = new ArrayList<UserPlanRelation>();
+		upr.setActionId("iJr8KK8pXi");
+		uprList.add(upr);
+		pa.setActionId("iJr8KK8pXi");
+		paList.add(pa);
+		upr.setActionId("fU0cf2sK8h");
+		pa.setActionId("fU0cf2sK8h");
+		paList.add(pa);
+		uprList.add(upr);
+		ParseUtils.createPlan(plan, userPlan, paList, uprList);*/
+	}
+
+	private void PlanTextChange() {
+		etPlanName.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				searchPlan();
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+	}
+	
+	private void searchPlan() {
+		
 	}
 	
 	public void onAddAction(View v) {
@@ -102,7 +141,7 @@ public class CreatePlanActivity extends FragmentActivity implements AddActionDia
 		return true;
 	}
 
-		@Override
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
