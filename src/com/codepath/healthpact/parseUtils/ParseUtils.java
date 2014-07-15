@@ -314,15 +314,16 @@ public class ParseUtils {
 	}
 
 	/**
-	 * Get plan detail for the provided user from UserPlan table
-	 * @param v View
-	 * @return a list of user plans
+	 * Post data to shared plan
+	 * @param shared_to_user_id other user to use the plan
+	 * @param plan_id plan identifier
 	 */
-	public static void convertPlanToShared(String user_plan_object_id, String plan_id) {
-		UserPlan user_plan = getUserPlan(user_plan_object_id);
-		
-
-		return;
+	public static void convertPlanToShared(String shared_to_user_id, String plan_id) {
+		ParseObject planShared = new ParseObject("PlanShared");
+		planShared.put("user_id", ParseUser.getCurrentUser().getObjectId());
+		planShared.put("plan_id", plan_id);
+		planShared.put("shared_to_user_id", shared_to_user_id);
+		planShared.saveInBackground();
 	}
 	
 
