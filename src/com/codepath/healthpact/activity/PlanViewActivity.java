@@ -5,6 +5,7 @@ import java.util.Calendar;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.healthpact.R;
+import com.codepath.healthpact.dialogs.ShareUserDialog;
 import com.codepath.healthpact.fragments.DatePickerFragment;
 import com.codepath.healthpact.fragments.UserActionsFragment;
 import com.codepath.healthpact.models.AppPlan;
@@ -21,6 +23,7 @@ import com.codepath.healthpact.models.AppPlan;
 public class PlanViewActivity extends FragmentActivity {
 	Calendar calender = Calendar.getInstance();
 	OnDateSetListener ondate;
+	AppPlan result;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +34,7 @@ public class PlanViewActivity extends FragmentActivity {
 		TextView pDesc = (TextView)findViewById(R.id.pvtvDescription);
 		TextView pDuration = (TextView)findViewById(R.id.pvtvDuration);
 		
-		AppPlan result = (AppPlan) getIntent().getSerializableExtra("userplan");
+		result = (AppPlan) getIntent().getSerializableExtra("userplan");
 		pName.setText(result.getName());
 		pDesc.setText(result.getDesc());
 		pDuration.setText("Duration:"+ result.getDuration() + " weeks");
@@ -40,7 +43,7 @@ public class PlanViewActivity extends FragmentActivity {
 		if(result.getFollowed()){
 			bFollowPlan.setVisibility(View.INVISIBLE);
 		}
-		
+				
 		ondate = new OnDateSetListener() {
 			@Override
 			public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -71,6 +74,16 @@ public class PlanViewActivity extends FragmentActivity {
 		 */
 		date.setCallBack(ondate);
 		date.show(getSupportFragmentManager(), "Date Picker");
+	}
+	
+	public void onSharePlan(View v) {
+		FragmentManager fm = getSupportFragmentManager();		
+		ShareUserDialog shareDialog = new ShareUserDialog();
+		Bundle args = new Bundle();
+		args.putString("planid", result.getId());
+		args.putString("usrplanid", result.getUsrPlanid());
+		shareDialog.setArguments(args);
+		shareDialog.show(fm, "");
 	}
 
 	@Override

@@ -156,6 +156,24 @@
             android:minHeight="30dp"
             android:text="User Description"
             android:textAppearance="?android:attr/textAppearanceSmall" />
+        
+        <TextView
+            android:id="@+id/uplblListOfPlans"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/uptvDescription"
+            android:layout_marginTop="5dp"
+            android:text="Plans created"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <fragment
+            android:id="@+id/upPlanViewFragment"
+            android:name="com.codepath.healthpact.fragments.PlanListFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/uplblListOfPlans"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp" />
 
 </RelativeLayout>
 
