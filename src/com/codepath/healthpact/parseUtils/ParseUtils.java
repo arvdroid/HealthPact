@@ -273,11 +273,11 @@ public class ParseUtils {
 	 * @param v View
 	 * @return a list of user plans
 	 */
-	public static ArrayList<UserPlan> getUserPlans(View v) {
+	public static ArrayList<UserPlan> getUserFollowedPlans(View v) {
 		ArrayList<UserPlan> userPlans = null;
 		ParseQuery<UserPlan> userPlanQuery = ParseQuery.getQuery(UserPlan.class);
 		userPlanQuery.whereEqualTo("user_id", ParseUser.getCurrentUser().getObjectId());
-		userPlanQuery.whereNotEqualTo("plan_following", true);
+		userPlanQuery.whereEqualTo("plan_following", true);
 		try {
 			userPlans = (ArrayList<UserPlan>) userPlanQuery.find();
 		} catch (ParseException parseEx) {
@@ -296,7 +296,7 @@ public class ParseUtils {
 		ArrayList<Plan> allPlans = new ArrayList<Plan>();
 		
 		ParseQuery<UserPlan> userPlanQuery = ParseQuery.getQuery(UserPlan.class);
-		userPlanQuery.whereEqualTo("user_id", ParseUser.getCurrentUser().getObjectId());
+		userPlanQuery.whereEqualTo("created_by", currentUserId);
 		//userPlanQuery.whereEqualTo("plan_following", false);
 		ArrayList<UserPlan> userplans;
 		try {
@@ -542,7 +542,6 @@ public class ParseUtils {
 	}
 	
 	public static void updateToFromDate(String plan_id, Date start_date, int duration) {
-		//currentUserId
 		
 		Calendar c = Calendar.getInstance();
 		c.setTime(start_date);

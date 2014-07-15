@@ -52,6 +52,14 @@ public class UserPlan  extends ParseObject {
 		return getString("user_id");
 	}
 
+	public void setCreatedBy(String created_by) {
+		put("created_by", created_by);
+	}
+
+	public String getCreatedBy() {
+		return getString("created_by");
+	}
+
 	public void setUser_id(String user_id) {
 		put("user_id", user_id);
 	}
