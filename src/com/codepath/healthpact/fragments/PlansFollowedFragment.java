@@ -41,7 +41,7 @@ public class PlansFollowedFragment extends Fragment{
 		// TODO Auto-generated method stub		
 		
 
-		ArrayList<UserPlan> userplans = ParseUtils.getUserPlans(null);
+		ArrayList<UserPlan> userplans = ParseUtils.getUserFollowedPlans(null);
 		List<AppPlan> plans = new ArrayList<AppPlan>();
 		
 		for (UserPlan up : userplans) {
