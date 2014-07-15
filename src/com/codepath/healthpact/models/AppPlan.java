@@ -12,6 +12,7 @@ public class AppPlan implements Serializable{
 	private int duration;
 	private String id;
 	private String desc;
+	private String usrPlanid;
 	private boolean followed;
 	
 	public AppPlan(){}
@@ -51,6 +52,10 @@ public class AppPlan implements Serializable{
 	public String getDesc() {return desc;}
 
 	public void setDesc(String desc) {this.desc = desc;}
+
+	public String getUsrPlanid() {return usrPlanid;}
+
+	public void setUsrPlanid(String usrPlanid) {this.usrPlanid = usrPlanid;}
 
 	public boolean getFollowed() {return followed;}
 
