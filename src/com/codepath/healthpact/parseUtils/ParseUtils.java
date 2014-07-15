@@ -84,7 +84,7 @@ public class ParseUtils {
 		UserPlanRelation user_plan_relation = null;
 		ParseQuery<UserPlanRelation> query = ParseQuery.getQuery(UserPlanRelation.class);
 		query.whereEqualTo("action_id", action_id);
-		query.whereEqualTo("user_plan_id", action_id);
+		query.whereEqualTo("user_plan_id", action_id);  
 		try {
 			user_plan_relation = (UserPlanRelation) query.find();
 		} catch (ParseException parseEx) {
