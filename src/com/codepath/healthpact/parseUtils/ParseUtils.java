@@ -58,9 +58,14 @@ public class ParseUtils {
 	 * Get all HealthPact users including the user requesting the information
 	 * @return ArrayList of ParseUsers
 	 */
-	public static ArrayList<ParseUser> getAllUsers() {
+	public static ArrayList<ParseUser> getAllUsers(boolean isCurrentUser) {
 
 		ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
+		
+		if (!isCurrentUser) {
+			query.whereNotEqualTo("objectId", ParseUser.getCurrentUser().getObjectId());
+		}
+		
 		ArrayList<ParseUser> allUsers = null;
 		
 		try {
@@ -271,7 +276,7 @@ public class ParseUtils {
 		ArrayList<UserPlan> userPlans = null;
 		ParseQuery<UserPlan> userPlanQuery = ParseQuery.getQuery(UserPlan.class);
 		userPlanQuery.whereEqualTo("user_id", ParseUser.getCurrentUser().getObjectId());
-		userPlanQuery.whereEqualTo("plan_following", false);
+		userPlanQuery.whereNotEqualTo("plan_following", true);
 		try {
 			userPlans = (ArrayList<UserPlan>) userPlanQuery.find();
 		} catch (ParseException parseEx) {
@@ -291,6 +296,7 @@ public class ParseUtils {
 		
 		ParseQuery<UserPlan> userPlanQuery = ParseQuery.getQuery(UserPlan.class);
 		userPlanQuery.whereEqualTo("user_id", ParseUser.getCurrentUser().getObjectId());
+		//userPlanQuery.whereEqualTo("plan_following", false);
 		ArrayList<UserPlan> userplans;
 		try {
 			userplans = (ArrayList<UserPlan>) userPlanQuery.find();
@@ -312,8 +318,9 @@ public class ParseUtils {
 	 * @param v View
 	 * @return a list of user plans
 	 */
-	public static void convertPlanToShared(String user_plan_object_id) {
+	public static void convertPlanToShared(String user_plan_object_id, String plan_id) {
 		UserPlan user_plan = getUserPlan(user_plan_object_id);
+		
 
 		return;
 	}
