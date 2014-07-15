@@ -34,7 +34,7 @@ public class UserPlanRelation extends ParseObject {
 	
 	public void setCompletionDate(Date date) {
 		put("completion_date", date);
-	}
+	} 
 	
 	public String getActionId() {
 		return getString("action_id");
