@@ -27,6 +27,7 @@ import com.parse.SaveCallback;
 public class ParseUtils {
 	protected static final String TAG = "HealthPact";
 	public static ArrayList<UserPlan> userPlansList;
+	public static String currentUserId = ParseUser.getCurrentUser().getObjectId();
 	
 	public static void parseLoginForTesting() {
 		ParseUser.logInInBackground("dipankar", "dipankar", new LogInCallback() {
@@ -538,6 +539,34 @@ public class ParseUtils {
 		    });			
 		}		
 		
+	}
+	
+	public static void updateToFromDate(String plan_id, Date start_date, int duration) {
+		//currentUserId
+		
+		Calendar c = Calendar.getInstance();
+		c.setTime(start_date);
+		c.add(Calendar.DATE, -1);
+		start_date = c.getTime();
+		
+		c.add(Calendar.WEEK_OF_YEAR, duration);
+		Date end_date = c.getTime();
+
+		ArrayList<UserPlan> userPlans = null;
+		ParseQuery<UserPlan> userPlanQuery = ParseQuery.getQuery(UserPlan.class);
+		userPlanQuery.whereEqualTo("user_id", currentUserId);
+		userPlanQuery.whereEqualTo("plan_id", plan_id);
+		userPlanQuery.whereEqualTo("plan_following", false);
+		try {
+			userPlans = (ArrayList<UserPlan>) userPlanQuery.find();
+			for (UserPlan up : userPlans) {
+				up.setPlan_start_date(start_date);
+				up.setPlan_end_date(end_date);
+				up.saveEventually();
+			}
+		} catch (ParseException parseEx) {
+			LogMsg(parseEx, 1);
+		}
 	}
 	
 	public static void updateProfile(String expertise,String location,String description) {
