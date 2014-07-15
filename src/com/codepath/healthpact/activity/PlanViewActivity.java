@@ -1,10 +1,9 @@
 package com.codepath.healthpact.activity;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -14,20 +13,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codepath.healthpact.R;
 import com.codepath.healthpact.dialogs.ShareUserDialog;
 import com.codepath.healthpact.fragments.DatePickerFragment;
 import com.codepath.healthpact.fragments.UserActionsFragment;
 import com.codepath.healthpact.models.AppPlan;
-import com.codepath.healthpact.parseUtils.ParseUtils;
 
 public class PlanViewActivity extends FragmentActivity {
 	Calendar calender = Calendar.getInstance();
 	OnDateSetListener ondate;
 	AppPlan result;
-	String pattern = "MM/dd/yyyy";
-	SimpleDateFormat format = new SimpleDateFormat(pattern);
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +34,11 @@ public class PlanViewActivity extends FragmentActivity {
 		TextView pName = (TextView)findViewById(R.id.pvtvPlanName);
 		TextView pDesc = (TextView)findViewById(R.id.pvtvDescription);
 		TextView pDuration = (TextView)findViewById(R.id.pvtvDuration);
-		TextView pCreatedDate = (TextView)findViewById(R.id.pvtvCreatedDate);
-				
+		
 		result = (AppPlan) getIntent().getSerializableExtra("userplan");
 		pName.setText(result.getName());
 		pDesc.setText(result.getDesc());
-		pDuration.setText("Duration:"+ result.getDuration() + " week(s)");
+		pDuration.setText("Duration:"+ result.getDuration() + " weeks");
 		
 		Button bFollowPlan =  (Button)findViewById(R.id.bFollowPlan);
 		if(result.getFollowed()){
@@ -54,13 +50,7 @@ public class PlanViewActivity extends FragmentActivity {
 			public void onDateSet(DatePicker view, int year, int monthOfYear,
 					int dayOfMonth) {
 				calender.set(year, monthOfYear, dayOfMonth, 0, 0);
-				//Toast.makeText(PlanViewActivity.this,String.valueOf(year) + "-" + String.valueOf(monthOfYear+1)+ "-" + String.valueOf(dayOfMonth),Toast.LENGTH_LONG).show();
-				Date startDate = calender.getTime();
-				//Toast.makeText(PlanViewActivity.this, String.valueOf(d), Toast.LENGTH_LONG).show();
-				String planid = result.getId();
-				int duration = result.getDuration();
-				//Toast.makeText(PlanViewActivity.this, " "+planid + " "+ duration, Toast.LENGTH_LONG).show();
-				ParseUtils.updatePlanFollowedByUser(planid, startDate, duration);
+				Toast.makeText(PlanViewActivity.this,String.valueOf(year) + "-" + String.valueOf(monthOfYear+1)+ "-" + String.valueOf(dayOfMonth),Toast.LENGTH_LONG).show();
 			}
 		};
 		
@@ -110,7 +100,9 @@ public class PlanViewActivity extends FragmentActivity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		if (id == R.id.action_home) {
+			Intent i = new Intent(this, HomeViewActivity.class);
+			startActivity(i);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
