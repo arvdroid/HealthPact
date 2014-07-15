@@ -319,10 +319,10 @@ public class ParseUtils {
 	 * @param plan_id plan identifier
 	 */
 	public static void convertPlanToShared(String shared_to_user_id, String plan_id) {
-		ParseObject planShared = new ParseObject("PlanShared");
-		planShared.put("user_id", ParseUser.getCurrentUser().getObjectId());
-		planShared.put("plan_id", plan_id);
-		planShared.put("shared_to_user_id", shared_to_user_id);
+		PlanShared planShared = new PlanShared();
+		planShared.setUserId(ParseUser.getCurrentUser().getObjectId());
+		planShared.set_shared_to_user_id(shared_to_user_id);
+		planShared.setPlan_id(plan_id);
 		planShared.saveInBackground();
 	}
 	
