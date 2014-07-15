@@ -18,6 +18,14 @@ public class PlanShared extends ParseObject {
 		return getString("plan_id");
 	}
 	
+	public void setUserId(String user_id) {
+		put("user_id", user_id);
+	}
+
+	public String getUserId() {
+		return getString("user_id");
+	}
+	
 	public void setPlan_id(Object plan_id) {
 		put("plan_id", plan_id);
 	}
