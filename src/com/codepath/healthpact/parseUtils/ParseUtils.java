@@ -420,7 +420,9 @@ public class ParseUtils {
 		                	
 		                	final UserPlan userplan = new UserPlan();
 		                	userplan.setPlan_id(plan_id);
-		                	userplan.setUser_id(ParseUser.getCurrentUser().getObjectId());
+		                	userplan.setUser_id(currentUserId);
+		                	userplan.setCreatedBy(currentUserId);
+		                	userplan.setPlan_following(false);
 		                	
 							userplan.saveInBackground(new SaveCallback() {
 								public void done(ParseException e) {
