@@ -1,6 +1,8 @@
 package com.codepath.healthpact.activity;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.os.Bundle;
@@ -12,18 +14,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.codepath.healthpact.R;
 import com.codepath.healthpact.dialogs.ShareUserDialog;
 import com.codepath.healthpact.fragments.DatePickerFragment;
 import com.codepath.healthpact.fragments.UserActionsFragment;
 import com.codepath.healthpact.models.AppPlan;
+import com.codepath.healthpact.parseUtils.ParseUtils;
 
 public class PlanViewActivity extends FragmentActivity {
 	Calendar calender = Calendar.getInstance();
 	OnDateSetListener ondate;
 	AppPlan result;
+	String pattern = "MM/dd/yyyy";
+	SimpleDateFormat format = new SimpleDateFormat(pattern);
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +37,12 @@ public class PlanViewActivity extends FragmentActivity {
 		TextView pName = (TextView)findViewById(R.id.pvtvPlanName);
 		TextView pDesc = (TextView)findViewById(R.id.pvtvDescription);
 		TextView pDuration = (TextView)findViewById(R.id.pvtvDuration);
-		
+		TextView pCreatedDate = (TextView)findViewById(R.id.pvtvCreatedDate);
+				
 		result = (AppPlan) getIntent().getSerializableExtra("userplan");
 		pName.setText(result.getName());
 		pDesc.setText(result.getDesc());
-		pDuration.setText("Duration:"+ result.getDuration() + " weeks");
+		pDuration.setText("Duration:"+ result.getDuration() + " week(s)");
 		
 		Button bFollowPlan =  (Button)findViewById(R.id.bFollowPlan);
 		if(result.getFollowed()){
@@ -49,7 +54,13 @@ public class PlanViewActivity extends FragmentActivity {
 			public void onDateSet(DatePicker view, int year, int monthOfYear,
 					int dayOfMonth) {
 				calender.set(year, monthOfYear, dayOfMonth, 0, 0);
-				Toast.makeText(PlanViewActivity.this,String.valueOf(year) + "-" + String.valueOf(monthOfYear+1)+ "-" + String.valueOf(dayOfMonth),Toast.LENGTH_LONG).show();
+				//Toast.makeText(PlanViewActivity.this,String.valueOf(year) + "-" + String.valueOf(monthOfYear+1)+ "-" + String.valueOf(dayOfMonth),Toast.LENGTH_LONG).show();
+				Date startDate = calender.getTime();
+				//Toast.makeText(PlanViewActivity.this, String.valueOf(d), Toast.LENGTH_LONG).show();
+				String planid = result.getId();
+				int duration = result.getDuration();
+				//Toast.makeText(PlanViewActivity.this, " "+planid + " "+ duration, Toast.LENGTH_LONG).show();
+				ParseUtils.updatePlanFollowedByUser(planid, startDate, duration);
 			}
 		};
 		

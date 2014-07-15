@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -49,45 +50,14 @@ public class UserActionsFragment extends Fragment{
 		showUpdateAction(plan);
 		actionarrayadapter.clear();
 		String id = plan.getId();
-		List<Action> actions = new ArrayList<Action>();
-		actions = ParseUtils.getActionForPlan(id);
+		List<Action> actions = ParseUtils.getActionForPlan(id);
 		actionarrayadapter.addAll(actions);
 	}
 	
-	void temp(){
-		/*userplans = new ArrayList<Plan>();
-		
-		Plan userplan1 = new Plan();
-		Plan userplan2 = new Plan();
-		Plan userplan3 = new Plan();
-		
-		userplan1.setPlanDesc("Action 1");
-		userplan1.setPlanDuration(2);
-        userplans.add(userplan1);
-        
-		userplan2.setPlanDesc("Action 2");
-		userplan2.setPlanDuration(3);
-        userplans.add(userplan2);
-        
-		userplan3.setPlanDesc("Action 3");
-		userplan3.setPlanDuration(4);
-        userplans.add(userplan3);*/
-        
-        //actionarrayadapter = new ActionArrayAdapter(getActivity(),userplans);
-		
-		/*Action nA = new Action();
-		nA.setActionName("action 1");
-		actions.add(nA);
-		
-		nA = new Action();
-		nA.setActionName("action 2");
-		actions.add(nA);
-		
-		nA = new Action();
-		nA.setActionName("action 3");
-		actions.add(nA);*/
+	public void disableDetailAction(boolean disable){
+		((ActionArrayAdapter)actionarrayadapter).setDisableDetails(disable);
 	}
-	
+		
 	public void populateAction(Action action){		
 		actionarrayadapter.add(action);
 	}
@@ -98,6 +68,16 @@ public class UserActionsFragment extends Fragment{
 			actions.add(actionarrayadapter.getItem(i));
 		}
 		return actions;
+	}
+	
+	public void removeAction(){
+		int position = lvPlanActions.getSelectedItemPosition();
+		Action a = actionarrayadapter.getItem(position);
+		actionarrayadapter.remove(a);
+	}
+	
+	public void test(){
+		lvPlanActions.getSelectedItemPosition();
 	}
 	
 }

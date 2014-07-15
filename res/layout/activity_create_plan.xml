@@ -82,6 +82,17 @@
             android:text="Duration"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
+        <EditText
+            android:id="@+id/tv_cPTvDescEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:lines="3"
+            android:maxHeight="50dp"
+            android:maxLines="5"
+            android:scrollbars="vertical" />
+
         <fragment
             android:id="@+id/cpActionViewFragment"
             android:name="com.codepath.healthpact.fragments.UserActionsFragment"
@@ -111,14 +122,14 @@
             android:background="@drawable/ic_icon_only_button"
             android:drawableLeft="@drawable/ic_save2" />
         
-        <Button
+        <!-- <Button
             android:id="@+id/cpBCancelPlan"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_margin="7dp"
             android:background="@drawable/ic_icon_only_button"
-            android:drawableLeft="@drawable/ic_cancel" />
+            android:drawableLeft="@drawable/ic_cancel" /> -->
 
          <Button
              android:id="@+id/cpBSharePlan"

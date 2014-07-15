@@ -20,7 +20,7 @@ import com.codepath.healthpact.models.ParseProxyObject;
 
 public class ActionArrayAdapter extends ArrayAdapter<Action> {
 	boolean followed;
-	
+	boolean disableDetail;
 	public ActionArrayAdapter(Context context,List<Action> userplans) {
 		super(context, com.codepath.healthpact.R.layout.action_item, userplans);
 	}
@@ -60,12 +60,13 @@ public class ActionArrayAdapter extends ArrayAdapter<Action> {
 			tbActionDone.setVisibility(View.INVISIBLE);
 		}
 
-        view.setOnClickListener(new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			launchDetailsActivity(useraction);
-		}
-	});
+		if(!disableDetail)
+			view.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					launchDetailsActivity(useraction);
+				}
+			});
 
 		return view;
 	}
@@ -74,12 +75,15 @@ public class ActionArrayAdapter extends ArrayAdapter<Action> {
 		this.followed = followed;
 	}
 	
+	public void setDisableDetails(boolean disableDetail){
+		this.disableDetail = disableDetail;
+	}
+	
 	protected void launchDetailsActivity(Action useraction) {
-		String actionname = useraction.getActionName();
 		Intent showplan = new Intent(getContext(), ActionDetailActivity.class);
 		// using proxy class for serialization and transfer using putExtra
         ParseProxyObject proxyProject = new ParseProxyObject(useraction);
-
+        showplan.putExtra("followed", followed);
 		showplan.putExtra("useraction", proxyProject);
 		getContext().startActivity(showplan);
 	}

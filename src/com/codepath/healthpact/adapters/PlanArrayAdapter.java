@@ -38,7 +38,7 @@ public class PlanArrayAdapter extends ArrayAdapter<AppPlan>{
 		//To-do get plan details
       
 		tvUserPlanName.setText(userPlan.getName());
-		tvUserPlanDuration.setText("Duration: "+ userPlan.getDuration()+ " weeks");
+		tvUserPlanDuration.setText("Duration: "+ userPlan.getDuration()+ " week(s)");
 
 
         view.setOnClickListener(new OnClickListener() {

@@ -136,14 +136,14 @@
         android:orientation="horizontal"
         android:background="@drawable/plan_view_action_buttons_layout" >
 
-        <Button
+        <!-- <Button
             android:id="@+id/bEditPlan"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_margin="7dp"
             android:background="@drawable/ic_icon_only_button"
-            android:drawableLeft="@drawable/ic_edit" />
+            android:drawableLeft="@drawable/ic_edit" /> -->
 
          <Button
              android:id="@+id/bSharePlan"

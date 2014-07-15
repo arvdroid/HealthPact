@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.codepath.healthpact.R;
-import com.codepath.healthpact.models.Action;
 import com.codepath.healthpact.models.ParseProxyObject;
 
 public class ActionDetailActivity extends Activity {
@@ -22,31 +21,42 @@ public class ActionDetailActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.details_action_view);
 		ParseProxyObject result = (ParseProxyObject) getIntent().getSerializableExtra("useraction");
-		
+		boolean followed = getIntent().getBooleanExtra("followed", false);
 		TextView aName = (TextView)findViewById(R.id.datvActionName);
 		TextView aDesc = (TextView)findViewById(R.id.aVtvDescription);
+		TextView aPerDayCnt = (TextView)findViewById(R.id.datvActionPerDayTime);
+		
 		String actionname = result.getString("action_name");
 
 		aName.setText(actionname);
+		aDesc.setText(result.getString("action_desc"));
+		aPerDayCnt.setText(result.getString("serving"));
 		
-		final Drawable onD = (Drawable)getResources().getDrawable(R.drawable.custom_week_layout_on);
-		final Drawable offD = (Drawable)getResources().getDrawable(R.drawable.custom_week_layout);
-		
-		tbM = (ToggleButton)findViewById(R.id.toggleButtonM);
-		tbM.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				boolean on = ((ToggleButton) v).isChecked();
-			    if (on) {
-			        //Toast.makeText(HealthPactActivity.this, "on", Toast.LENGTH_SHORT).show();			        
-			        ((ToggleButton) v).setBackground(onD);
-			    } else {
-			    	//Toast.makeText(HealthPactActivity.this, "off", Toast.LENGTH_SHORT).show();
-			    	 ((ToggleButton) v).setBackground(offD);
-			    }				
-			}
-		});
+		if(!followed){
+			findViewById(R.id.aVlevelTwoLayout).setVisibility(View.INVISIBLE);
+			findViewById(R.id.layoutWeeks).setVisibility(View.INVISIBLE);
+			findViewById(R.id.actionProgressBar).setVisibility(View.INVISIBLE);
+		}else{
+
+			final Drawable onD = (Drawable)getResources().getDrawable(R.drawable.custom_week_layout_on);
+			final Drawable offD = (Drawable)getResources().getDrawable(R.drawable.custom_week_layout);
+
+			tbM = (ToggleButton)findViewById(R.id.toggleButtonM);
+			tbM.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					boolean on = ((ToggleButton) v).isChecked();
+					if (on) {
+						//Toast.makeText(HealthPactActivity.this, "on", Toast.LENGTH_SHORT).show();			        
+						((ToggleButton) v).setBackground(onD);
+					} else {
+						//Toast.makeText(HealthPactActivity.this, "off", Toast.LENGTH_SHORT).show();
+						((ToggleButton) v).setBackground(offD);
+					}				
+				}
+			});
+		}
 	}
 
 	@Override

@@ -65,7 +65,7 @@
             android:maxHeight="50dp"
             android:maxLines="5"
             android:minHeight="30dp"
-            android:text="Plan Description"
+            android:text="Action Description"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     <LinearLayout
         android:id="@+id/aVlevelTwoLayout"
