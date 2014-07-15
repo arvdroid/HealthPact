@@ -39,7 +39,7 @@ public class FindPlansActivity extends FragmentActivity {
 		TextView textView =(TextView)findViewById(R.id.tvFilter);
 		Button findButton = (Button)findViewById(R.id.fpBSearch);
 		searchText = (EditText)findViewById(R.id.fpSearchEditText);
-		pb = (ProgressBar) findViewById(R.id.pbLoading);
+		//pb = (ProgressBar) findViewById(R.id.pbLoading);
 		planFragment = (PlanListFragment) 
                 getSupportFragmentManager().findFragmentById(R.id.fpPlanViewFragment);
 
