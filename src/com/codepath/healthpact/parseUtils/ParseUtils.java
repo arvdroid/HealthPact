@@ -319,7 +319,7 @@ public class ParseUtils {
 	 * Get plan followers by current user
 	 * @return count
 	 */
-	public static int getUserFollowingPlansCount() {
+	public static int getUserFollowerPlansCount() {
 		ParseQuery<UserPlan> userPlanQuery = ParseQuery.getQuery(UserPlan.class);
 		userPlanQuery.whereEqualTo("created_by", currentUserId);
 		try {
@@ -329,7 +329,8 @@ public class ParseUtils {
 				ParseQuery<UserPlan> query = ParseQuery.getQuery(UserPlan.class);
 				query.whereEqualTo("plan_following", true);
 				query.whereEqualTo("plan_id", up.getPlanId());
-
+				followerCount += query.count();
+				/*
 				query.countInBackground(new CountCallback() {
 					public void done(int count, ParseException e) {
 						if (e == null) {
@@ -339,25 +340,14 @@ public class ParseUtils {
 						}
 					}
 				});
-
+				*/
 			}
 			
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
 				
-		userPlanQuery.countInBackground(new CountCallback() {
-			public void done(int count, ParseException e) {
-				if (e == null) {
-					followingCount = count;
-				} else {
-					// The request failed
-					followingCount = 0;
-				}
-			}
-		});
-		
-		return followingCount;
+		return followerCount;
 	}
 
 	/**
