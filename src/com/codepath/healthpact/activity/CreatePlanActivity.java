@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codepath.healthpact.R;
 import com.codepath.healthpact.activity.AddActionDialog.AddActionDialogListener;
@@ -23,8 +22,8 @@ import com.codepath.healthpact.activity.SetDurationDialog.SetDurationDialogListe
 import com.codepath.healthpact.fragments.UserActionsFragment;
 import com.codepath.healthpact.models.Action;
 import com.codepath.healthpact.models.Plan;
-import com.codepath.healthpact.models.PlanAction;
 import com.codepath.healthpact.models.UserPlan;
+import com.codepath.healthpact.parseUtils.ParseUtils;
 import com.parse.ParseUser;
 
 public class CreatePlanActivity extends FragmentActivity implements AddActionDialogListener, SetDurationDialogListener{
@@ -53,9 +52,6 @@ public class CreatePlanActivity extends FragmentActivity implements AddActionDia
 				PlanSave();				
 			}
 		});
-		
-		//PlanTextChange();
-		//PlanSave();
 	}
 	
 	private void PlanSave() {
@@ -69,54 +65,8 @@ public class CreatePlanActivity extends FragmentActivity implements AddActionDia
 		plan.setPlanName(planName);
 		plan.setPlanDuration(duration);
 		plan.setPlanDesc(planName+ " descrip");
-		
-		List<PlanAction> planActions = new ArrayList<PlanAction>();
-		PlanAction planAction = new PlanAction();
-		
-		/*ArrayList<PlanAction> paList = new ArrayList<PlanAction>();
-		PlanAction pa = new PlanAction();
-		Plan plan = new Plan();
-		plan.setPlanDesc(etPlanName.getText().toString());
-		userPlan.setPlan_end_date(new Date());
-		UserPlanRelation upr = new UserPlanRelation();
-		ArrayList<UserPlanRelation> uprList = new ArrayList<UserPlanRelation>();
-		upr.setActionId("iJr8KK8pXi");
-		uprList.add(upr);
-		pa.setActionId("iJr8KK8pXi");
-		paList.add(pa);
-		upr.setActionId("fU0cf2sK8h");
-		pa.setActionId("fU0cf2sK8h");
-		paList.add(pa);
-		uprList.add(upr);
-		ParseUtils.createPlan(plan, userPlan, paList, uprList);*/
-	}
-
-	private void PlanTextChange() {
-		etPlanName.addTextChangedListener(new TextWatcher() {
-			
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				searchPlan();
-			}
-			
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void afterTextChanged(Editable s) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-	}
-	
-	private void searchPlan() {
-		
+		ParseUtils.createPlan(plan, actions);
+		Toast.makeText(this, "Plan create", Toast.LENGTH_SHORT).show();
 	}
 	
 	public void onAddAction(View v) {
