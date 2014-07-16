@@ -24,6 +24,9 @@ public class UserProfileActivity extends FragmentActivity {
 	PlanListFragment planFragment;
 	String pattern = "MM/dd/yyyy";
 	SimpleDateFormat format = new SimpleDateFormat(pattern);
+	TextView usrPlansCnt;
+	TextView usrPlansFollowingCnt;
+	TextView usrFollowersCnt;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,9 @@ public class UserProfileActivity extends FragmentActivity {
 		TextView userName = (TextView)findViewById(R.id.uptvCreatedBy);
 		TextView createdDate = (TextView)findViewById(R.id.uptvCreatedDate);
 		TextView updatedDate = (TextView)findViewById(R.id.uptvUpdatedDate);
+		usrPlansCnt = (TextView)findViewById(R.id.uptvPlansCnt);
+		usrPlansFollowingCnt = (TextView)findViewById(R.id.uptvFollowingCnt);
+		usrFollowersCnt = (TextView)findViewById(R.id.uptvFollowersCnt);
 		
 		ParseUser user = ParseUser.getCurrentUser();
 		createdDate.setText(format.format(user.getCreatedAt()));
@@ -42,10 +48,12 @@ public class UserProfileActivity extends FragmentActivity {
 		planFragment = (PlanListFragment) 
                 getSupportFragmentManager().findFragmentById(R.id.upPlanViewFragment);
 		populateUserCreatedPlans();
+		populateUserProfileCounts();
 	}
 	
 	private void populateUserCreatedPlans()	{
 		ArrayList<Plan> plans = ParseUtils.getPlansCreatedByCurrentUser();
+		usrPlansCnt.setText(String.valueOf(plans.size()));
 		List<AppPlan> appPlans = new ArrayList<AppPlan>();
 		Log.d("hp", "user plans: "+ plans.size());
 		for(Plan plan: plans){
@@ -56,6 +64,13 @@ public class UserProfileActivity extends FragmentActivity {
 			appPlans.add(ap);
 		}
 		planFragment.populatePlans(appPlans);	
+	}
+	
+	private void populateUserProfileCounts(){
+		int plansF = ParseUtils.getUserFollowedPlans(null).size();
+		int plansFs = ParseUtils.getUserFollowedPlansCount();
+		usrPlansFollowingCnt.setText(String.valueOf(plansF));
+		usrFollowersCnt.setText(String.valueOf(plansFs));
 	}
 	
 	@Override

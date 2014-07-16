@@ -9,6 +9,7 @@ public class AppPlan implements Serializable{
 	private String name;
 	private Date startDate;
 	private Date endDate;
+	private Date createdDate;
 	private int duration;
 	private String id;
 	private String desc;
@@ -44,6 +45,10 @@ public class AppPlan implements Serializable{
 	public Date getStartDate() {return startDate;}
 
 	public Date getEndDate() {return endDate;}
+
+	public Date getCreatedDate() {return createdDate;}
+
+	public void setCreatedDate(Date createdDate) {this.createdDate = createdDate;}
 
 	public int getDuration() {return duration;}
 
