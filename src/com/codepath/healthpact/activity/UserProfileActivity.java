@@ -61,6 +61,7 @@ public class UserProfileActivity extends FragmentActivity {
 			ap.setName(plan.getPlanName());
 			ap.setDuration(plan.getPlanDuration());
 			ap.setId(plan.getPlanId());
+			ap.setCreatedDate(plan.getCreatedAt());
 			appPlans.add(ap);
 		}
 		planFragment.populatePlans(appPlans);	
@@ -68,7 +69,7 @@ public class UserProfileActivity extends FragmentActivity {
 	
 	private void populateUserProfileCounts(){
 		int plansF = ParseUtils.getUserFollowedPlans(null).size();
-		int plansFs = ParseUtils.getUserFollowedPlansCount();
+		int plansFs = ParseUtils.getUserFollowerPlansCount();
 		usrPlansFollowingCnt.setText(String.valueOf(plansF));
 		usrFollowersCnt.setText(String.valueOf(plansFs));
 	}

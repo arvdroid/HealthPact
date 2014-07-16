@@ -33,7 +33,9 @@ public class PlansSharedFragment extends PlanListFragment{
 			AppPlan ap = new AppPlan();
 			ap.setName(p.getPlanName());
 			ap.setId(p.getPlanId());
+			ap.setCreatedDate(sp.getCreatedAt());
 			ap.setDuration(p.getPlanDuration());
+			ap.setUsrPlanid(sp.getUserPlanId());
 			plans.add(ap);
 		}
 		populatePlans(plans);
