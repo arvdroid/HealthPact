@@ -30,6 +30,8 @@ public class ParseUtils {
 	protected static final String TAG = "HealthPact";
 	public static ArrayList<UserPlan> userPlansList;
 	public static String currentUserId = ParseUser.getCurrentUser().getObjectId();
+	public static int followingCount;
+	public static int followerCount;
 	
 	public static void parseLoginForTesting() {
 		ParseUser.logInInBackground("dipankar", "dipankar", new LogInCallback() {
@@ -294,25 +296,69 @@ public class ParseUtils {
 	 * @return count
 	 */
 	public static int getUserFollowedPlansCount() {
-		//final int followingCount;
 		ParseQuery<UserPlan> userPlanQuery = ParseQuery.getQuery(UserPlan.class);
 		userPlanQuery.whereEqualTo("user_id", ParseUser.getCurrentUser().getObjectId());
 		userPlanQuery.whereEqualTo("plan_following", true);
-		
+		followingCount = 0;
+
 		userPlanQuery.countInBackground(new CountCallback() {
-			  public void done(int count, ParseException e) {
-			    if (e == null) {
-			    	//followingCount = count;
-			    } else {
-			      // The request failed
-			    }
-			  }
-			  
+			public void done(int count, ParseException e) {
+				if (e == null) {
+					followingCount = count;
+				} else {
+					// The request failed
+				}
+			}
 		});
 		
-		return 10;
+		return followingCount;
 	}
 
+
+	/**
+	 * Get plan followers by current user
+	 * @return count
+	 */
+	public static int getUserFollowingPlansCount() {
+		ParseQuery<UserPlan> userPlanQuery = ParseQuery.getQuery(UserPlan.class);
+		userPlanQuery.whereEqualTo("created_by", currentUserId);
+		try {
+			ArrayList<UserPlan> userPlans = (ArrayList<UserPlan>) userPlanQuery.find();
+			followerCount = 0;
+			for (UserPlan up : userPlans) {
+				ParseQuery<UserPlan> query = ParseQuery.getQuery(UserPlan.class);
+				query.whereEqualTo("plan_following", true);
+				query.whereEqualTo("plan_id", up.getPlanId());
+
+				query.countInBackground(new CountCallback() {
+					public void done(int count, ParseException e) {
+						if (e == null) {
+							followerCount += count;
+						} else {
+							// The request failed
+						}
+					}
+				});
+
+			}
+			
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+				
+		userPlanQuery.countInBackground(new CountCallback() {
+			public void done(int count, ParseException e) {
+				if (e == null) {
+					followingCount = count;
+				} else {
+					// The request failed
+					followingCount = 0;
+				}
+			}
+		});
+		
+		return followingCount;
+	}
 
 	/**
 	 * Get plan for the current user from Plan table
