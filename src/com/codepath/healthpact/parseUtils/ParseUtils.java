@@ -19,6 +19,7 @@ import com.codepath.healthpact.models.PlanShared;
 import com.codepath.healthpact.models.UserPlan;
 import com.codepath.healthpact.models.UserPlanRelation;
 import com.parse.CountCallback;
+import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -32,6 +33,7 @@ public class ParseUtils {
 	public static String currentUserId = ParseUser.getCurrentUser().getObjectId();
 	public static int followingCount;
 	public static int followerCount;
+	public static ArrayList<UserPlanRelation> userPlanRelation = new ArrayList<UserPlanRelation>();
 	
 	public static void parseLoginForTesting() {
 		ParseUser.logInInBackground("dipankar", "dipankar", new LogInCallback() {
@@ -632,7 +634,6 @@ public class ParseUtils {
 					up.setPlan_end_date(end_date);
 					up.setPlan_following(true);   
 					up.saveEventually();  
-					//ajfjla
 				}
 			}
 			else {
@@ -647,6 +648,62 @@ public class ParseUtils {
 		} catch (ParseException parseEx) {
 			LogMsg(parseEx, 1);
 		}
+	}
+	
+	public static void updateIndividualActionPerPlan(String user_plan_id, String action_id, Date date, boolean status) {
+		ArrayList<UserPlanRelation> userPlanRelation = null;
+
+		ParseQuery<UserPlanRelation> userPlanQuery = ParseQuery.getQuery(UserPlanRelation.class);
+		userPlanQuery.whereEqualTo("user_plan_id", user_plan_id);
+		userPlanQuery.whereEqualTo("action_id", action_id);
+		userPlanQuery.whereEqualTo("completion_date", date);
+		try {
+			userPlanRelation = (ArrayList<UserPlanRelation>) userPlanQuery.find();
+			if ((userPlanRelation != null) && (!userPlanRelation.isEmpty())) {
+				for (UserPlanRelation up : userPlanRelation) {
+					up.setUpdated(status);   
+					up.saveEventually();  
+				}
+			}
+
+		} catch (ParseException parseEx) {
+			LogMsg(parseEx, 1);
+		}		
+	}
+	
+	public static void getPlanRelationPerDuration(String user_plan_id_param, String action_id_param, Date start_date_param, int duration) {
+		
+	    GregorianCalendar gcal = new GregorianCalendar();
+		gcal.setTime(start_date_param);
+		
+		gcal.add(Calendar.WEEK_OF_YEAR, duration);
+		Date end_date = gcal.getTime();
+		gcal.setTime(start_date_param);
+
+		Date currentDate = start_date_param;
+		
+		ParseQuery<UserPlanRelation> userPlanQuery = ParseQuery.getQuery(UserPlanRelation.class);
+		userPlanQuery.whereEqualTo("user_plan_id", user_plan_id_param);
+		userPlanQuery.whereEqualTo("action_id", action_id_param);
+		userPlanQuery.whereGreaterThanOrEqualTo("completion_date", start_date_param);
+		userPlanQuery.whereLessThan("completion_date", end_date);
+		try {
+			userPlanRelation = (ArrayList<UserPlanRelation>) userPlanQuery.find();
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+/*		userPlanQuery.findInBackground(new FindCallback<UserPlanRelation>() {
+			@Override
+			public void done(List<UserPlanRelation> retreivedResult, ParseException e) {
+				if (e == null) {
+					userPlanRelation.addAll(retreivedResult);
+				}
+			}
+
+		});
+*/
 	}
 	
 	public static void updatePlanRelation(String user_plan_id_param, String action_id_param, Date start_date_param, int duration) {
@@ -669,13 +726,18 @@ public class ParseUtils {
 			upr.setActionId(action_id_param);
 			upr.setUpdated(false);
 
-			upr.saveEventually();
+			//upr.saveEventually();
+			try {
+				upr.save();
+			} catch (ParseException e) {
+				LogMsg(e, 1);
+			}
 
 			gcal.add(Calendar.DATE, 1);
 			currentDate = gcal.getTime();
 		}
 	}
-	
+
 	public static void updateProfile(String expertise,String location,String description) {
 		ParseUser user = ParseUser.getCurrentUser();
 		user.getUsername();
