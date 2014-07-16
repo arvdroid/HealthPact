@@ -2,7 +2,6 @@ package com.codepath.healthpact.parseUtils;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -19,6 +18,7 @@ import com.codepath.healthpact.models.PlanAction;
 import com.codepath.healthpact.models.PlanShared;
 import com.codepath.healthpact.models.UserPlan;
 import com.codepath.healthpact.models.UserPlanRelation;
+import com.parse.CountCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -288,6 +288,31 @@ public class ParseUtils {
 		userPlansList = userPlans;
 		return userPlans;
 	}
+
+	/**
+	 * Get plan following by current user
+	 * @return count
+	 */
+	public static int getUserFollowedPlansCount() {
+		//final int followingCount;
+		ParseQuery<UserPlan> userPlanQuery = ParseQuery.getQuery(UserPlan.class);
+		userPlanQuery.whereEqualTo("user_id", ParseUser.getCurrentUser().getObjectId());
+		userPlanQuery.whereEqualTo("plan_following", true);
+		
+		userPlanQuery.countInBackground(new CountCallback() {
+			  public void done(int count, ParseException e) {
+			    if (e == null) {
+			    	//followingCount = count;
+			    } else {
+			      // The request failed
+			    }
+			  }
+			  
+		});
+		
+		return 10;
+	}
+
 
 	/**
 	 * Get plan for the current user from Plan table
