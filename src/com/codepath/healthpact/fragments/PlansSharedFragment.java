@@ -3,24 +3,15 @@ package com.codepath.healthpact.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.codepath.healthpact.models.AppPlan;
 import com.codepath.healthpact.models.Plan;
 import com.codepath.healthpact.models.PlanShared;
 import com.codepath.healthpact.parseUtils.ParseUtils;
 
 public class PlansSharedFragment extends PlanListFragment{
-
 	
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View v  = super.onCreateView(inflater, container, savedInstanceState);
+	public void getPlans(){
 		populateSharedPlans();
-		return v;
 	}
 	
 	public void populateSharedPlans(){
