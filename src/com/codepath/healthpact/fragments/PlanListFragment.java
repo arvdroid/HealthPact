@@ -16,16 +16,16 @@ import com.codepath.healthpact.R;
 import com.codepath.healthpact.adapters.PlanArrayAdapter;
 import com.codepath.healthpact.models.AppPlan;
 
-public class PlanListFragment extends Fragment{
+public abstract class PlanListFragment extends Fragment{
 	
-	private ArrayAdapter<AppPlan> userplanadapter;
+	protected ArrayAdapter<AppPlan> userplanadapter;
 	private ListView lvUserPlans;
-	private ArrayList<AppPlan> appPlans;
+	protected ArrayList<AppPlan> appPlans = new ArrayList<AppPlan>();;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		appPlans = new ArrayList<AppPlan>();
+		
 		userplanadapter = new PlanArrayAdapter(getActivity(),appPlans);
 	}
 	
@@ -35,9 +35,11 @@ public class PlanListFragment extends Fragment{
 		View v = inflater.inflate(com.codepath.healthpact.R.layout.fragments_user_plan_list, container, false);
 		lvUserPlans = (ListView) v.findViewById(R.id.lvUserPlans);
 		lvUserPlans.setAdapter(userplanadapter);
+		getPlans();
 		return v;
 	}
 	
+	public abstract void getPlans();
 	
 	public void populatePlans(List<AppPlan> plans){
 		userplanadapter.clear();
