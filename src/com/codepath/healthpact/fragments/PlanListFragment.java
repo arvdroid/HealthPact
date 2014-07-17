@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.codepath.healthpact.R;
 import com.codepath.healthpact.adapters.PlanArrayAdapter;
@@ -21,6 +22,7 @@ public abstract class PlanListFragment extends Fragment{
 	protected ArrayAdapter<AppPlan> userplanadapter;
 	private ListView lvUserPlans;
 	protected ArrayList<AppPlan> appPlans = new ArrayList<AppPlan>();;
+	private ProgressBar pb;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,9 @@ public abstract class PlanListFragment extends Fragment{
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(com.codepath.healthpact.R.layout.fragments_user_plan_list, container, false);
 		lvUserPlans = (ListView) v.findViewById(R.id.lvUserPlans);
+		pb = (ProgressBar)v.findViewById(R.id.pbLoading);
 		lvUserPlans.setAdapter(userplanadapter);
+		showProgressBar();
 		getPlans();
 		return v;
 	}
@@ -44,5 +48,13 @@ public abstract class PlanListFragment extends Fragment{
 	public void populatePlans(List<AppPlan> plans){
 		userplanadapter.clear();
 		userplanadapter.addAll(plans);
+	}
+	
+	public void showProgressBar(){
+		pb.setVisibility(ProgressBar.VISIBLE);
+	}
+	
+	public void clearProgressBar(){
+		pb.setVisibility(ProgressBar.INVISIBLE);
 	}
 }
