@@ -13,13 +13,13 @@ import android.view.View;
 
 import com.activeandroid.util.Log;
 import com.codepath.healthpact.models.Action;
+import com.codepath.healthpact.models.ActionPerPeriod;
 import com.codepath.healthpact.models.Plan;
 import com.codepath.healthpact.models.PlanAction;
 import com.codepath.healthpact.models.PlanShared;
 import com.codepath.healthpact.models.UserPlan;
 import com.codepath.healthpact.models.UserPlanRelation;
 import com.parse.CountCallback;
-import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -380,6 +380,19 @@ public class ParseUtils {
 	}
 
 	/**
+	 * Get plan for the current user from Plan table
+	 * @param v View
+	 * @return a list of user plans
+	 */
+	public static ParseQuery<UserPlan> getPlansCreatedByCurrentUser1() {
+	
+		ParseQuery<UserPlan> userPlanQuery = ParseQuery.getQuery(UserPlan.class);
+		userPlanQuery.whereEqualTo("created_by", currentUserId);
+		
+		return userPlanQuery;
+	}
+
+	/**
 	 * Post data to shared plan
 	 * @param shared_to_user_id other user to use the plan
 	 * @param plan_id plan identifier
@@ -413,6 +426,24 @@ public class ParseUtils {
 			LogMsg(parseEx, 1);
 		}
 		return plansShared;
+	}
+
+	/**
+	 * Get shared plan detail for the given user from SharedPlan table
+	 * asyn call
+	 * @return a list of user shared plans
+	 */
+	public static ParseQuery<PlanShared> getUserSharedPlans() {
+		ArrayList<PlanShared> plansShared = null;
+		ParseQuery<PlanShared> userSharedPlanQuery = ParseQuery.getQuery(PlanShared.class);
+		userSharedPlanQuery.whereEqualTo("user_id", ParseUser.getCurrentUser().getObjectId());
+		
+		/*try {
+			plansShared = (ArrayList<PlanShared>) userSharedPlanQuery.find();
+		} catch (ParseException parseEx) {
+			LogMsg(parseEx, 1);
+		}*/
+		return userSharedPlanQuery;		
 	}
 
 	/**
@@ -688,7 +719,51 @@ public class ParseUtils {
 		userPlanQuery.whereGreaterThanOrEqualTo("completion_date", start_date_param);
 		userPlanQuery.whereLessThan("completion_date", end_date);
 		try {
-			userPlanRelation = (ArrayList<UserPlanRelation>) userPlanQuery.find();
+			ArrayList<UserPlanRelation> userPlanRelation = (ArrayList<UserPlanRelation>) userPlanQuery.find();
+			ActionPerPeriod actionPerPeriod = new ActionPerPeriod();
+			ActionPerPeriod.WeekRange weekRange = new ActionPerPeriod().new WeekRange();
+			ArrayList<ActionPerPeriod.WeekRange> wr = new ArrayList<ActionPerPeriod.WeekRange>();
+			ArrayList<Boolean> daysUpdated = new ArrayList<Boolean>();
+			
+			Date previousDate = null;
+			Date enddt = null;
+			for (UserPlanRelation upr : userPlanRelation) {
+				if (previousDate == null) {
+					weekRange.setStartDate(upr.getCompletionDate());
+					previousDate = upr.getCompletionDate();
+					gcal.setTime(upr.getCompletionDate());
+					
+					gcal.add(Calendar.WEEK_OF_YEAR, 1);
+					enddt = gcal.getTime();
+				}
+				else if (enddt.getTime() == upr.getCompletionDate().getTime()){
+					wr.add(weekRange);
+					actionPerPeriod.setDaysUpdated(daysUpdated);
+
+					// set the current week pointer
+					if ((weekRange.getStartDate().getTime() > System.currentTimeMillis()) &&
+						(weekRange.getEndDate().getTime() < System.currentTimeMillis())) {
+						actionPerPeriod.setCurrentWeekPointer(wr.size() - 1);
+					}
+					
+					weekRange.setStartDate(upr.getCompletionDate());
+					previousDate = enddt;
+
+					gcal.setTime(upr.getCompletionDate());					
+					gcal.add(Calendar.WEEK_OF_YEAR, 1);
+					enddt = gcal.getTime();
+				}
+				else {
+					weekRange.setEndDate(upr.getCompletionDate());
+				}
+				
+				// set the current week pointer
+				if ((weekRange.getStartDate().getTime() > System.currentTimeMillis()) &&
+					(weekRange.getEndDate().getTime() < System.currentTimeMillis())) {
+					daysUpdated.add(upr.isUpdated());
+				}
+
+			}
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
