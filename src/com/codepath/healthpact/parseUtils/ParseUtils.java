@@ -14,6 +14,7 @@ import android.view.View;
 import com.activeandroid.util.Log;
 import com.codepath.healthpact.models.Action;
 import com.codepath.healthpact.models.ActionPerPeriod;
+import com.codepath.healthpact.models.ActionPerPeriod.WeekRange;
 import com.codepath.healthpact.models.Plan;
 import com.codepath.healthpact.models.PlanAction;
 import com.codepath.healthpact.models.PlanShared;
@@ -202,6 +203,28 @@ public class ParseUtils {
 		return allPlans;
 	}
 	
+	
+	public static ParseQuery<Plan> getPlansBasedOnExpertise1(String expertise) {
+		
+
+		try {
+			ParseQuery<ParseUser> query = ParseUser.getQuery();
+			query.whereEqualTo("Expertise", expertise);
+			ArrayList<ParseUser> users = (ArrayList<ParseUser>) query.find();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		ParseQuery<Plan> searchPlansQuery = ParseQuery.getQuery(Plan.class);
+		searchPlansQuery.whereEqualTo("created_by", currentUserId);
+
+		return searchPlansQuery;
+
+		
+	}
+	
+	
 	/**
 	 * Get userplan data for the specific user and plan
 	 * @param user_plan_object_id objectId from userplan table
@@ -292,6 +315,15 @@ public class ParseUtils {
 		userPlansList = userPlans;
 		return userPlans;
 	}
+	
+	
+	public static ParseQuery<UserPlan> getUserFollowedPlans() {
+		ParseQuery<UserPlan> userPlanQuery = ParseQuery.getQuery(UserPlan.class);
+		userPlanQuery.whereEqualTo("user_id", ParseUser.getCurrentUser().getObjectId());
+		userPlanQuery.whereEqualTo("plan_following", true);
+		return userPlanQuery;
+	}
+
 
 	/**
 	 * Get plan following by current user
@@ -767,7 +799,7 @@ public class ParseUtils {
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
+		} 
 		
 /*		userPlanQuery.findInBackground(new FindCallback<UserPlanRelation>() {
 			@Override
@@ -779,7 +811,7 @@ public class ParseUtils {
 
 		});
 */
-	}
+	}   
 	
 	public static void updatePlanRelation(String user_plan_id_param, String action_id_param, Date start_date_param, int duration) {
 		
