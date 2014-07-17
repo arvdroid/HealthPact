@@ -19,18 +19,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.codepath.healthpact.R;
-import com.codepath.healthpact.fragments.PlanListFragment;
+import com.codepath.healthpact.fragments.FindPlansFragment;
 import com.codepath.healthpact.models.AppPlan;
 import com.codepath.healthpact.models.Plan;
 import com.codepath.healthpact.parseUtils.ParseUtils;
 
 public class FindPlansActivity extends FragmentActivity {
 	
-	PlanListFragment planFragment;
+	FindPlansFragment planFragment;
 	EditText searchText;
-	private ProgressBar pb;
-
-	
+	private ProgressBar pb;	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -39,10 +37,12 @@ public class FindPlansActivity extends FragmentActivity {
 		TextView textView =(TextView)findViewById(R.id.tvFilter);
 		Button findButton = (Button)findViewById(R.id.fpBSearch);
 		searchText = (EditText)findViewById(R.id.fpSearchEditText);
-		//pb = (ProgressBar) findViewById(R.id.pbLoading);
-		planFragment = (PlanListFragment) 
+		
+		planFragment = (FindPlansFragment) 
                 getSupportFragmentManager().findFragmentById(R.id.fpPlanViewFragment);
-
+		planFragment.clearProgressBar();
+		pb = (ProgressBar)findViewById(R.id.fpPbLoading);
+		
 		textView.setMovementMethod(LinkMovementMethod.getInstance());
 		String text = "<u>Filter</u>";
 		textView.setText(Html.fromHtml(text));
@@ -56,9 +56,9 @@ public class FindPlansActivity extends FragmentActivity {
 		
 		findButton.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {
-				showProgressBar();
-				ArrayList<Plan> plans = ParseUtils.getPlansBasedOnExpertise(searchText.getText().toString());
+			public void onClick(View v) {				
+				showProgressBar();				
+				ArrayList<Plan> plans = ParseUtils.getPlansBasedOnExpertise(searchText.getText().toString());				
 				List<AppPlan> appPlans = new ArrayList<AppPlan>();
 				
 				for(Plan plan: plans){
@@ -69,8 +69,9 @@ public class FindPlansActivity extends FragmentActivity {
 					ap.setCreatedDate(plan.getCreatedAt());
 					appPlans.add(ap);
 				}
-				planFragment.populatePlans(appPlans);
 				clearProgressBar();
+				planFragment.populatePlans(appPlans);				
+				planFragment.populateFindPlans(searchText.getText().toString());
 			}
 		});	
 	}
