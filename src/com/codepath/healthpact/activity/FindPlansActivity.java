@@ -74,12 +74,4 @@ public class FindPlansActivity extends FragmentActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	public void showProgressBar(){
-		//pb.setVisibility(ProgressBar.VISIBLE);
-	}
-
-	public void clearProgressBar(){
-		//pb.setVisibility(ProgressBar.INVISIBLE);
-	}
 }
