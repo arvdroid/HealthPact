@@ -175,7 +175,7 @@ public class ParseUtils {
 	 * @param v View
 	 * @return a list of user plans
 	 */
-	public static ArrayList<Plan> getPlansBasedOnExpertise(String expertise) {
+	public static ArrayList<Plan> getPlansBasedOnExpertise(List<ParseUser> expertise) {
 		final ArrayList<Plan> allPlans = new ArrayList<Plan>();
 		
 		try {
@@ -203,7 +203,42 @@ public class ParseUtils {
 		return allPlans;
 	}
 	
-	
+	/**
+	 * Get plan detail for specific expertise ...new code
+	 * @param v View
+	 * @return a list of user plans
+	 */
+	public static ArrayList<Plan> getPlansBasedOnUsers(List<ParseUser> users) {
+		final ArrayList<Plan> allPlans = new ArrayList<Plan>();
+		
+		try {
+
+			for (ParseUser user : users) {
+				ParseQuery<UserPlan> innerUserPlanQuery = new ParseQuery<UserPlan>("UserPlan");
+				innerUserPlanQuery.whereEqualTo("user_id", user.getObjectId());
+				ArrayList<UserPlan> userplans = (ArrayList<UserPlan>) innerUserPlanQuery.find();
+
+				for (UserPlan ups : userplans) {
+					ParseQuery<Plan> innerquery = new ParseQuery<Plan>("Plan");
+					innerquery.whereEqualTo("objectId", ups.getPlanId());
+					ArrayList<Plan> plans = (ArrayList<Plan>) innerquery.find();
+					allPlans.addAll(plans);
+				}
+			}
+		} catch (ParseException parseEx) {
+			LogMsg(parseEx, 1);
+		}
+		
+		return allPlans;
+	}
+
+	public static ParseQuery<ParseUser> getUserBasedOnExpertise(String expertise) {		
+		ParseQuery<ParseUser> query = ParseUser.getQuery();
+		query.whereEqualTo("Expertise", expertise);
+
+		return query;		
+	}
+
 	public static ParseQuery<Plan> getPlansBasedOnExpertise1(String expertise) {
 		
 
