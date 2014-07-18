@@ -7,22 +7,28 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.codepath.healthpact.R;
 import com.codepath.healthpact.adapters.ActionArrayAdapter;
 import com.codepath.healthpact.models.Action;
 import com.codepath.healthpact.models.AppPlan;
+import com.codepath.healthpact.models.PlanAction;
 import com.codepath.healthpact.parseUtils.ParseUtils;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 
 public class UserActionsFragment extends Fragment{
 	
 	private ArrayList<Action> planActions;
 	private ArrayAdapter<Action> actionarrayadapter;
 	private ListView lvPlanActions;
+	private ProgressBar pb;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -36,6 +42,7 @@ public class UserActionsFragment extends Fragment{
 		// TODO Auto-generated method stub
 		View v = inflater.inflate(com.codepath.healthpact.R.layout.fragments_action_list, container, false);
 		lvPlanActions = (ListView) v.findViewById(R.id.lvPlanActions);
+		pb = (ProgressBar)v.findViewById(R.id.pvPbLoading);
 		planActions = new ArrayList<Action>();
 		actionarrayadapter = new ActionArrayAdapter(getActivity(),planActions);
 		lvPlanActions.setAdapter(actionarrayadapter);
@@ -50,8 +57,22 @@ public class UserActionsFragment extends Fragment{
 		showUpdateAction(plan);
 		actionarrayadapter.clear();
 		String id = plan.getId();
-		List<Action> actions = ParseUtils.getActionForPlan(id);
-		actionarrayadapter.addAll(actions);
+		showProgressBar();
+		ParseQuery<PlanAction> query = ParseUtils.getActionForPlanQuery(id);		
+		query.findInBackground(new FindCallback<PlanAction>() {
+
+			@Override
+			public void done(List<PlanAction> planActions, ParseException parseEx) {
+				if (parseEx == null) {
+					List<Action> actions = ParseUtils.getActionsForPlan(planActions);
+					clearProgressBar();
+					actionarrayadapter.addAll(actions);
+				}else{
+					clearProgressBar();
+					Toast.makeText(getActivity(), "Failed to get data", Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
 	}
 	
 	public void disableDetailAction(boolean disable){
@@ -78,6 +99,14 @@ public class UserActionsFragment extends Fragment{
 	
 	public void test(){
 		lvPlanActions.getSelectedItemPosition();
+	}
+	
+	public void showProgressBar(){
+		pb.setVisibility(ProgressBar.VISIBLE);
+	}
+	
+	public void clearProgressBar(){
+		pb.setVisibility(ProgressBar.INVISIBLE);
 	}
 	
 }

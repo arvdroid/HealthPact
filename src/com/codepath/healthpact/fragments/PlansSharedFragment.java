@@ -12,6 +12,7 @@ import com.codepath.healthpact.parseUtils.ParseUtils;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class PlansSharedFragment extends PlanListFragment{
 	
@@ -33,9 +34,12 @@ public class PlansSharedFragment extends PlanListFragment{
 						AppPlan ap = new AppPlan();
 						ap.setName(p.getPlanName());
 						ap.setId(p.getPlanId());
-						ap.setCreatedDate(sp.getCreatedAt());
+						ap.setCreatedDate(p.getCreatedAt());
 						ap.setDuration(p.getPlanDuration());
 						ap.setUsrPlanid(sp.getUserPlanId());
+						ParseUser usr = p.getUser();
+						if(usr!=null)
+							ap.setUsrName(usr.getUsername());
 						plans.add(ap);
 					}
 					clearProgressBar();

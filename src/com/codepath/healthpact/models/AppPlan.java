@@ -14,6 +14,7 @@ public class AppPlan implements Serializable{
 	private String id;
 	private String desc;
 	private String usrPlanid;
+	private String usrName;
 	private boolean followed;
 	
 	public AppPlan(){}
@@ -65,4 +66,8 @@ public class AppPlan implements Serializable{
 	public boolean getFollowed() {return followed;}
 
 	public void setFollowed(boolean followed) {this.followed = followed;}
+
+	public String getUsrName() {return usrName;}
+
+	public void setUsrName(String usrName) {this.usrName = usrName;}
 }

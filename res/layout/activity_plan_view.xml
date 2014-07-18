@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.testproj.PlanViewActivity" >
+    tools:context="com.example.testproj.PlanViewActivity">
     
     <LinearLayout
         android:layout_width="match_parent"
@@ -86,10 +86,11 @@
         <fragment
         android:id="@+id/actionViewFragment"
         android:name="com.codepath.healthpact.fragments.UserActionsFragment"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         />
+
     </LinearLayout>
 
     <LinearLayout

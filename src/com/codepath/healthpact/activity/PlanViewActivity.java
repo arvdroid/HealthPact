@@ -1,5 +1,6 @@
 package com.codepath.healthpact.activity;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,9 @@ public class PlanViewActivity extends FragmentActivity {
 	Calendar calender = Calendar.getInstance();
 	OnDateSetListener ondate;
 	AppPlan result;
+	String pattern = "MM/dd/yyyy";
+	SimpleDateFormat format = new SimpleDateFormat(pattern);
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +39,15 @@ public class PlanViewActivity extends FragmentActivity {
 		TextView pName = (TextView)findViewById(R.id.pvtvPlanName);
 		TextView pDesc = (TextView)findViewById(R.id.pvtvDescription);
 		TextView pDuration = (TextView)findViewById(R.id.pvtvDuration);
+		TextView pCreatedAt = (TextView)findViewById(R.id.pvtvCreatedDate);
+		TextView pCreatedBy = (TextView)findViewById(R.id.pvtvCreatedBy);
 		
 		result = (AppPlan) getIntent().getSerializableExtra("userplan");
 		pName.setText(result.getName());
 		pDesc.setText(result.getDesc());
 		pDuration.setText("Duration:"+ result.getDuration() + " weeks");
+		pCreatedAt.setText(format.format(result.getCreatedDate()));
+		pCreatedBy.setText("Created By: " + result.getUsrName());
 		
 		Button bFollowPlan =  (Button)findViewById(R.id.bFollowPlan);
 		if(result.getFollowed()){

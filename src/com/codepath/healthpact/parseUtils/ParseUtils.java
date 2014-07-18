@@ -145,6 +145,30 @@ public class ParseUtils {
 		return actions;
 	}
 	
+	public static ParseQuery<PlanAction> getActionForPlanQuery(String plan_id) {
+		ParseQuery<PlanAction> query = ParseQuery.getQuery(PlanAction.class);
+		query.whereEqualTo("plan_id", plan_id);
+		return query;
+	}
+	
+	public static  ArrayList<Action> getActionsForPlan(List<PlanAction> plan_actions){
+		ArrayList<Action> actions = new ArrayList<Action>();
+		for (PlanAction plan_action : plan_actions) {
+			ParseQuery<Action> actionQuery = ParseQuery.getQuery(Action.class);
+			actionQuery.whereEqualTo("objectId", plan_action.getActionId());
+			try {
+				Action action = actionQuery.getFirst();
+				if (action != null) {
+					actions.add(action);
+				}
+			}
+			catch (ParseException parseEx) {
+				LogMsg(parseEx, 1);
+			}
+		}	
+
+		return actions;
+	}
 
 	
 	/**

@@ -14,6 +14,12 @@
 		   android:background="@drawable/list_border"
 		   android:listSelector="@drawable/states_selector_list">
     </ListView>
-    
+    <ProgressBar
+            android:id="@+id/pvPbLoading"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:visibility="invisible" />
 
 </LinearLayout>
