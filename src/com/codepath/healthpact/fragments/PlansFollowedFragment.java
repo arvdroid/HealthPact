@@ -34,7 +34,6 @@ public class PlansFollowedFragment extends PlanListFragment{
 			@Override
 			public void done(List<UserPlan> userplans, ParseException parseEx) {
 				if (parseEx == null) {
-					Toast.makeText(getActivity(), "data: "+userplans.size(), Toast.LENGTH_SHORT).show();
 					List<AppPlan> plans = new ArrayList<AppPlan>();					
 					for (UserPlan up : userplans) {
 						String plan_id = up.getPlanId();			

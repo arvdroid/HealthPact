@@ -1,8 +1,5 @@
 package com.codepath.healthpact.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -15,20 +12,16 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.codepath.healthpact.R;
 import com.codepath.healthpact.fragments.FindPlansFragment;
-import com.codepath.healthpact.models.AppPlan;
-import com.codepath.healthpact.models.Plan;
-import com.codepath.healthpact.parseUtils.ParseUtils;
 
 public class FindPlansActivity extends FragmentActivity {
 	
 	FindPlansFragment planFragment;
 	EditText searchText;
-	private ProgressBar pb;	
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,8 +34,7 @@ public class FindPlansActivity extends FragmentActivity {
 		planFragment = (FindPlansFragment) 
                 getSupportFragmentManager().findFragmentById(R.id.fpPlanViewFragment);
 		planFragment.clearProgressBar();
-		pb = (ProgressBar)findViewById(R.id.fpPbLoading);
-		
+				
 		textView.setMovementMethod(LinkMovementMethod.getInstance());
 		String text = "<u>Filter</u>";
 		textView.setText(Html.fromHtml(text));
@@ -57,20 +49,6 @@ public class FindPlansActivity extends FragmentActivity {
 		findButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {				
-				showProgressBar();				
-				ArrayList<Plan> plans = ParseUtils.getPlansBasedOnExpertise(searchText.getText().toString());				
-				List<AppPlan> appPlans = new ArrayList<AppPlan>();
-				
-				for(Plan plan: plans){
-					AppPlan ap = new AppPlan();
-					ap.setName(plan.getPlanName());
-					ap.setDuration(plan.getPlanDuration());
-					ap.setId(plan.getPlanId());
-					ap.setCreatedDate(plan.getCreatedAt());
-					appPlans.add(ap);
-				}
-				clearProgressBar();
-				planFragment.populatePlans(appPlans);				
 				planFragment.populateFindPlans(searchText.getText().toString());
 			}
 		});	
@@ -98,10 +76,10 @@ public class FindPlansActivity extends FragmentActivity {
 	}
 	
 	public void showProgressBar(){
-		pb.setVisibility(ProgressBar.VISIBLE);
+		//pb.setVisibility(ProgressBar.VISIBLE);
 	}
 
 	public void clearProgressBar(){
-		pb.setVisibility(ProgressBar.INVISIBLE);
+		//pb.setVisibility(ProgressBar.INVISIBLE);
 	}
 }
