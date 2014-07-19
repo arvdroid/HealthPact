@@ -67,19 +67,30 @@
             android:minHeight="30dp"
             android:text="Action Description"
             android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <ProgressBar
+            android:id="@+id/actionProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:max="100"
+            android:minHeight="20dp"
+            android:progress="30" />
     
-        <com.codepath.healthpact.listeners.PagerContainer
-        android:id="@+id/pager_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="#CCC">
-
+        <com.codepath.healthpact.container.PagerContainer
+	        android:id="@+id/pager_container"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="10dp"        
+	        android:background="#CCC">
+        
         <android.support.v4.view.ViewPager
-            android:layout_width="228dp"
-            android:layout_height="324dp"
-            android:layout_gravity="center_horizontal" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+        />
 
-        </com.codepath.healthpact.listeners.PagerContainer>
+        </com.codepath.healthpact.container.PagerContainer>
 
 </LinearLayout>

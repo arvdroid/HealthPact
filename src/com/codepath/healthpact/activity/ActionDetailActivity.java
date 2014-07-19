@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.codepath.healthpact.R;
-import com.codepath.healthpact.listeners.PagerContainer;
+import com.codepath.healthpact.container.PagerContainer;
 import com.codepath.healthpact.models.ParseProxyObject;
 
 public class ActionDetailActivity extends Activity {
