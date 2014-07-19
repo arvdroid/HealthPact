@@ -14,7 +14,6 @@ import android.view.View;
 import com.activeandroid.util.Log;
 import com.codepath.healthpact.models.Action;
 import com.codepath.healthpact.models.ActionPerPeriod;
-import com.codepath.healthpact.models.ActionPerPeriod.WeekRange;
 import com.codepath.healthpact.models.Plan;
 import com.codepath.healthpact.models.PlanAction;
 import com.codepath.healthpact.models.PlanShared;
@@ -793,72 +792,55 @@ public class ParseUtils {
 		}		
 	}
 	
-	public static void getPlanRelationPerDuration(String user_plan_id_param, String action_id_param, Date start_date_param, int duration) {
+	public static ActionPerPeriod getPlanRelationPerDuration(String user_plan_id_param, String action_id_param, Date start_date_param, Date end_date_param) {
 		
-	    GregorianCalendar gcal = new GregorianCalendar();
-		gcal.setTime(start_date_param);
+		ActionPerPeriod actionPerPeriod = new ActionPerPeriod();
+		//dipankar not required ActionPerPeriod.WeekRange currentWeek = actionPerPeriod.getCurrentWeek();
 		
-		gcal.add(Calendar.WEEK_OF_YEAR, duration);
-		Date end_date = gcal.getTime();
-		gcal.setTime(start_date_param);
+		// set current week start and end date
+		actionPerPeriod.setCurrentWeek();
 
-		Date currentDate = start_date_param;
+	    GregorianCalendar gcal = new GregorianCalendar();
+	    // set first day of week Monday
+	    gcal.setFirstDayOfWeek(Calendar.MONDAY);
+
+	    // remove the time portion of the date to get data by Query
+		gcal.setTime(start_date_param);
+		gcal.set(Calendar.HOUR_OF_DAY, 0);
+		gcal.clear(Calendar.MINUTE);
+		gcal.clear(Calendar.SECOND);
+		gcal.clear(Calendar.MILLISECOND);
+		start_date_param = gcal.getTime();  
 		
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(end_date_param);		
+	    calendar.set(Calendar.HOUR_OF_DAY, 23);
+	    calendar.set(Calendar.MINUTE, 59);
+	    calendar.set(Calendar.SECOND, 59);
+	    calendar.set(Calendar.MILLISECOND, 999);
+	    end_date_param = calendar.getTime();
+	    
+				
+		// get the query based on calculated start and end date
 		ParseQuery<UserPlanRelation> userPlanQuery = ParseQuery.getQuery(UserPlanRelation.class);
 		userPlanQuery.whereEqualTo("user_plan_id", user_plan_id_param);
 		userPlanQuery.whereEqualTo("action_id", action_id_param);
 		userPlanQuery.whereGreaterThanOrEqualTo("completion_date", start_date_param);
-		userPlanQuery.whereLessThan("completion_date", end_date);
+		userPlanQuery.whereLessThanOrEqualTo("completion_date", end_date_param);
+		userPlanQuery.addAscendingOrder("completion_date");
+		
 		try {
-			ArrayList<UserPlanRelation> userPlanRelation = (ArrayList<UserPlanRelation>) userPlanQuery.find();
-			ActionPerPeriod actionPerPeriod = new ActionPerPeriod();
-			ActionPerPeriod.WeekRange weekRange = new ActionPerPeriod().new WeekRange();
-			ArrayList<ActionPerPeriod.WeekRange> wr = new ArrayList<ActionPerPeriod.WeekRange>();
-			ArrayList<Boolean> daysUpdated = new ArrayList<Boolean>();
+			ArrayList<UserPlanRelation> userPlanRelation = (ArrayList<UserPlanRelation>) userPlanQuery.find();			
 			
-			Date previousDate = null;
-			Date enddt = null;
 			for (UserPlanRelation upr : userPlanRelation) {
-				if (previousDate == null) {
-					weekRange.setStartDate(upr.getCompletionDate());
-					previousDate = upr.getCompletionDate();
-					gcal.setTime(upr.getCompletionDate());
-					
-					gcal.add(Calendar.WEEK_OF_YEAR, 1);
-					enddt = gcal.getTime();
-				}
-				else if (enddt.getTime() == upr.getCompletionDate().getTime()){
-					wr.add(weekRange);
-					actionPerPeriod.setDaysUpdated(daysUpdated);
-
-					// set the current week pointer
-					if ((weekRange.getStartDate().getTime() > System.currentTimeMillis()) &&
-						(weekRange.getEndDate().getTime() < System.currentTimeMillis())) {
-						actionPerPeriod.setCurrentWeekPointer(wr.size() - 1);
-					}
-					
-					weekRange.setStartDate(upr.getCompletionDate());
-					previousDate = enddt;
-
-					gcal.setTime(upr.getCompletionDate());					
-					gcal.add(Calendar.WEEK_OF_YEAR, 1);
-					enddt = gcal.getTime();
-				}
-				else {
-					weekRange.setEndDate(upr.getCompletionDate());
-				}
-				
-				// set the current week pointer
-				if ((weekRange.getStartDate().getTime() > System.currentTimeMillis()) &&
-					(weekRange.getEndDate().getTime() < System.currentTimeMillis())) {
-					daysUpdated.add(upr.isUpdated());
-				}
-
+				actionPerPeriod.addToMap(upr.getCompletionDate(), upr.isUpdated());
 			}
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} 
+		
+		return actionPerPeriod;
 		
 /*		userPlanQuery.findInBackground(new FindCallback<UserPlanRelation>() {
 			@Override
@@ -872,6 +854,59 @@ public class ParseUtils {
 */
 	}   
 	
+	public static int getDayOfWeek(Date date) {
+		GregorianCalendar c = new GregorianCalendar();
+		c.setTime(date);
+		int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);	
+		return dayOfWeek;
+	}
+
+	
+	public static void setStartEndDateOfWeek(ActionPerPeriod.WeekRange weekRange, Date date) {
+	    GregorianCalendar gcal = new GregorianCalendar();
+	    
+	    // set provided date as parameter or currentdate as default
+		gcal.setTime(date);
+		
+	    // set first day of week Monday
+	    gcal.setFirstDayOfWeek(Calendar.MONDAY);
+
+		while (gcal.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
+			gcal.add(Calendar.DATE, -1);
+		}
+		
+		// get start of this week in milliseconds
+		gcal.set(Calendar.DAY_OF_WEEK, gcal.getFirstDayOfWeek());
+		Date current_week_start_date = gcal.getTime();
+		weekRange.setStartDate(current_week_start_date);
+
+		gcal.add(Calendar.WEEK_OF_YEAR, 1);
+		gcal.add(Calendar.DATE, -1);
+		Date current_week_end_date = gcal.getTime();
+		weekRange.setEndDate(current_week_end_date);
+	}
+	
+	public static void setCurrentWeekStartEndDate(ActionPerPeriod.WeekRange weekRange) {
+	    GregorianCalendar gcal = new GregorianCalendar();
+	    
+	    // set first day of week Monday
+	    gcal.setFirstDayOfWeek(Calendar.MONDAY);
+
+		while (gcal.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
+			gcal.add(Calendar.DATE, -1);
+		}
+		
+		// get start of this week in milliseconds
+		gcal.set(Calendar.DAY_OF_WEEK, gcal.getFirstDayOfWeek());
+		Date current_week_start_date = gcal.getTime();
+		weekRange.setStartDate(current_week_start_date);
+
+		gcal.add(Calendar.WEEK_OF_YEAR, 1);
+		gcal.add(Calendar.DATE, -1);
+		Date current_week_end_date = gcal.getTime();
+		weekRange.setEndDate(current_week_end_date);
+	}
+
 	public static void updatePlanRelation(String user_plan_id_param, String action_id_param, Date start_date_param, int duration) {
 		
 	    GregorianCalendar gcal = new GregorianCalendar();
