@@ -798,7 +798,7 @@ public class ParseUtils {
 		//dipankar not required ActionPerPeriod.WeekRange currentWeek = actionPerPeriod.getCurrentWeek();
 		
 		// set current week start and end date
-		actionPerPeriod.setCurrentWeek();
+		//not required dipankar actionPerPeriod.setCurrentWeek();
 
 	    GregorianCalendar gcal = new GregorianCalendar();
 	    // set first day of week Monday

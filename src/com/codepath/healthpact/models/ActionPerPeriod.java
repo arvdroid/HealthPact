@@ -9,6 +9,8 @@ import com.codepath.healthpact.parseUtils.ParseUtils;
 
 public class ActionPerPeriod {
 	private LinkedHashMap<Date, ActionPerDay> weekActionDateMap;
+	private WeekRange currentWeekRange;
+
 	private int currentWeekPointer = 0;
 	private boolean[] daysUpdated;
 	private WeekRange weekRange;
@@ -18,6 +20,7 @@ public class ActionPerPeriod {
 		weekActionDateMap = new LinkedHashMap<Date, ActionPerDay>();
 		daysUpdated = new boolean[7];
 		this.weekRange = new WeekRange();
+		this.currentWeekRange = new WeekRange();
 	}
 
 	public ActionPerPeriod(LinkedHashMap<Date, ActionPerDay> weekActionDateMap, int currentWeekPointer, boolean[] daysUpdated) {
@@ -28,7 +31,15 @@ public class ActionPerPeriod {
 	}
 
 	public WeekRange getCurrentWeek() {
-		return weekRange;
+		setCurrentWeekData();
+		return currentWeekRange;
+	}
+	
+	public void setCurrentWeekData() {
+		ParseUtils.setCurrentWeekStartEndDate(currentWeekRange);
+		if (weekActionDateMap.containsKey(currentWeekRange.getStartDate())) {
+			setDaysUpdated(weekActionDateMap.get(weekRange.getStartDate()).getDones());
+		}
 	}
 	
 	public void addToMap(Date date, boolean flag) {
@@ -48,7 +59,7 @@ public class ActionPerPeriod {
 			apd1.setDone(dayOfWeek, flag);
 			apd1.setWeek(weekRange);
 			weekActionDateMap.put(weekRange.getStartDate(), apd1);
-		}
+		}		
 	}
 	
 	public LinkedHashMap<Date, ActionPerDay> getResultSet() {
@@ -76,7 +87,7 @@ public class ActionPerPeriod {
 	}
 
 	public void setCurrentWeek() {
-		ParseUtils.setCurrentWeekStartEndDate(weekRange);
+		ParseUtils.setCurrentWeekStartEndDate(currentWeekRange);
 	}
 
 	public class ActionPerDay {
@@ -104,7 +115,7 @@ public class ActionPerPeriod {
 			this.done[day] = flag;
 		}
 		
-		public boolean[] getDaysUpdated() {
+		public boolean[] getDones() {
 			return done;
 		}
 	}
