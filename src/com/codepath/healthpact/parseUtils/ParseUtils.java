@@ -816,7 +816,13 @@ public class ParseUtils {
 		ParseQuery<UserPlanRelation> userPlanQuery = ParseQuery.getQuery(UserPlanRelation.class);
 		userPlanQuery.whereEqualTo("user_plan_id", user_plan_id);
 		userPlanQuery.whereEqualTo("action_id", action_id);
-		userPlanQuery.whereEqualTo("completion_date", date);
+		userPlanQuery.whereGreaterThanOrEqualTo("completion_date", date);
+		gcal.add(Calendar.DATE, 1);
+	    date = removeTimeFromDate(date);
+
+		userPlanQuery.whereLessThan("completion_date", gcal.getTime());
+
+
 		try {
 			userPlanRelation = (ArrayList<UserPlanRelation>) userPlanQuery.find();
 			if ((userPlanRelation != null) && (!userPlanRelation.isEmpty())) {
