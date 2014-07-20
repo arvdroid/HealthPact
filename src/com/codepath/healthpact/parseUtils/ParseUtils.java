@@ -20,6 +20,7 @@ import com.codepath.healthpact.models.PlanShared;
 import com.codepath.healthpact.models.UserPlan;
 import com.codepath.healthpact.models.UserPlanRelation;
 import com.parse.CountCallback;
+import com.parse.GetCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -440,6 +441,20 @@ public class ParseUtils {
 		}
 				
 		return followerCount;
+	}
+	
+	public static void updateUserPlanToFollow(String user_plan_id) {
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("UserPlan");
+
+		// Retrieve the object by id
+		query.getInBackground(user_plan_id, new GetCallback<ParseObject>() {
+			public void done(ParseObject userPlan, ParseException e) {
+				if (e == null) {
+					userPlan.put("plan_following", true);
+					userPlan.saveInBackground();
+				}
+			}
+		});
 	}
 
 	/**
