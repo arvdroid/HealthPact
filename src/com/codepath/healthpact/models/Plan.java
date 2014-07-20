@@ -35,6 +35,14 @@ public class Plan extends ParseObject {
 		return getString("plan_name");
 	}
 	
+	public void setCreatedBy(String created_by) {
+		put("created_by", created_by);
+	}
+
+	public String getCreatedBy() {
+		return getString("created_by");
+	}
+	
 	// Get the user for this item
 	public ParseUser getUser() {
 		return getParseUser("owner");

@@ -595,6 +595,7 @@ public class ParseUtils {
 				return;
 			}
 			
+			plan.setCreatedBy(ParseUser.getCurrentUser().getUsername());
 			plan.saveInBackground(new SaveCallback() {
 		        public void done(ParseException e) {
 		            if (e == null) {
