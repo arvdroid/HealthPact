@@ -35,7 +35,7 @@ public class ParseUtils {
 	public static int followingCount;
 	public static int followerCount;
 	public static ArrayList<UserPlanRelation> userPlanRelation = new ArrayList<UserPlanRelation>();
-	
+
 	public static void parseLoginForTesting() {
 		ParseUser.logInInBackground("dipankar", "dipankar", new LogInCallback() {
 			  public void done(ParseUser user, ParseException e) {
@@ -47,7 +47,7 @@ public class ParseUtils {
 			  }
 			});
 	}
-	
+
 	public static ParseUser getAppUserDetails(View v, final Context context, String appUserName) {
 
 		ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
@@ -61,7 +61,7 @@ public class ParseUtils {
 		return null;
 	}
 
-	
+
 	/**
 	 * Get all HealthPact users including the user requesting the information
 	 * @return ArrayList of ParseUsers
@@ -69,19 +69,19 @@ public class ParseUtils {
 	public static ArrayList<ParseUser> getAllUsers(boolean isCurrentUser) {
 
 		ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
-		
+
 		if (!isCurrentUser) {
 			query.whereNotEqualTo("objectId", ParseUser.getCurrentUser().getObjectId());
 		}
-		
+
 		ArrayList<ParseUser> allUsers = null;
-		
+
 		try {
 			allUsers = (ArrayList<ParseUser>) query.find();
 		} catch (ParseException parseEx) {
 			LogMsg(parseEx, 1);
 		}
-		
+
 		return allUsers;
 	}
 
@@ -89,7 +89,7 @@ public class ParseUtils {
 		UserPlanRelation user_plan_relation = null;
 		ParseQuery<UserPlanRelation> query = ParseQuery.getQuery(UserPlanRelation.class);
 		query.whereEqualTo("action_id", action_id);
-		query.whereEqualTo("user_plan_id", action_id);  
+		query.whereEqualTo("user_plan_id", action_id);
 		try {
 			user_plan_relation = (UserPlanRelation) query.find();
 		} catch (ParseException parseEx) {
@@ -98,7 +98,7 @@ public class ParseUtils {
 		}
 		return user_plan_relation;
 	}
-	
+
 	public static Action getAction(String name) {
 		Action action = null;
 		ParseQuery<Action> query = ParseQuery.getQuery(Action.class);
@@ -111,7 +111,7 @@ public class ParseUtils {
 		}
 		return action;
 	}
-	
+
 	/**
 	 * Get action for the provided plan
 	 * @param plan_id plan identifier
@@ -121,7 +121,7 @@ public class ParseUtils {
 		ArrayList<Action> actions = new ArrayList<Action>();
 		ParseQuery<PlanAction> query = ParseQuery.getQuery(PlanAction.class);
 		query.whereEqualTo("plan_id", plan_id);
-		
+
 		try {
 			ArrayList<PlanAction> plan_actions = (ArrayList<PlanAction>) query.find();
 			for (PlanAction plan_action : plan_actions) {
@@ -144,13 +144,13 @@ public class ParseUtils {
 
 		return actions;
 	}
-	
+
 	public static ParseQuery<PlanAction> getActionForPlanQuery(String plan_id) {
 		ParseQuery<PlanAction> query = ParseQuery.getQuery(PlanAction.class);
 		query.whereEqualTo("plan_id", plan_id);
 		return query;
 	}
-	
+
 	public static  ArrayList<Action> getActionsForPlan(List<PlanAction> plan_actions){
 		ArrayList<Action> actions = new ArrayList<Action>();
 		for (PlanAction plan_action : plan_actions) {
@@ -165,12 +165,12 @@ public class ParseUtils {
 			catch (ParseException parseEx) {
 				LogMsg(parseEx, 1);
 			}
-		}	
+		}
 
 		return actions;
 	}
 
-	
+
 	/**
 	 * Get plan detail for the provided user from UserPlan table
 	 * @param v View
@@ -180,10 +180,10 @@ public class ParseUtils {
 		ArrayList<UserPlan> userPlans = null;
 		ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
 		query.whereEqualTo("objectId", user_id);
-		
+
 		try {
 			ParseUser user = query.getFirst();
-			
+
 			ParseQuery<UserPlan> userPlanQuery = ParseQuery.getQuery(UserPlan.class);
 			userPlanQuery.whereEqualTo("user_id", user.getObjectId());
 			userPlans = (ArrayList<UserPlan>) userPlanQuery.find();
@@ -193,7 +193,7 @@ public class ParseUtils {
 
 		return userPlans;
 	}
-	
+
 	/**
 	 * Get plan detail for specific expertise
 	 * @param v View
@@ -201,7 +201,7 @@ public class ParseUtils {
 	 */
 	public static ArrayList<Plan> getPlansBasedOnExpertise(List<ParseUser> expertise) {
 		final ArrayList<Plan> allPlans = new ArrayList<Plan>();
-		
+
 		try {
 
 			ParseQuery<ParseUser> query = ParseUser.getQuery();
@@ -223,10 +223,10 @@ public class ParseUtils {
 		} catch (ParseException parseEx) {
 			LogMsg(parseEx, 1);
 		}
-		
+
 		return allPlans;
 	}
-	
+
 	/**
 	 * Get plan detail for specific expertise ...new code
 	 * @param v View
@@ -234,7 +234,7 @@ public class ParseUtils {
 	 */
 	public static ArrayList<Plan> getPlansBasedOnUsers(List<ParseUser> users) {
 		final ArrayList<Plan> allPlans = new ArrayList<Plan>();
-		
+
 		try {
 
 			for (ParseUser user : users) {
@@ -252,19 +252,19 @@ public class ParseUtils {
 		} catch (ParseException parseEx) {
 			LogMsg(parseEx, 1);
 		}
-		
+
 		return allPlans;
 	}
 
-	public static ParseQuery<ParseUser> getUserBasedOnExpertise(String expertise) {		
+	public static ParseQuery<ParseUser> getUserBasedOnExpertise(String expertise) {
 		ParseQuery<ParseUser> query = ParseUser.getQuery();
 		query.whereEqualTo("Expertise", expertise);
 
-		return query;		
+		return query;
 	}
 
 	public static ParseQuery<Plan> getPlansBasedOnExpertise1(String expertise) {
-		
+
 
 		try {
 			ParseQuery<ParseUser> query = ParseUser.getQuery();
@@ -274,16 +274,16 @@ public class ParseUtils {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		ParseQuery<Plan> searchPlansQuery = ParseQuery.getQuery(Plan.class);
 		searchPlansQuery.whereEqualTo("created_by", currentUserId);
 
 		return searchPlansQuery;
 
-		
+
 	}
-	
-	
+
+
 	/**
 	 * Get userplan data for the specific user and plan
 	 * @param user_plan_object_id objectId from userplan table
@@ -292,14 +292,14 @@ public class ParseUtils {
 	public static UserPlan getUserPlan(String user_plan_object_id) {
 		ParseQuery<UserPlan> query = new ParseQuery<UserPlan>("UserPlan");
 		UserPlan userplan = null;
-		
+
 		query.whereEqualTo("objectId", user_plan_object_id);
 		try {
 			userplan = query.getFirst();
 		} catch (ParseException e) {
 			LogMsg(e,1);
 		}
-		
+
 		return userplan;
 	}
 
@@ -318,7 +318,7 @@ public class ParseUtils {
 		query.whereStartsWith("plan_desc", partialPlanName);
 		query.whereMatchesQuery("plan_id", innerUserPlanQuery);
 
-		
+
 		try {
 			plans = (ArrayList<Plan>) query.find();
 		} catch (ParseException parseEx) {
@@ -341,7 +341,7 @@ public class ParseUtils {
 		ParseQuery<UserPlan> userPlanQuery = ParseQuery
 				.getQuery(UserPlan.class);
 		userPlanQuery.whereEqualTo("user_id", ParseUser.getCurrentUser().getObjectId());
-		
+
 		try {
 			userPlans = (ArrayList<UserPlan>) userPlanQuery.find();
 			for (UserPlan up : userPlans) {
@@ -351,11 +351,11 @@ public class ParseUtils {
 		} catch (ParseException parseEx) {
 			LogMsg(parseEx, 1);
 		}
-		
+
 		userPlansList = userPlans;
 		return userPlans;
 	}
-	
+
 	/**
 	 * Get plan detail for the current user from UserPlan table
 	 * @param v View
@@ -374,8 +374,8 @@ public class ParseUtils {
 		userPlansList = userPlans;
 		return userPlans;
 	}
-	
-	
+
+
 	public static ParseQuery<UserPlan> getUserFollowedPlans() {
 		ParseQuery<UserPlan> userPlanQuery = ParseQuery.getQuery(UserPlan.class);
 		userPlanQuery.whereEqualTo("user_id", ParseUser.getCurrentUser().getObjectId());
@@ -403,7 +403,7 @@ public class ParseUtils {
 				}
 			}
 		});
-		
+
 		return followingCount;
 	}
 
@@ -435,14 +435,14 @@ public class ParseUtils {
 				});
 				*/
 			}
-			
+
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
-				
+
 		return followerCount;
 	}
-	
+
 	/**
 	 * Get plan for the current user from Plan table
 	 * @param v View
@@ -450,7 +450,7 @@ public class ParseUtils {
 	 */
 	public static ArrayList<Plan> getPlansCreatedByCurrentUser() {
 		ArrayList<Plan> allPlans = new ArrayList<Plan>();
-		
+
 		ParseQuery<UserPlan> userPlanQuery = ParseQuery.getQuery(UserPlan.class);
 		userPlanQuery.whereEqualTo("created_by", currentUserId);
 		//userPlanQuery.whereEqualTo("plan_following", false);
@@ -466,7 +466,7 @@ public class ParseUtils {
 		} catch (ParseException e) {
 			LogMsg(e,1);
 		}
-		
+
 		return allPlans;
 	}
 
@@ -476,10 +476,10 @@ public class ParseUtils {
 	 * @return a list of user plans
 	 */
 	public static ParseQuery<UserPlan> getPlansCreatedByCurrentUser1() {
-	
+
 		ParseQuery<UserPlan> userPlanQuery = ParseQuery.getQuery(UserPlan.class);
 		userPlanQuery.whereEqualTo("created_by", currentUserId);
-		
+
 		return userPlanQuery;
 	}
 
@@ -495,7 +495,7 @@ public class ParseUtils {
 		planShared.setPlan_id(plan_id);
 		planShared.saveInBackground();
 	}
-	
+
 
 	/**
 	 * Get shared plan detail for the provided user from SharedPlan table
@@ -506,7 +506,7 @@ public class ParseUtils {
 		ArrayList<PlanShared> plansShared = null;
 		ParseQuery<ParseUser> query = ParseQuery.getQuery(ParseUser.class);
 		query.whereEqualTo("objectId", user_id);
-		
+
 		try {
 			ParseUser user = query.getFirst();
 
@@ -528,13 +528,13 @@ public class ParseUtils {
 		ArrayList<PlanShared> plansShared = null;
 		ParseQuery<PlanShared> userSharedPlanQuery = ParseQuery.getQuery(PlanShared.class);
 		userSharedPlanQuery.whereEqualTo("user_id", ParseUser.getCurrentUser().getObjectId());
-		
+
 		/*try {
 			plansShared = (ArrayList<PlanShared>) userSharedPlanQuery.find();
 		} catch (ParseException parseEx) {
 			LogMsg(parseEx, 1);
 		}*/
-		return userSharedPlanQuery;		
+		return userSharedPlanQuery;
 	}
 
 	/**
@@ -546,13 +546,13 @@ public class ParseUtils {
 		ArrayList<PlanShared> plansShared = null;
 		ParseQuery<PlanShared> userSharedPlanQuery = ParseQuery.getQuery(PlanShared.class);
 		userSharedPlanQuery.whereEqualTo("user_id", ParseUser.getCurrentUser().getObjectId());
-		
+
 		try {
 			plansShared = (ArrayList<PlanShared>) userSharedPlanQuery.find();
 		} catch (ParseException parseEx) {
 			LogMsg(parseEx, 1);
 		}
-		return plansShared;		
+		return plansShared;
 	}
 
 	/**
@@ -581,13 +581,13 @@ public class ParseUtils {
 		ArrayList<PlanShared> plansShared = null;
 		ParseQuery<PlanShared> userSharedPlanQuery = ParseQuery.getQuery(PlanShared.class);
 		userSharedPlanQuery.whereEqualTo("user_id", ParseUser.getCurrentUser().getObjectId());
-		
+
 		try {
 			plansShared = (ArrayList<PlanShared>) userSharedPlanQuery.find();
 		} catch (ParseException parseEx) {
 			LogMsg(parseEx, 1);
 		}
-		return plansShared;		
+		return plansShared;
 	}
 
 	public static void createPlan(final Plan plan, final List<Action> actions) {
@@ -595,7 +595,7 @@ public class ParseUtils {
 			if ((plan.getPlanDesc() == null) || (plan.getPlanDesc().isEmpty())) {
 				return;
 			}
-			
+
 			plan.setCreatedBy(ParseUser.getCurrentUser().getUsername());
 			plan.saveInBackground(new SaveCallback() {
 		        public void done(ParseException e) {
@@ -605,17 +605,17 @@ public class ParseUtils {
 		                final String plan_id = plan.getObjectId();
 		                Log.d(TAG, "The object id is: " + plan_id);
 		                if (plan_id != null) {
-		                	
+
 		                	final UserPlan userplan = new UserPlan();
 		                	userplan.setPlan_id(plan_id);
 		                	userplan.setUser_id(currentUserId);
 		                	userplan.setCreatedBy(currentUserId);
 		                	userplan.setPlan_following(false);
-		                	
+
 							userplan.saveInBackground(new SaveCallback() {
 								public void done(ParseException e) {
 									if (e == null) {
-										
+
 										//get Actions
 										if (actions != null) {
 											for (final Action action : actions) {
@@ -636,7 +636,7 @@ public class ParseUtils {
 											                Log.d(TAG, "User Plan save error: " + e);
 														}
 													}
-												});									
+												});
 											}
 										}
 
@@ -652,17 +652,17 @@ public class ParseUtils {
 		                Log.d(TAG, "Plan save error: " + e);
 		            }
 		        }
-		    });			
-		}		
-		
+		    });
+		}
+
 	}
-	
+
 	public static void createPlanWithDuration(final Plan plan, final List<Action> actions, final int duration) {
 		if ((plan != null) && (actions != null)) {
 			if ((plan.getPlanDesc() == null) || (plan.getPlanDesc().isEmpty())) {
 				return;
 			}
-			
+
 			plan.saveInBackground(new SaveCallback() {
 		        public void done(ParseException e) {
 		            if (e == null) {
@@ -671,16 +671,16 @@ public class ParseUtils {
 		                final String plan_id = plan.getObjectId();
 		                Log.d(TAG, "The object id is: " + plan_id);
 		                if (plan_id != null) {
-		                	
+
 		                	final UserPlan userplan = new UserPlan();
 		                	userplan.setPlan_id(plan_id);
 		                	userplan.setUser_id(ParseUser.getCurrentUser().getObjectId());
 		                	setupRelation(userplan, duration);
-		                	
+
 							userplan.saveInBackground(new SaveCallback() {
 								public void done(ParseException e) {
 									if (e == null) {
-										
+
 										//get Actions
 										if (actions != null) {
 											for (final Action action : actions) {
@@ -701,7 +701,7 @@ public class ParseUtils {
 											                Log.d(TAG, "User Plan save error: " + e);
 														}
 													}
-												});									
+												});
 											}
 										}
 
@@ -724,25 +724,25 @@ public class ParseUtils {
 					c.setTime(userplan.getPlan_start_date());
 					c.add(Calendar.WEEK_OF_YEAR, duration);
 					userplan.setPlan_end_date(c.getTime());
-					
+
 				}
-		    });			
-		}		
-		
+		    });
+		}
+
 	}
-	
-	
+
+
 	public static void updatePlanFollowedByUser(String plan_id, Date start_date, int duration, List<Action> actions) {
-		
+
 		ArrayList<UserPlan> userPlans = null;
-		
+
 		//Calendar c = Calendar.getInstance();
 	    GregorianCalendar c = new GregorianCalendar();
 
 		c.setTime(start_date);
 		//c.add(Calendar.DATE, -1);
 		start_date = c.getTime();
-		
+
 		c.add(Calendar.WEEK_OF_YEAR, duration);
 		Date end_date = c.getTime();
 
@@ -755,8 +755,8 @@ public class ParseUtils {
 				for (UserPlan up : userPlans) {
 					up.setPlan_start_date(start_date);
 					up.setPlan_end_date(end_date);
-					up.setPlan_following(true);   
-					up.saveEventually();  
+					up.setPlan_following(true);
+					up.saveEventually();
 					for (Action action : actions) {
 						updatePlanRelation(up.getObjectId(), action.getObjectId(), start_date, duration);
 					}
@@ -769,7 +769,7 @@ public class ParseUtils {
 				userPlan.setPlan_following(true);
 				userPlan.setPlan_start_date(start_date);
 				userPlan.setPlan_end_date(end_date);
-				userPlan.saveEventually();				
+				userPlan.saveEventually();
 				for (Action action : actions) {
 					updatePlanRelation(userPlan.getObjectId(), action.getObjectId(), start_date, duration);
 				}
@@ -778,9 +778,12 @@ public class ParseUtils {
 			LogMsg(parseEx, 1);
 		}
 	}
-	
-	public static void updateIndividualActionPerPlan(String user_plan_id, String action_id, Date date, boolean status) {
+
+	public static void updateIndividualActionPerPlan(String user_plan_id, String action_id, boolean status) {
 		ArrayList<UserPlanRelation> userPlanRelation = null;
+	    GregorianCalendar gcal = new GregorianCalendar();
+	    Date date = gcal.getTime();
+	    date = removeTimeFromDate(date);
 
 		ParseQuery<UserPlanRelation> userPlanQuery = ParseQuery.getQuery(UserPlanRelation.class);
 		userPlanQuery.whereEqualTo("user_plan_id", user_plan_id);
@@ -790,21 +793,21 @@ public class ParseUtils {
 			userPlanRelation = (ArrayList<UserPlanRelation>) userPlanQuery.find();
 			if ((userPlanRelation != null) && (!userPlanRelation.isEmpty())) {
 				for (UserPlanRelation up : userPlanRelation) {
-					up.setUpdated(status);   
-					up.saveEventually();  
+					up.setUpdated(status);
+					up.saveEventually();
 				}
 			}
 
 		} catch (ParseException parseEx) {
 			LogMsg(parseEx, 1);
-		}		
+		}
 	}
-	
+
 	public static ActionPerPeriod getPlanRelationPerDuration(String user_plan_id_param, String action_id_param, Date start_date_param, Date end_date_param) {
-		
+
 		ActionPerPeriod actionPerPeriod = new ActionPerPeriod();
 		//dipankar not required ActionPerPeriod.WeekRange currentWeek = actionPerPeriod.getCurrentWeek();
-		
+
 		// set current week start and end date
 		//not required dipankar actionPerPeriod.setCurrentWeek();
 
@@ -818,17 +821,17 @@ public class ParseUtils {
 		gcal.clear(Calendar.MINUTE);
 		gcal.clear(Calendar.SECOND);
 		gcal.clear(Calendar.MILLISECOND);
-		start_date_param = gcal.getTime();  
-		
+		start_date_param = gcal.getTime();
+
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(end_date_param);		
+		calendar.setTime(end_date_param);
 	    calendar.set(Calendar.HOUR_OF_DAY, 23);
 	    calendar.set(Calendar.MINUTE, 59);
 	    calendar.set(Calendar.SECOND, 59);
 	    calendar.set(Calendar.MILLISECOND, 999);
 	    end_date_param = calendar.getTime();
-	    
-				
+
+
 		// get the query based on calculated start and end date
 		ParseQuery<UserPlanRelation> userPlanQuery = ParseQuery.getQuery(UserPlanRelation.class);
 		userPlanQuery.whereEqualTo("user_plan_id", user_plan_id_param);
@@ -836,20 +839,20 @@ public class ParseUtils {
 		userPlanQuery.whereGreaterThanOrEqualTo("completion_date", start_date_param);
 		userPlanQuery.whereLessThanOrEqualTo("completion_date", end_date_param);
 		userPlanQuery.addAscendingOrder("completion_date");
-		
+
 		try {
-			ArrayList<UserPlanRelation> userPlanRelation = (ArrayList<UserPlanRelation>) userPlanQuery.find();			
-			
+			ArrayList<UserPlanRelation> userPlanRelation = (ArrayList<UserPlanRelation>) userPlanQuery.find();
+
 			for (UserPlanRelation upr : userPlanRelation) {
 				actionPerPeriod.addToMap(upr.getCompletionDate(), upr.isUpdated());
 			}
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		} 
-		
+		}
+
 		return actionPerPeriod;
-		
+
 /*		userPlanQuery.findInBackground(new FindCallback<UserPlanRelation>() {
 			@Override
 			public void done(List<UserPlanRelation> retreivedResult, ParseException e) {
@@ -860,29 +863,41 @@ public class ParseUtils {
 
 		});
 */
-	}   
+	}
+
+	private static Date removeTimeFromDate(Date date) {
+		GregorianCalendar gcal = new GregorianCalendar();
+
+		// remove the time portion of the date to get data by Query
+		gcal.setTime(date);
+		gcal.set(Calendar.HOUR_OF_DAY, 0);
+		gcal.clear(Calendar.MINUTE);
+		gcal.clear(Calendar.SECOND);
+		gcal.clear(Calendar.MILLISECOND);
+		return (gcal.getTime());
+	}
 	
 	public static int getDayOfWeek(Date date) {
 		GregorianCalendar c = new GregorianCalendar();
 		c.setTime(date);
-		int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);	
+		int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
 		return dayOfWeek;
 	}
 
-	
+
 	public static void setStartEndDateOfWeek(ActionPerPeriod.WeekRange weekRange, Date date) {
 	    GregorianCalendar gcal = new GregorianCalendar();
-	    
+
 	    // set provided date as parameter or currentdate as default
 		gcal.setTime(date);
-		
+
 	    // set first day of week Monday
 	    gcal.setFirstDayOfWeek(Calendar.MONDAY);
 
 		while (gcal.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
 			gcal.add(Calendar.DATE, -1);
 		}
-		
+
 		// get start of this week in milliseconds
 		gcal.set(Calendar.DAY_OF_WEEK, gcal.getFirstDayOfWeek());
 		Date current_week_start_date = gcal.getTime();
@@ -893,17 +908,17 @@ public class ParseUtils {
 		Date current_week_end_date = gcal.getTime();
 		weekRange.setEndDate(current_week_end_date);
 	}
-	
+
 	public static void setCurrentWeekStartEndDate(ActionPerPeriod.WeekRange weekRange) {
 	    GregorianCalendar gcal = new GregorianCalendar();
-	    
+
 	    // set first day of week Monday
 	    gcal.setFirstDayOfWeek(Calendar.MONDAY);
 
 		while (gcal.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
 			gcal.add(Calendar.DATE, -1);
 		}
-		
+
 		// get start of this week in milliseconds
 		gcal.set(Calendar.DAY_OF_WEEK, gcal.getFirstDayOfWeek());
 		Date current_week_start_date = gcal.getTime();
@@ -916,10 +931,10 @@ public class ParseUtils {
 	}
 
 	public static void updatePlanRelation(String user_plan_id_param, String action_id_param, Date start_date_param, int duration) {
-		
+
 	    GregorianCalendar gcal = new GregorianCalendar();
 		gcal.setTime(start_date_param);
-		
+
 		gcal.add(Calendar.WEEK_OF_YEAR, duration);
 		Date end_date = gcal.getTime();
 		gcal.setTime(start_date_param);
@@ -930,16 +945,29 @@ public class ParseUtils {
 				break;
 			}
 			UserPlanRelation upr = new UserPlanRelation();
+			currentDate = removeTimeFromDate(currentDate);
 			upr.setCompletionDate(currentDate);
 			upr.setUserPlanId(user_plan_id_param);
 			upr.setActionId(action_id_param);
 			upr.setUpdated(false);
 
-			//upr.saveEventually();
+/*			upr.pinInBackground( new SaveCallback( ) {
+
+			    @Override
+			    public void done( ParseException e ) {
+			        if( e == null ) {
+			            //success
+			        } else {
+			            //fail
+			        }
+			    }
+			} );
+*/			
 			try {
 				upr.save();
 			} catch (ParseException e) {
-				LogMsg(e, 1);
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 
 			gcal.add(Calendar.DATE, 1);
@@ -965,22 +993,22 @@ public class ParseUtils {
 
 	public static String getExpertise() {
 		ParseUser user = ParseUser.getCurrentUser();
-		String expertise = (String) user.get("Expertise");		
+		String expertise = (String) user.get("Expertise");
 		return expertise;
 	}
 
 	public static String getLocation() {
 		ParseUser user = ParseUser.getCurrentUser();
-		String location = (String) user.get("location");		
+		String location = (String) user.get("location");
 		return location;
 	}
 
 	public static String getDescription() {
 		ParseUser user = ParseUser.getCurrentUser();
-		String description = (String) user.get("desc");		
+		String description = (String) user.get("desc");
 		return description;
 	}
-	
+
 	/**
 	 * Log message for any parse message with log level
 	 * @param ex exception
