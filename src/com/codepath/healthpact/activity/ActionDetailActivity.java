@@ -53,7 +53,7 @@ public class ActionDetailActivity extends Activity {
         // make this at least however many pages you can see
         pager.setOffscreenPageLimit(adapter.getCount());
         //A little space between pages
-        pager.setPageMargin(15);
+        pager.setPageMargin(10);
  
         //If hardware acceleration is enabled, you should also remove
         // clipping on the pager for its children.
