@@ -794,9 +794,10 @@ public class ParseUtils {
 		userPlanQuery.whereEqualTo("action_id", action_id);
 		userPlanQuery.whereGreaterThanOrEqualTo("completion_date", date);
 		gcal.add(Calendar.DATE, 1);
+	    date = gcal.getTime();
 	    date = removeTimeFromDate(date);
 
-		userPlanQuery.whereLessThan("completion_date", gcal.getTime());
+		userPlanQuery.whereLessThan("completion_date", date);
 		
 		try {
 			userPlanRelation = (UserPlanRelation) userPlanQuery.getFirst();
@@ -818,9 +819,10 @@ public class ParseUtils {
 		userPlanQuery.whereEqualTo("action_id", action_id);
 		userPlanQuery.whereGreaterThanOrEqualTo("completion_date", date);
 		gcal.add(Calendar.DATE, 1);
+	    date = gcal.getTime();
 	    date = removeTimeFromDate(date);
 
-		userPlanQuery.whereLessThan("completion_date", gcal.getTime());
+		userPlanQuery.whereLessThan("completion_date", date);
 
 
 		try {

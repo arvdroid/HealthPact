@@ -41,12 +41,14 @@ public class ActionArrayAdapter extends ArrayAdapter<Action> {
 		}
 		TextView tvUserActionName = (TextView) view.findViewById(com.codepath.healthpact.R.id.tvUserActionName);		
 		ToggleButton tbActionDone = (ToggleButton) view.findViewById(R.id.tbactionDone);
-		
-		
+		final Drawable onD = (Drawable) view.getResources().getDrawable(R.drawable.custom_action_done_pressed);
+		final Drawable offD = (Drawable)view.getResources().getDrawable(R.drawable.custom_action_done);
+		if(useraction.getUpdated()){
+			tbActionDone.setBackground(onD);
+		}
 		tvUserActionName.setText(useraction.getActionName());
 		if(followed){
-			final Drawable onD = (Drawable) view.getResources().getDrawable(R.drawable.custom_action_done_pressed);
-			final Drawable offD = (Drawable)view.getResources().getDrawable(R.drawable.custom_action_done);
+			
 			tbActionDone.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {

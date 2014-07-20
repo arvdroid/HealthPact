@@ -61,7 +61,7 @@ public class PlanViewActivity extends FragmentActivity {
 			public void onDateSet(DatePicker view, int year, int monthOfYear,
 					int dayOfMonth) {
 				
-				//calender.set(year, monthOfYear, dayOfMonth, 0, 0);
+				calender.set(year, monthOfYear, dayOfMonth, 0, 0);
 				//Toast.makeText(PlanViewActivity.this,String.valueOf(year) + "-" + String.valueOf(monthOfYear+1)+ "-" + String.valueOf(dayOfMonth),Toast.LENGTH_LONG).show();
 				
 				if(!OndateSet){

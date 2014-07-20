@@ -54,7 +54,7 @@ public class UserActionsFragment extends Fragment{
 		((ActionArrayAdapter)actionarrayadapter).setUsrPlanid(plan.getUsrPlanid());
 	}
 	
-	public void populateActions(AppPlan plan) {		
+	public void populateActions(final AppPlan plan) {		
 		updateActionAdapter(plan);
 		actionarrayadapter.clear();
 		String id = plan.getId();
@@ -66,6 +66,11 @@ public class UserActionsFragment extends Fragment{
 			public void done(List<PlanAction> planActions, ParseException parseEx) {
 				if (parseEx == null) {
 					List<Action> actions = ParseUtils.getActionsForPlan(planActions);
+					for (Action action : actions) {
+						boolean updated = ParseUtils.getIndividualActionPerPlan(plan.getUsrPlanid(), action.getObjectId());
+						action.setUpdated(updated);
+					}
+					
 					clearProgressBar();
 					actionarrayadapter.addAll(actions);
 				}else{
