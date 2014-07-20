@@ -28,6 +28,7 @@ public class PlanViewActivity extends FragmentActivity {
 	Calendar calender = Calendar.getInstance();
 	OnDateSetListener ondate;
 	AppPlan result;
+	Menu menu;
 	String pattern = "MM/dd/yyyy";
 	SimpleDateFormat format = new SimpleDateFormat(pattern);
 	UserActionsFragment actionsFragment;
@@ -51,10 +52,6 @@ public class PlanViewActivity extends FragmentActivity {
 		pCreatedAt.setText(format.format(result.getCreatedDate()));
 		pCreatedBy.setText("Created By: " + result.getUsrName());
 		
-		Button bFollowPlan =  (Button)findViewById(R.id.bFollowPlan);
-		if(result.getFollowed()){
-			bFollowPlan.setVisibility(View.INVISIBLE);
-		}
 				
 		ondate = new OnDateSetListener() {
 			@Override
@@ -78,38 +75,23 @@ public class PlanViewActivity extends FragmentActivity {
 		actionsFragment.populateActions(result);
 	}
 	
-	public void onFollowPlan(View v) {
-		DatePickerFragment date = new DatePickerFragment();
-		/**
-		 * Set Up Current Date Into dialog
-		 */
-		Bundle args = new Bundle();
-		args.putInt("year", calender.get(Calendar.YEAR));
-		args.putInt("month", calender.get(Calendar.MONTH));
-		args.putInt("day", calender.get(Calendar.DAY_OF_MONTH));
-		date.setArguments(args);
-		/**
-		 * Set Call back to capture selected date
-		 */
-		date.setCallBack(ondate);
-		date.show(getSupportFragmentManager(), "Date Picker");
-	}
 	
-	public void onSharePlan(View v) {
-		FragmentManager fm = getSupportFragmentManager();		
-		ShareUserDialog shareDialog = new ShareUserDialog();
-		Bundle args = new Bundle();
-		args.putString("planid", result.getId());
-		args.putString("usrplanid", result.getUsrPlanid());
-		shareDialog.setArguments(args);
-		shareDialog.show(fm, "");
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
+		this.menu = menu;
 		getMenuInflater().inflate(R.menu.plan_view, menu);		
 		return true;
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		if(result.getFollowed()) {
+		    menu.findItem(R.id.action_follow).setVisible(false);
+		}
+		return super.onPrepareOptionsMenu(menu);
 	}
 
 	@Override
@@ -122,6 +104,29 @@ public class PlanViewActivity extends FragmentActivity {
 			Intent i = new Intent(this, HomeViewActivity.class);
 			startActivity(i);
 			return true;
+		} if(id == R.id.action_share) {
+			FragmentManager fm = getSupportFragmentManager();		
+			ShareUserDialog shareDialog = new ShareUserDialog();
+			Bundle args = new Bundle();
+			args.putString("planid", result.getId());
+			args.putString("usrplanid", result.getUsrPlanid());
+			shareDialog.setArguments(args);
+			shareDialog.show(fm, "");
+		} if(id == R.id.action_follow) {
+			DatePickerFragment date = new DatePickerFragment();
+			/**
+			 * Set Up Current Date Into dialog
+			 */
+			Bundle args = new Bundle();
+			args.putInt("year", calender.get(Calendar.YEAR));
+			args.putInt("month", calender.get(Calendar.MONTH));
+			args.putInt("day", calender.get(Calendar.DAY_OF_MONTH));
+			date.setArguments(args);
+			/**
+			 * Set Call back to capture selected date
+			 */
+			date.setCallBack(ondate);
+			date.show(getSupportFragmentManager(), "Date Picker");
 		}
 		return super.onOptionsItemSelected(item);
 	}

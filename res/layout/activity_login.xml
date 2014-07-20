@@ -6,69 +6,74 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/healthpact"
     tools:context=".LoginActivity" >
     
-    
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:padding="10dp" >
+   <LinearLayout
+       android:id="@+id/linearLayout1"
+       android:layout_width="fill_parent"
+       android:layout_height="150dp"
+       android:layout_alignParentBottom="true"
+       android:layout_alignParentLeft="true"
+       android:alpha="0.7"
+       android:background="#000040"
+       android:orientation="vertical" >
 
         <EditText
             android:id="@+id/etUserName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edittext_top_bg"
+            android:textColor="#FFFFFF"
+            android:ems="10"
             android:drawableLeft="@drawable/user"
-            android:hint="UserName"
-            android:padding="10dp"
-            android:textColorHint="#cccccc" />
-
+            android:hint="UserName" />
+                
+       
         <EditText
             android:id="@+id/etPass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-2dp"
-            android:background="@drawable/edittext_bottom_bg"
-            android:drawableLeft="@drawable/password"
+            android:textColor="#FFFFFF"
+            android:ems="10"
             android:hint="Password"
-            android:padding="10dp"
-            android:password="true"
-            android:textColorHint="#cccccc" />
-
-        <Button
+            android:inputType="textPassword" 
+            android:drawableLeft="@drawable/password"/>
+        
+       <LinearLayout android:id="@+id/linearLayout2"
+        android:layout_width="fill_parent"
+        android:background="#000040"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+           
+          <Button
             android:id="@+id/btnSingIn"
-            style="@style/DefaultButtonText"
-            android:layout_width="match_parent"
+            android:layout_width="145dp"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:background="@drawable/button_default_bg"
+            android:background="@drawable/action_button_layout" 
             android:onClick="parseLogin"
-            android:padding="10dp"
             android:text="Sign In" />
-    </LinearLayout>
-    
-     <TextView
+          
+           <TextView
         android:id="@+id/or"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp"
-        android:text="--OR--" />
+        android:textColor="#FFFFFF"
+        android:text="    " />
 
     <Button
         android:id="@+id/btnSignUp"
-        style="@style/DefaultButtonText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/or"
-        android:layout_margin="16dp"
+        android:background="@drawable/action_button_layout"
         android:onClick="onSignUp"
-        android:background="@drawable/button_default_bg"
-        android:padding="10dp"
         android:text="Sign Up" />
+           
+       </LinearLayout> 
+   
+
+
+    </LinearLayout>
+    
+    
+    
 </RelativeLayout>
