@@ -29,14 +29,6 @@ import com.codepath.healthpact.parseUtils.ParseUtils;
 
 public class ActionDetailActivity extends Activity {
 	
-	ToggleButton tbM;
-	ToggleButton tbT;
-	ToggleButton tbW;
-	ToggleButton tbTh;
-	ToggleButton tbF;
-	ToggleButton tbSa;
-	ToggleButton tbS;
-	
 	Drawable onD;
 	
     PagerContainer mContainer;
