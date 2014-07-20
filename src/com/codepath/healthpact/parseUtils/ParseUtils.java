@@ -117,6 +117,64 @@ public class ParseUtils {
 	}
 
 	/**
+	 * Get % of Plan completed
+	 * @param plan_id plan identifier
+	 * @return %Plan Completed
+	 */
+	public static float getPlanCompleted(String plan_id) {
+		float val = 0;
+		ParseQuery<UserPlan> query = ParseQuery.getQuery(UserPlan.class);
+		query.whereEqualTo("plan_id", plan_id);
+		query.whereEqualTo("user_id", currentUserId);
+
+		try {
+			UserPlan userPlan = (UserPlan) query.getFirst();
+			ParseQuery<UserPlanRelation> upr = ParseQuery.getQuery(UserPlanRelation.class);
+			upr.whereEqualTo("user_plan_id", userPlan.getObjectId());
+			float totCount = upr.count();
+			upr.whereEqualTo("updated", true);
+			float totCompleted = upr.count();
+			val = (totCompleted/totCount) * 100;
+		} catch (ParseException ex) {
+			LogMsg(ex, 1);
+		}
+
+		return val;
+	}
+
+	
+	/**
+	 * Get % of Action completed for that Plan
+	 * @param plan_id plan identifier
+	 * @param action_id action identifier
+	 * @return %PlanAction Completed
+	 */
+	public static float getPlanActionCompleted(String plan_id, String action_id) {
+		float val = 0;
+		ParseQuery<UserPlan> query = ParseQuery.getQuery(UserPlan.class);
+		query.whereEqualTo("plan_id", plan_id);
+		query.whereEqualTo("user_id", currentUserId);
+
+		try {
+			UserPlan userPlan = (UserPlan) query.getFirst();
+			ParseQuery<UserPlanRelation> upr = ParseQuery.getQuery(UserPlanRelation.class);
+			upr.whereEqualTo("user_plan_id", userPlan.getObjectId());
+			upr.whereEqualTo("action_id", action_id);
+			float totCount = upr.count();
+			upr.whereEqualTo("updated", true);
+			float totCompleted = upr.count();
+			val = (totCompleted/totCount) * 100;
+		} catch (ParseException ex) {
+			LogMsg(ex, 1);
+		}
+
+		return val;
+	}
+
+	
+	
+	
+	/**
 	 * Get action for the provided plan
 	 * @param plan_id plan identifier
 	 * @return a list of actions specific to the provided plan
