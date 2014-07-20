@@ -34,6 +34,10 @@ public class ParseUtils {
 	public static String currentUserId = ParseUser.getCurrentUser().getObjectId();
 	public static int followingCount;
 	public static int followerCount;
+	
+	private static String user_plan_id;
+	private static String action_id;
+	
 	public static ArrayList<UserPlanRelation> userPlanRelation = new ArrayList<UserPlanRelation>();
 
 	public static void parseLoginForTesting() {
@@ -779,6 +783,30 @@ public class ParseUtils {
 		}
 	}
 
+	public static boolean getIndividualActionPerPlan(String user_plan_id, String action_id) {
+		UserPlanRelation userPlanRelation = null;
+	    GregorianCalendar gcal = new GregorianCalendar();
+	    Date date = gcal.getTime();
+	    date = removeTimeFromDate(date);
+
+		ParseQuery<UserPlanRelation> userPlanQuery = ParseQuery.getQuery(UserPlanRelation.class);
+		userPlanQuery.whereEqualTo("user_plan_id", user_plan_id);
+		userPlanQuery.whereEqualTo("action_id", action_id);
+		userPlanQuery.whereGreaterThanOrEqualTo("completion_date", date);
+		gcal.add(Calendar.DATE, 1);
+	    date = removeTimeFromDate(date);
+
+		userPlanQuery.whereLessThan("completion_date", gcal.getTime());
+		
+		try {
+			userPlanRelation = (UserPlanRelation) userPlanQuery.getFirst();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			return userPlanRelation.isUpdated();
+	}
+
 	public static void updateIndividualActionPerPlan(String user_plan_id, String action_id, boolean status) {
 		ArrayList<UserPlanRelation> userPlanRelation = null;
 	    GregorianCalendar gcal = new GregorianCalendar();
@@ -932,6 +960,14 @@ public class ParseUtils {
 
 	public static void updatePlanRelation(String user_plan_id_param, String action_id_param, Date start_date_param, int duration) {
 
+/*		if ((user_plan_id_param.equals(ParseUtils.user_plan_id)) && (action_id_param.equals(ParseUtils.action_id))) {
+			return;
+		}
+		else {
+			ParseUtils.user_plan_id = user_plan_id_param;
+			ParseUtils.action_id = action_id_param;
+		}
+*/		
 	    GregorianCalendar gcal = new GregorianCalendar();
 		gcal.setTime(start_date_param);
 
