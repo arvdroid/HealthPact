@@ -10,8 +10,6 @@ import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,11 +26,13 @@ import com.parse.ParseUser;
 
 public class CreatePlanActivity extends FragmentActivity implements AddActionDialogListener, SetDurationDialogListener{
 	EditText etPlanName; 
-	Button btnSave;
 	TextView tvduration;
+	Menu menu;
+
+	
 	List<Action> actionsList = new ArrayList<Action>();
 	UserActionsFragment fragmentDemo;
-	int duration;
+	int duration=0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,16 +42,7 @@ public class CreatePlanActivity extends FragmentActivity implements AddActionDia
                 getSupportFragmentManager().findFragmentById(R.id.cpActionViewFragment);
             
 		etPlanName = (EditText) findViewById(R.id.lblcPPlanNameEditText);
-		btnSave = (Button) findViewById(R.id.cpBSavePlan);
 		tvduration = (TextView)findViewById(R.id.lblcPDuration);
-		
-		btnSave.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				PlanSave();				
-			}
-		});
 	}
 	
 	private void PlanSave() {
@@ -85,10 +76,18 @@ public class CreatePlanActivity extends FragmentActivity implements AddActionDia
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
+	    this.menu = menu;
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.create_plan, menu);
 		return true;
+	}
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+	    super.onPrepareOptionsMenu(menu);
+	    menu.findItem(R.id.action_share).setVisible(false);
+	    menu.findItem(R.id.action_follow).setVisible(false);
+	    return true;
 	}
 
 	@Override
@@ -100,6 +99,19 @@ public class CreatePlanActivity extends FragmentActivity implements AddActionDia
 		if (id == R.id.action_home) {
 			Intent i = new Intent(this, HomeViewActivity.class);
 			startActivity(i);
+			return true;
+		} if(id == R.id.action_save) {
+			if(etPlanName.getText().toString() == null || etPlanName.getText().toString().equals("")) {
+				Toast.makeText(CreatePlanActivity.this, "Please Enter Plan Name", Toast.LENGTH_SHORT).show();
+			}  else if(duration == 0) {
+				Toast.makeText(CreatePlanActivity.this, "Please Enter Duration", Toast.LENGTH_SHORT).show();
+			} else {
+				
+			    menu.findItem(R.id.action_share).setVisible(true);
+			    menu.findItem(R.id.action_follow).setVisible(true);
+			    menu.findItem(R.id.action_save).setVisible(false);
+				PlanSave();
+			}
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

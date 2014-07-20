@@ -93,46 +93,4 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/planActionsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="5dp"
-        android:gravity="center"
-        android:maxHeight="20dp"
-        android:minHeight="20dp"
-        android:orientation="horizontal"
-        android:background="@drawable/plan_view_action_buttons_layout" >
-
-        <!-- <Button
-            android:id="@+id/bEditPlan"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="7dp"
-            android:background="@drawable/ic_icon_only_button"
-            android:drawableLeft="@drawable/ic_edit" /> -->
-
-         <Button
-             android:id="@+id/bSharePlan"
-             style="?android:attr/buttonStyleSmall"
-             android:layout_width="40dp"
-             android:layout_height="40dp"
-             android:layout_margin="7dp"
-             android:onClick="onSharePlan"
-             android:background="@drawable/ic_icon_only_button"
-             android:drawableLeft="@drawable/ic_share" />
-
-         <Button
-             android:id="@+id/bFollowPlan"
-             style="?android:attr/buttonStyleSmall"
-             android:layout_width="40dp"
-             android:layout_height="40dp"
-             android:layout_margin="7dp"
-             android:background="@drawable/ic_icon_only_button"
-             android:onClick="onFollowPlan"
-             android:drawableLeft="@drawable/ic_follow" />
-     </LinearLayout>
-
 </RelativeLayout>
