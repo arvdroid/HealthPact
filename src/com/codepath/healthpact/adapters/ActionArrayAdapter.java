@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.codepath.healthpact.R;
@@ -52,7 +53,8 @@ public class ActionArrayAdapter extends ArrayAdapter<Action> {
 					boolean on = ((ToggleButton) v).isChecked();
 					if (on) {
 						((ToggleButton) v).setBackground(onD);						
-						ParseUtils.updateIndividualActionPerPlan(usrPlanId, useraction.getObjectId(), true);						
+						ParseUtils.updateIndividualActionPerPlan(usrPlanId, useraction.getObjectId(), true);
+						Toast.makeText(getContext(), "Action updated", Toast.LENGTH_SHORT).show();
 					} else {
 						((ToggleButton) v).setBackground(offD);
 					}
@@ -79,7 +81,7 @@ public class ActionArrayAdapter extends ArrayAdapter<Action> {
 		
 	public String getUsrPlanid() {return usrPlanId;}
 
-	public void setUsrPlanid(String usrPlanid) {this.usrPlanId = usrPlanId;}
+	public void setUsrPlanid(String usrPlanId) {this.usrPlanId = usrPlanId;}
 
 	protected void launchDetailsActivity(Action useraction) {
 		Intent showplan = new Intent(getContext(), ActionDetailActivity.class);
