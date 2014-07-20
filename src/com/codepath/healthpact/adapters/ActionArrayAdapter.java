@@ -86,12 +86,14 @@ public class ActionArrayAdapter extends ArrayAdapter<Action> {
 	public void setUsrPlanid(String usrPlanId) {this.usrPlanId = usrPlanId;}
 
 	protected void launchDetailsActivity(Action useraction) {
-		Intent showplan = new Intent(getContext(), ActionDetailActivity.class);
+		Intent showAction = new Intent(getContext(), ActionDetailActivity.class);
 		// using proxy class for serialization and transfer using putExtra
         ParseProxyObject proxyProject = new ParseProxyObject(useraction);
-        showplan.putExtra("followed", followed);
-		showplan.putExtra("useraction", proxyProject);
-		getContext().startActivity(showplan);
+        showAction.putExtra("actionid", useraction.getObjectId());
+        showAction.putExtra("followed", followed);
+        showAction.putExtra("usrPlanId", usrPlanId);
+		showAction.putExtra("useraction", proxyProject);
+		getContext().startActivity(showAction);
 	}
 }
 

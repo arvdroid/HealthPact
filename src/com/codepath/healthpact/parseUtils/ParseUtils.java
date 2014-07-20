@@ -839,7 +839,7 @@ public class ParseUtils {
 		}
 	}
 
-	public static ActionPerPeriod getPlanRelationPerDuration(String user_plan_id_param, String action_id_param, Date start_date_param, Date end_date_param) {
+	public static ActionPerPeriod getPlanRelationPerDuration(String user_plan_id_param, String action_id_param) {
 
 		ActionPerPeriod actionPerPeriod = new ActionPerPeriod();
 		//dipankar not required ActionPerPeriod.WeekRange currentWeek = actionPerPeriod.getCurrentWeek();
@@ -852,7 +852,7 @@ public class ParseUtils {
 	    gcal.setFirstDayOfWeek(Calendar.MONDAY);
 
 	    // remove the time portion of the date to get data by Query
-		gcal.setTime(start_date_param);
+/*		gcal.setTime(start_date_param);
 		gcal.set(Calendar.HOUR_OF_DAY, 0);
 		gcal.clear(Calendar.MINUTE);
 		gcal.clear(Calendar.SECOND);
@@ -866,16 +866,16 @@ public class ParseUtils {
 	    calendar.set(Calendar.SECOND, 59);
 	    calendar.set(Calendar.MILLISECOND, 999);
 	    end_date_param = calendar.getTime();
-
+*/
 
 		// get the query based on calculated start and end date
 		ParseQuery<UserPlanRelation> userPlanQuery = ParseQuery.getQuery(UserPlanRelation.class);
 		userPlanQuery.whereEqualTo("user_plan_id", user_plan_id_param);
 		userPlanQuery.whereEqualTo("action_id", action_id_param);
-		userPlanQuery.whereGreaterThanOrEqualTo("completion_date", start_date_param);
+/*		userPlanQuery.whereGreaterThanOrEqualTo("completion_date", start_date_param);
 		userPlanQuery.whereLessThanOrEqualTo("completion_date", end_date_param);
 		userPlanQuery.addAscendingOrder("completion_date");
-
+*/
 		try {
 			ArrayList<UserPlanRelation> userPlanRelation = (ArrayList<UserPlanRelation>) userPlanQuery.find();
 
