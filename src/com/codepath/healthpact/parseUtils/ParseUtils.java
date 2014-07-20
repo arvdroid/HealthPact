@@ -443,20 +443,6 @@ public class ParseUtils {
 		return followerCount;
 	}
 	
-	public static void updateUserPlanToFollow(String user_plan_id) {
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("UserPlan");
-
-		// Retrieve the object by id
-		query.getInBackground(user_plan_id, new GetCallback<ParseObject>() {
-			public void done(ParseObject userPlan, ParseException e) {
-				if (e == null) {
-					userPlan.put("plan_following", true);
-					userPlan.saveInBackground();
-				}
-			}
-		});
-	}
-
 	/**
 	 * Get plan for the current user from Plan table
 	 * @param v View
@@ -746,7 +732,7 @@ public class ParseUtils {
 	}
 	
 	
-	public static void updatePlanFollowedByUser(String plan_id, Date start_date, int duration) {
+	public static void updatePlanFollowedByUser(String plan_id, Date start_date, int duration, List<Action> actions) {
 		
 		ArrayList<UserPlan> userPlans = null;
 		
@@ -771,6 +757,9 @@ public class ParseUtils {
 					up.setPlan_end_date(end_date);
 					up.setPlan_following(true);   
 					up.saveEventually();  
+					for (Action action : actions) {
+						updatePlanRelation(up.getObjectId(), action.getObjectId(), start_date, duration);
+					}
 				}
 			}
 			else {
@@ -781,6 +770,9 @@ public class ParseUtils {
 				userPlan.setPlan_start_date(start_date);
 				userPlan.setPlan_end_date(end_date);
 				userPlan.saveEventually();				
+				for (Action action : actions) {
+					updatePlanRelation(userPlan.getObjectId(), action.getObjectId(), start_date, duration);
+				}
 			}
 		} catch (ParseException parseEx) {
 			LogMsg(parseEx, 1);
