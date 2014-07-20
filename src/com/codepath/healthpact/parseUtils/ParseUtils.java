@@ -805,7 +805,12 @@ public class ParseUtils {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		if (userPlanRelation == null) {
+			return false;
+		}
+		else {
 			return userPlanRelation.isUpdated();
+		}
 	}
 
 	public static void updateIndividualActionPerPlan(String user_plan_id, String action_id, boolean status) {
