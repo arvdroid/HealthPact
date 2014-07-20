@@ -49,12 +49,13 @@ public class UserActionsFragment extends Fragment{
 		return v;
 	}
 	
-	private void showUpdateAction(AppPlan plan){
+	private void updateActionAdapter(AppPlan plan){
 		((ActionArrayAdapter)actionarrayadapter).setFollowed(plan.getFollowed());
+		((ActionArrayAdapter)actionarrayadapter).setUsrPlanid(plan.getUsrPlanid());
 	}
 	
 	public void populateActions(AppPlan plan) {		
-		showUpdateAction(plan);
+		updateActionAdapter(plan);
 		actionarrayadapter.clear();
 		String id = plan.getId();
 		showProgressBar();

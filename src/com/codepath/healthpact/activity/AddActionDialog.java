@@ -29,7 +29,7 @@ public class AddActionDialog extends DialogFragment {
 		View view = inflater.inflate(R.layout.add_action_view, container);
 		window.requestFeature(Window.FEATURE_NO_TITLE);
 		
-		String[] imgSizeVals = new String[]{"Running", "Walking", "Yoga", "Eat Fruits", "Hot Therapy"};
+		String[] imgSizeVals = new String[]{"Hot Therapy", "Lift Weights", "Running", "Walking", "Yoga"};
 		actionCategorySpinner = (Spinner)view.findViewById((R.id.spinner1));
 		
 		perDay = (EditText)view.findViewById((R.id.tv_aAEditPerDay));

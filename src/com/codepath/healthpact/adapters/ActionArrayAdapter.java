@@ -17,10 +17,13 @@ import com.codepath.healthpact.R;
 import com.codepath.healthpact.activity.ActionDetailActivity;
 import com.codepath.healthpact.models.Action;
 import com.codepath.healthpact.models.ParseProxyObject;
+import com.codepath.healthpact.parseUtils.ParseUtils;
 
 public class ActionArrayAdapter extends ArrayAdapter<Action> {
-	boolean followed;
-	boolean disableDetail;
+	private boolean followed;
+	private boolean disableDetail;
+	private String usrPlanId;
+	
 	public ActionArrayAdapter(Context context,List<Action> userplans) {
 		super(context, com.codepath.healthpact.R.layout.action_item, userplans);
 	}
@@ -44,16 +47,15 @@ public class ActionArrayAdapter extends ArrayAdapter<Action> {
 			final Drawable onD = (Drawable) view.getResources().getDrawable(R.drawable.custom_action_done_pressed);
 			final Drawable offD = (Drawable)view.getResources().getDrawable(R.drawable.custom_action_done);
 			tbActionDone.setOnClickListener(new OnClickListener() {
-
 				@Override
 				public void onClick(View v) {
 					boolean on = ((ToggleButton) v).isChecked();
 					if (on) {
-						((ToggleButton) v).setBackground(onD);
+						((ToggleButton) v).setBackground(onD);						
+						ParseUtils.updateIndividualActionPerPlan(usrPlanId, useraction.getObjectId(), true);						
 					} else {
 						((ToggleButton) v).setBackground(offD);
-					}				
-
+					}
 				}
 			});
 		}else{
@@ -71,14 +73,14 @@ public class ActionArrayAdapter extends ArrayAdapter<Action> {
 		return view;
 	}
 	
-	public void setFollowed(boolean followed){
-		this.followed = followed;
-	}
+	public void setFollowed(boolean followed){this.followed = followed;	}
 	
-	public void setDisableDetails(boolean disableDetail){
-		this.disableDetail = disableDetail;
-	}
-	
+	public void setDisableDetails(boolean disableDetail){this.disableDetail = disableDetail;}
+		
+	public String getUsrPlanid() {return usrPlanId;}
+
+	public void setUsrPlanid(String usrPlanid) {this.usrPlanId = usrPlanId;}
+
 	protected void launchDetailsActivity(Action useraction) {
 		Intent showplan = new Intent(getContext(), ActionDetailActivity.class);
 		// using proxy class for serialization and transfer using putExtra
