@@ -21,6 +21,7 @@ import com.codepath.healthpact.dialogs.ShareUserDialog;
 import com.codepath.healthpact.fragments.DatePickerFragment;
 import com.codepath.healthpact.fragments.UserActionsFragment;
 import com.codepath.healthpact.models.AppPlan;
+import com.codepath.healthpact.parseUtils.ParseUtils;
 
 public class PlanViewActivity extends FragmentActivity {
 	Calendar calender = Calendar.getInstance();
@@ -28,7 +29,7 @@ public class PlanViewActivity extends FragmentActivity {
 	AppPlan result;
 	String pattern = "MM/dd/yyyy";
 	SimpleDateFormat format = new SimpleDateFormat(pattern);
-	
+	UserActionsFragment actionsFragment;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +59,17 @@ public class PlanViewActivity extends FragmentActivity {
 			public void onDateSet(DatePicker view, int year, int monthOfYear,
 					int dayOfMonth) {
 				calender.set(year, monthOfYear, dayOfMonth, 0, 0);
-				Toast.makeText(PlanViewActivity.this,String.valueOf(year) + "-" + String.valueOf(monthOfYear+1)+ "-" + String.valueOf(dayOfMonth),Toast.LENGTH_LONG).show();
+				//Toast.makeText(PlanViewActivity.this,String.valueOf(year) + "-" + String.valueOf(monthOfYear+1)+ "-" + String.valueOf(dayOfMonth),Toast.LENGTH_LONG).show();
+				actionsFragment.getActions();
+				ParseUtils.updatePlanFollowedByUser(result.getId(), calender.getTime(), result.getDuration());
+				Toast.makeText(PlanViewActivity.this, "Plan followed" ,Toast.LENGTH_LONG).show();
 			}
 		};
 		
-		UserActionsFragment fragmentDemo = (UserActionsFragment) 
+		actionsFragment = (UserActionsFragment) 
                 getSupportFragmentManager().findFragmentById(R.id.actionViewFragment);
 		
-		fragmentDemo.populateActions(result);
+		actionsFragment.populateActions(result);
 	}
 	
 	public void onFollowPlan(View v) {
