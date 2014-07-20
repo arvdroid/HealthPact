@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,7 +31,8 @@ public class PlanViewActivity extends FragmentActivity {
 	String pattern = "MM/dd/yyyy";
 	SimpleDateFormat format = new SimpleDateFormat(pattern);
 	UserActionsFragment actionsFragment;
-	
+	boolean OndateSet;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,10 +60,15 @@ public class PlanViewActivity extends FragmentActivity {
 			@Override
 			public void onDateSet(DatePicker view, int year, int monthOfYear,
 					int dayOfMonth) {
-				calender.set(year, monthOfYear, dayOfMonth, 0, 0);
+				
+				//calender.set(year, monthOfYear, dayOfMonth, 0, 0);
 				//Toast.makeText(PlanViewActivity.this,String.valueOf(year) + "-" + String.valueOf(monthOfYear+1)+ "-" + String.valueOf(dayOfMonth),Toast.LENGTH_LONG).show();
-				ParseUtils.updatePlanFollowedByUser(result.getId(), calender.getTime(), result.getDuration(), actionsFragment.getActions());
-				Toast.makeText(PlanViewActivity.this, "Plan followed" ,Toast.LENGTH_LONG).show();
+				
+				if(!OndateSet){
+					ParseUtils.updatePlanFollowedByUser(result.getId(), calender.getTime(), result.getDuration(), actionsFragment.getActions());
+					Toast.makeText(PlanViewActivity.this, "Plan followed" ,Toast.LENGTH_LONG).show();
+				}
+				OndateSet = true;
 			}
 		};
 		
