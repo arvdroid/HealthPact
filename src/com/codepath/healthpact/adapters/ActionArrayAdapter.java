@@ -41,24 +41,26 @@ public class ActionArrayAdapter extends ArrayAdapter<Action> {
 		}
 		TextView tvUserActionName = (TextView) view.findViewById(com.codepath.healthpact.R.id.tvUserActionName);		
 		ToggleButton tbActionDone = (ToggleButton) view.findViewById(R.id.tbactionDone);
-		final Drawable onD = (Drawable) view.getResources().getDrawable(R.drawable.custom_action_done_pressed);
-		final Drawable offD = (Drawable)view.getResources().getDrawable(R.drawable.custom_action_done);
-		if(useraction.getUpdated()){
-			tbActionDone.setBackground(onD);
-		}
+		
 		tvUserActionName.setText(useraction.getActionName());
 		if(followed){
+			final Drawable onD = (Drawable) view.getResources().getDrawable(R.drawable.custom_action_done_pressed);
+			if(useraction.getUpdated())
+				tbActionDone.setBackground(onD);
 			
 			tbActionDone.setOnClickListener(new OnClickListener() {
+				boolean updated =  useraction.getUpdated();
 				@Override
 				public void onClick(View v) {
 					boolean on = ((ToggleButton) v).isChecked();
-					if (on) {
-						((ToggleButton) v).setBackground(onD);						
+					if (on && !updated) {
+						((ToggleButton) v).setBackground(onD);
+						((ToggleButton) v).setChecked(true);
 						ParseUtils.updateIndividualActionPerPlan(usrPlanId, useraction.getObjectId(), true);
 						Toast.makeText(getContext(), "Action updated", Toast.LENGTH_SHORT).show();
-					} else {
-						((ToggleButton) v).setBackground(offD);
+						updated = true;
+					} else {						
+						Toast.makeText(getContext(), "Action is already updated", Toast.LENGTH_SHORT).show();
 					}
 				}
 			});
