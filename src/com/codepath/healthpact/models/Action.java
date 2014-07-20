@@ -6,6 +6,7 @@ import com.parse.ParseObject;
 @ParseClassName("Action")
 public class Action extends ParseObject{
 	private boolean updated;
+	private int progress;
 	
 	public Action() {
 		super();
@@ -18,4 +19,8 @@ public class Action extends ParseObject{
 	public boolean getUpdated() {return updated;}
 
 	public void setUpdated(boolean updated) {this.updated = updated;}
+	
+	public int getProgress() {return progress;}
+
+	public void setProgress(int progress) {this.progress = progress;}
 }

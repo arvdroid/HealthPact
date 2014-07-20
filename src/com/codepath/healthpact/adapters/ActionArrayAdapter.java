@@ -92,6 +92,7 @@ public class ActionArrayAdapter extends ArrayAdapter<Action> {
         showAction.putExtra("actionid", useraction.getObjectId());
         showAction.putExtra("followed", followed);
         showAction.putExtra("usrPlanId", usrPlanId);
+        showAction.putExtra("actionProgress", useraction.getProgress());
 		showAction.putExtra("useraction", proxyProject);
 		getContext().startActivity(showAction);
 	}

@@ -16,6 +16,7 @@ public class AppPlan implements Serializable{
 	private String usrPlanid;
 	private String usrName;
 	private boolean followed;
+	private int progress;
 	
 	public AppPlan(){}
 	
@@ -70,4 +71,9 @@ public class AppPlan implements Serializable{
 	public String getUsrName() {return usrName;}
 
 	public void setUsrName(String usrName) {this.usrName = usrName;}
+
+	public int getProgress() {return progress;}
+
+	public void setProgress(int progress) {this.progress = progress;}	
+	
 }

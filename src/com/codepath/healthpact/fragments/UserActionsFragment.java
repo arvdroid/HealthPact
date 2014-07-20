@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,9 +58,9 @@ public class UserActionsFragment extends Fragment{
 	public void populateActions(final AppPlan plan) {		
 		updateActionAdapter(plan);
 		actionarrayadapter.clear();
-		String id = plan.getId();
+		final String planId = plan.getId();
 		showProgressBar();
-		ParseQuery<PlanAction> query = ParseUtils.getActionForPlanQuery(id);		
+		ParseQuery<PlanAction> query = ParseUtils.getActionForPlanQuery(planId);		
 		query.findInBackground(new FindCallback<PlanAction>() {
 
 			@Override
@@ -68,7 +69,9 @@ public class UserActionsFragment extends Fragment{
 					List<Action> actions = ParseUtils.getActionsForPlan(planActions);
 					for (Action action : actions) {
 						boolean updated = ParseUtils.getIndividualActionPerPlan(plan.getUsrPlanid(), action.getObjectId());
+						int progress = (int)ParseUtils.getPlanActionCompleted(planId, action.getObjectId());
 						action.setUpdated(updated);
+						action.setProgress(progress);
 					}
 					
 					clearProgressBar();

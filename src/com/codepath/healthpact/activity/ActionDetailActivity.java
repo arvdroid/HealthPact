@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -33,7 +34,6 @@ public class ActionDetailActivity extends Activity {
 	
     PagerContainer mContainer;
     View customPageView;
-    ArrayList<String> alist;
     Map<Date, ActionPerDay> mapOfWeeks;
     int currentWeekIndex;
     List<ActionPerDay> listOfWeeks;
@@ -49,15 +49,19 @@ public class ActionDetailActivity extends Activity {
 		//boolean followed = getIntent().getBooleanExtra("followed", false);
 		String usrPlanId = getIntent().getStringExtra("usrPlanId");
 		String actionid = getIntent().getStringExtra("actionid");
+		int progress = getIntent().getIntExtra("actionProgress", 0);
+		
 		TextView aName = (TextView)findViewById(R.id.datvActionName);
 		TextView aDesc = (TextView)findViewById(R.id.aVtvDescription);
 		TextView aPerDayCnt = (TextView)findViewById(R.id.datvActionPerDayTime);
+		ProgressBar planActionProgress = (ProgressBar)findViewById(R.id.actionProgressBar);
 		
 		String actionname = result.getString("action_name");
 
 		aName.setText(actionname);
 		aDesc.setText(result.getString("action_desc"));
 		aPerDayCnt.setText(result.getString("serving"));
+		planActionProgress.setProgress(progress);
 		
         mContainer = (PagerContainer) findViewById(R.id.pager_container);
         loadData(usrPlanId, actionid);
@@ -79,12 +83,7 @@ public class ActionDetailActivity extends Activity {
 	}
 	
     public void loadData(String usrPlanId, String actionId) {
-    	alist = new ArrayList<String>();
-    	alist.add("week 1");
-    	alist.add("week 2");
-    	alist.add("week 3");
-    	alist.add("week 4");
-    	
+    	    	
     	ActionPerPeriod app = ParseUtils.getPlanRelationPerDuration(usrPlanId, actionId);
     	ParseUtils.setCurrentWeekStartEndDate(app.getCurrentWeek());
     	listOfWeeks = new ArrayList<ActionPerPeriod.ActionPerDay>();

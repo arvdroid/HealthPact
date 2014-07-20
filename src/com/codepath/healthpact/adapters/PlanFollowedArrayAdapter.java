@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -46,23 +45,13 @@ public class PlanFollowedArrayAdapter extends ArrayAdapter<AppPlan>{
 		tvUserPlanName.setText(userPlan.getName());
 		tvUserPlanStartDate.setText("Start date: "+ String.valueOf(format.format(userPlan.getStartDate())));
 		
-		long today_date = System.currentTimeMillis();		
-
+		long today_date = System.currentTimeMillis();
 		long end_date = userPlan.getEndDate().getTime();
-		long start_date = userPlan.getStartDate().getTime();
-		
-		Log.d("hp", "st_date: "+ String.valueOf(format.format(userPlan.getEndDate())));
-		
-		double timediff = end_date - today_date;
-		double total = end_date - start_date;		
+		double timediff = end_date - today_date;			
 
-		String daysleft = String.valueOf(((int)(timediff/(1000*3600*24))));
-		
-		tvUserPlanDurationLeft.setText("Days Left: "+ daysleft);
-		
-		int progressdone = (int) (((total - timediff)/total)*100);
-		pbUserPlanProgress.setProgress(progressdone);
-
+		String daysleft = String.valueOf(((int)(timediff/(1000*3600*24))));		
+		tvUserPlanDurationLeft.setText("Days Left: "+ daysleft);		
+		pbUserPlanProgress.setProgress(userPlan.getProgress());
 
         view.setOnClickListener(new OnClickListener() {
 		@Override
