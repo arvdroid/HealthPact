@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.codepath.healthpact.R;
 import com.codepath.healthpact.models.Action;
@@ -44,16 +45,20 @@ public class AddActionDialog extends DialogFragment {
 			
 			@Override
 			public void onClick(View v) {				
-				String aC = (String)actionCategorySpinner.getSelectedItem();
 				String aP = perDay.getText().toString();
-				String sDesc = aDesc.getText().toString();
-				Action nA = new Action();
-				nA.setActionName(aC);
-				nA.setActionServing(aP);
-				nA.setActionDesc(sDesc);
-				AddActionDialogListener activity = (AddActionDialogListener)getActivity();
-				activity.finishToActivity(nA);
-				dismiss();
+				if(!aP.isEmpty()){
+					String aC = (String)actionCategorySpinner.getSelectedItem();
+					String sDesc = aDesc.getText().toString();
+					Action nA = new Action();
+					nA.setActionName(aC);
+					nA.setActionServing(aP);
+					nA.setActionDesc(sDesc);
+					AddActionDialogListener activity = (AddActionDialogListener)getActivity();
+					activity.finishToActivity(nA);
+					dismiss();
+				}else{
+					Toast.makeText(getActivity(),"Please Enter Per Day", Toast.LENGTH_LONG).show();
+				}
 			}
 		});
 		
