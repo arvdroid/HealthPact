@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
             android:ems="10"
+            android:textCursorDrawable="@null"
             android:drawableLeft="@drawable/user"
             android:hint="UserName" />
                 
@@ -36,6 +37,7 @@
             android:textColor="#FFFFFF"
             android:ems="10"
             android:hint="Password"
+            android:textCursorDrawable="@null"
             android:inputType="textPassword" 
             android:drawableLeft="@drawable/password"/>
         

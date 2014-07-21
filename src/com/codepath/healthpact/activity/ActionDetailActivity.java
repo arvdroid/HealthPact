@@ -45,6 +45,7 @@ public class ActionDetailActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.details_action_view);
+	    getActionBar().setDisplayHomeAsUpEnabled(true);
 		ParseProxyObject result = (ParseProxyObject) getIntent().getSerializableExtra("useraction");
 		//boolean followed = getIntent().getBooleanExtra("followed", false);
 		String usrPlanId = getIntent().getStringExtra("usrPlanId");
@@ -111,6 +112,9 @@ public class ActionDetailActivity extends Activity {
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;
+		}
+	    if(id == android.R.id.home) {
+			finish();
 		}
 		return super.onOptionsItemSelected(item);
 	}
