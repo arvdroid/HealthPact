@@ -13,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import eu.erikw.PullToRefreshListView;
+import eu.erikw.PullToRefreshListView.OnRefreshListener;
 import com.codepath.healthpact.R;
 import com.codepath.healthpact.adapters.PlanArrayAdapter;
 import com.codepath.healthpact.models.AppPlan;
