@@ -47,21 +47,19 @@ public class ActionDetailActivity extends Activity {
 		setContentView(R.layout.details_action_view);
 	    getActionBar().setDisplayHomeAsUpEnabled(true);
 		ParseProxyObject result = (ParseProxyObject) getIntent().getSerializableExtra("useraction");
-		//boolean followed = getIntent().getBooleanExtra("followed", false);
+
 		String usrPlanId = getIntent().getStringExtra("usrPlanId");
 		String actionid = getIntent().getStringExtra("actionid");
 		int progress = getIntent().getIntExtra("actionProgress", 0);
 		
 		TextView aName = (TextView)findViewById(R.id.datvActionName);
 		TextView aDesc = (TextView)findViewById(R.id.aVtvDescription);
-		TextView aPerDayCnt = (TextView)findViewById(R.id.datvActionPerDayTime);
 		ProgressBar planActionProgress = (ProgressBar)findViewById(R.id.actionProgressBar);
 		
 		String actionname = result.getString("action_name");
 
 		aName.setText(actionname);
-		aDesc.setText(result.getString("action_desc"));
-		aPerDayCnt.setText(result.getString("serving"));
+		aDesc.setText(result.getString("action_desc"));		
 		planActionProgress.setProgress(progress);
 		
         mContainer = (PagerContainer) findViewById(R.id.pager_container);

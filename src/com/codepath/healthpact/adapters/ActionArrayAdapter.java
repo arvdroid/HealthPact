@@ -25,7 +25,7 @@ public class ActionArrayAdapter extends ArrayAdapter<Action> {
 	private String usrPlanId;
 	
 	public ActionArrayAdapter(Context context,List<Action> userplans) {
-		super(context, com.codepath.healthpact.R.layout.action_item, userplans);
+		super(context, R.layout.action_item, userplans);
 	}
 	
 	@Override
@@ -34,14 +34,18 @@ public class ActionArrayAdapter extends ArrayAdapter<Action> {
 		View view;
 		if(convertView == null) {
 			LayoutInflater inflator = LayoutInflater.from(getContext());
-			view = inflator.inflate(com.codepath.healthpact.R.layout.action_item, parent, false);
+			view = inflator.inflate(R.layout.action_item, parent, false);
 		} else {
 			view = convertView;
 		}
-		TextView tvUserActionName = (TextView) view.findViewById(com.codepath.healthpact.R.id.tvUserActionName);		
+		
+		TextView tvUserActionName = (TextView) view.findViewById(R.id.tvUserActionName);
+		TextView tvPerDay = (TextView) view.findViewById(R.id.tvAiUserActionPerDay);
 		ToggleButton tbActionDone = (ToggleButton) view.findViewById(R.id.tbactionDone);
 		
 		tvUserActionName.setText(useraction.getActionName());
+		tvPerDay.setText("PerDay: "+ useraction.getActionServing() + " min");
+				
 		if(followed){
 			final Drawable onD = (Drawable) view.getResources().getDrawable(R.drawable.custom_action_done_pressed);
 			if(useraction.getUpdated())

@@ -2,6 +2,7 @@ package com.codepath.healthpact.activity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,18 +41,22 @@ public class PlanViewActivity extends FragmentActivity {
 		TextView pDesc = (TextView)findViewById(R.id.pvtvDescription);
 		TextView pDuration = (TextView)findViewById(R.id.pvtvDuration);
 		TextView pCreatedAt = (TextView)findViewById(R.id.pvtvCreatedDate);
+		TextView pToday = (TextView)findViewById(R.id.pvtvCurrentDate);
 		TextView pCreatedBy = (TextView)findViewById(R.id.pvtvCreatedBy);
 		
 		result = (AppPlan) getIntent().getSerializableExtra("userplan");
 		pName.setText(result.getName());
 		pDesc.setText(result.getDesc());
 		pDuration.setText("Duration:"+ result.getDuration() + " weeks");
-		if(result.getFollowed())
+		pCreatedBy.setText("Created By: " + result.getUsrName());
+		
+		if(result.getFollowed()){
 			pCreatedAt.setText("Started On: "+format.format(result.getStartDate()));
+			pToday.setVisibility(View.VISIBLE);
+			pToday.setText("Today: "+format.format(new Date()));
+		}
 		else
 			pCreatedAt.setText("Created On: "+format.format(result.getCreatedDate()));
-		
-		pCreatedBy.setText("Created By: " + result.getUsrName());
 				
 		ondate = new OnDateSetListener() {
 			boolean OndateSet;
@@ -71,8 +77,6 @@ public class PlanViewActivity extends FragmentActivity {
 		
 		actionsFragment.populateActions(result);
 	}
-	
-	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

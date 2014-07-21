@@ -11,11 +11,12 @@
     tools:context="com.example.testproj.PlanViewActivity">
     
     <LinearLayout
+        android:id="@+id/pvTopLevelLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_alignParentTop="true"
-        android:layout_above="@+id/planActionsLayout">
+        >
         
         <TextView
                 android:id="@+id/pvtvPlanName"
@@ -48,14 +49,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
+            
+            <LinearLayout
+                android:id="@+id/pvplanCreatedByLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:orientation="vertical" >
 
-            <TextView
+               <TextView
                 android:id="@+id/pvtvCreatedBy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:gravity="left"
                 android:text="CreatedBy:"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <TextView
+                    android:id="@+id/pvtvDuration"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="Duration: 0 weeks"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/pvplanCreatedDateLayout"
@@ -74,23 +92,23 @@
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
-                    android:id="@+id/pvtvDuration"
+                    android:id="@+id/pvtvCurrentDate"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:text="Duration: 0 weeks"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:text="Today: mm/dd/yy"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:visibility="invisible" />
             </LinearLayout>
         </LinearLayout>
-
-        <fragment
+    </LinearLayout>
+    
+    <fragment
         android:id="@+id/actionViewFragment"
         android:name="com.codepath.healthpact.fragments.UserActionsFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        />
-
-    </LinearLayout>
+        android:layout_below="@+id/pvTopLevelLayout"
+        android:layout_marginTop="5dp"/>
 
 </RelativeLayout>
