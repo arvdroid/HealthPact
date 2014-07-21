@@ -37,9 +37,7 @@ public class PlansCreatedFragment extends PlanListFragment{
 						ap.setDuration(plan.getPlanDuration());
 						ap.setId(plan.getPlanId());
 						ap.setCreatedDate(plan.getCreatedAt());
-						ParseUser usr = plan.getUser();
-						if(usr!=null)
-							ap.setUsrName(usr.getUsername());
+						ap.setUsrName(plan.getCreatedBy());
 						appPlans.add(ap);
 					}
 					clearProgressBar();
