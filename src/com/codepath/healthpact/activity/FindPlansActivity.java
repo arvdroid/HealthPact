@@ -3,16 +3,12 @@ package com.codepath.healthpact.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.codepath.healthpact.R;
 import com.codepath.healthpact.fragments.FindPlansFragment;
@@ -27,24 +23,12 @@ public class FindPlansActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_find_plans);
 
-		TextView textView =(TextView)findViewById(R.id.tvFilter);
 		Button findButton = (Button)findViewById(R.id.fpBSearch);
 		searchText = (EditText)findViewById(R.id.fpSearchEditText);
 		
 		planFragment = (FindPlansFragment) 
                 getSupportFragmentManager().findFragmentById(R.id.fpPlanViewFragment);
-		planFragment.clearProgressBar();
-				
-		textView.setMovementMethod(LinkMovementMethod.getInstance());
-		String text = "<u>Filter</u>";
-		textView.setText(Html.fromHtml(text));
-		textView.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				FragmentManager fm = getSupportFragmentManager();		
-				AdvancedFilterDialog compose = new AdvancedFilterDialog();
-				compose.show(fm, "");
-			}
-		});
+		planFragment.clearProgressBar();		
 		
 		findButton.setOnClickListener(new OnClickListener() {
 			@Override
