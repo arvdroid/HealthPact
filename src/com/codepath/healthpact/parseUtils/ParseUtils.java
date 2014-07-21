@@ -589,7 +589,7 @@ public class ParseUtils {
 	public static ParseQuery<PlanShared> getUserSharedPlans() {
 		ArrayList<PlanShared> plansShared = null;
 		ParseQuery<PlanShared> userSharedPlanQuery = ParseQuery.getQuery(PlanShared.class);
-		userSharedPlanQuery.whereEqualTo("user_id", ParseUser.getCurrentUser().getObjectId());
+		userSharedPlanQuery.whereEqualTo("shared_to_user_id", ParseUser.getCurrentUser().getObjectId());
 
 		/*try {
 			plansShared = (ArrayList<PlanShared>) userSharedPlanQuery.find();
