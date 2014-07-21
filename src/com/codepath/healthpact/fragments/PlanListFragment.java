@@ -20,7 +20,7 @@ import com.codepath.healthpact.models.AppPlan;
 public abstract class PlanListFragment extends Fragment{
 	
 	protected ArrayAdapter<AppPlan> userplanadapter;
-	private ListView lvUserPlans;
+	protected PullToRefreshListView lvUserPlans;
 	protected ArrayList<AppPlan> appPlans = new ArrayList<AppPlan>();;
 	private ProgressBar pb;
 	
@@ -35,11 +35,17 @@ public abstract class PlanListFragment extends Fragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(com.codepath.healthpact.R.layout.fragments_user_plan_list, container, false);
-		lvUserPlans = (ListView) v.findViewById(R.id.lvUserPlans);
+		lvUserPlans = (PullToRefreshListView) v.findViewById(R.id.lvUserPlans);
 		pb = (ProgressBar)v.findViewById(R.id.pbLoading);
 		lvUserPlans.setAdapter(userplanadapter);
 		showProgressBar();
 		getPlans();
+	    lvUserPlans.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+            	getPlans();
+            }
+        });
 		return v;
 	}
 	
@@ -48,6 +54,7 @@ public abstract class PlanListFragment extends Fragment{
 	public void populatePlans(List<AppPlan> plans){
 		userplanadapter.clear();
 		userplanadapter.addAll(plans);
+		lvUserPlans.onRefreshComplete();
 	}
 	
 	public void showProgressBar(){

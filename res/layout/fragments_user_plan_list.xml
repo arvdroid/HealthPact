@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    <ListView
+   <eu.erikw.PullToRefreshListView
         android:id="@+id/lvUserPlans"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,7 +13,7 @@
 		   android:dividerHeight="1dp"
 		   android:background="@drawable/list_border"
 		   android:listSelector="@drawable/states_selector_list">
-    </ListView>
+    </eu.erikw.PullToRefreshListView>
 
     <ProgressBar
         android:id="@+id/pbLoading"
