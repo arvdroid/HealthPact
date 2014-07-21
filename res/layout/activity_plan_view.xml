@@ -70,7 +70,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="end"
-                    android:text="Created: mm/dd/yy"
+                    android:text="Created On: mm/dd/yy"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView

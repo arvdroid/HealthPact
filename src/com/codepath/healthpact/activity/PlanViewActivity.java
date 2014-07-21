@@ -29,7 +29,6 @@ public class PlanViewActivity extends FragmentActivity {
 	String pattern = "MM/dd/yyyy";
 	SimpleDateFormat format = new SimpleDateFormat(pattern);
 	UserActionsFragment actionsFragment;
-	boolean OndateSet;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +45,15 @@ public class PlanViewActivity extends FragmentActivity {
 		pName.setText(result.getName());
 		pDesc.setText(result.getDesc());
 		pDuration.setText("Duration:"+ result.getDuration() + " weeks");
-		pCreatedAt.setText(format.format(result.getCreatedDate()));
+		if(result.getFollowed())
+			pCreatedAt.setText("Started On: "+format.format(result.getStartDate()));
+		else
+			pCreatedAt.setText("Created On: "+format.format(result.getCreatedDate()));
+		
 		pCreatedBy.setText("Created By: " + result.getUsrName());
 				
 		ondate = new OnDateSetListener() {
+			boolean OndateSet;
 			@Override
 			public void onDateSet(DatePicker view, int year, int monthOfYear,
 					int dayOfMonth) {
