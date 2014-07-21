@@ -22,7 +22,6 @@ import com.codepath.healthpact.parseUtils.ParseUtils;
 
 public class ActionArrayAdapter extends ArrayAdapter<Action> {
 	private boolean followed;
-	private boolean disableDetail;
 	private String usrPlanId;
 	
 	public ActionArrayAdapter(Context context,List<Action> userplans) {
@@ -68,7 +67,7 @@ public class ActionArrayAdapter extends ArrayAdapter<Action> {
 			tbActionDone.setVisibility(View.INVISIBLE);
 		}
 
-		if(!disableDetail)
+		if(followed)
 			view.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -81,8 +80,6 @@ public class ActionArrayAdapter extends ArrayAdapter<Action> {
 	
 	public void setFollowed(boolean followed){this.followed = followed;	}
 	
-	public void setDisableDetails(boolean disableDetail){this.disableDetail = disableDetail;}
-		
 	public String getUsrPlanid() {return usrPlanId;}
 
 	public void setUsrPlanid(String usrPlanId) {this.usrPlanId = usrPlanId;}

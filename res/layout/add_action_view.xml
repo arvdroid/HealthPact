@@ -40,7 +40,7 @@
             android:id="@+id/lbl_aAPerDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PerDay/Servings"
+            android:text="PerDay in mins"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <EditText

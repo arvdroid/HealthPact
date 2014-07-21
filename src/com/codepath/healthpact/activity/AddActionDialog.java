@@ -20,6 +20,7 @@ public class AddActionDialog extends DialogFragment {
 	
 	Spinner actionCategorySpinner;
 	EditText perDay;
+	EditText aDesc;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -33,6 +34,7 @@ public class AddActionDialog extends DialogFragment {
 		actionCategorySpinner = (Spinner)view.findViewById((R.id.spinner1));
 		
 		perDay = (EditText)view.findViewById((R.id.tv_aAEditPerDay));
+		aDesc = (EditText)view.findViewById((R.id.tv_aATvDescEdit));
 		
         ArrayAdapter<String> adapters = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, imgSizeVals);
         actionCategorySpinner.setAdapter(adapters);
@@ -44,8 +46,11 @@ public class AddActionDialog extends DialogFragment {
 			public void onClick(View v) {				
 				String aC = (String)actionCategorySpinner.getSelectedItem();
 				String aP = perDay.getText().toString();
+				String sDesc = aDesc.getText().toString();
 				Action nA = new Action();
 				nA.setActionName(aC);
+				nA.setActionServing(aP);
+				nA.setActionDesc(sDesc);
 				AddActionDialogListener activity = (AddActionDialogListener)getActivity();
 				activity.finishToActivity(nA);
 				dismiss();

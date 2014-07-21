@@ -13,7 +13,6 @@
         android:id="@+id/cpTopLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/cpActionButtonLayout"
         android:layout_alignParentTop="true"
         android:orientation="vertical">
 
@@ -81,7 +80,14 @@
             android:layout_marginTop="5dp"
             android:text="Duration"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-
+		<TextView
+            android:id="@+id/lblcPDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Description"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+		
         <EditText
             android:id="@+id/tv_cPTvDescEdit"
             android:layout_width="match_parent"
@@ -92,12 +98,12 @@
             android:maxHeight="50dp"
             android:maxLines="5"
             android:scrollbars="vertical" />
-
-        <fragment
+    </LinearLayout>
+    <fragment
             android:id="@+id/cpActionViewFragment"
             android:name="com.codepath.healthpact.fragments.UserActionsFragment"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/cpTopLayout"
             android:layout_marginTop="5dp" />
-    </LinearLayout>
 </RelativeLayout>
