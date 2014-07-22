@@ -937,8 +937,9 @@ public class ParseUtils {
 		userPlanQuery.whereEqualTo("action_id", action_id_param);
 /*		userPlanQuery.whereGreaterThanOrEqualTo("completion_date", start_date_param);
 		userPlanQuery.whereLessThanOrEqualTo("completion_date", end_date_param);
+		*/
 		userPlanQuery.addAscendingOrder("completion_date");
-*/
+
 		try {
 			ArrayList<UserPlanRelation> userPlanRelation = (ArrayList<UserPlanRelation>) userPlanQuery.find();
 
