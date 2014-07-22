@@ -2,21 +2,48 @@ package com.codepath.healthpact.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
-public class AppPlan implements Serializable{
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
+
+@Table(name = "AppPlan")
+public class AppPlan extends Model implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	@Column(name = "appPlanId", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
+	private String appPlanId;
+	
+	@Column(name = "name")
 	private String name;
+	@Column(name = "startDate")
 	private Date startDate;
+	@Column(name = "endDate")
 	private Date endDate;
+	@Column(name = "createdDate")
 	private Date createdDate;
+	@Column(name = "duration")
 	private int duration;
-	private String id;
+	
+	@Column(name = "planid")
+	private String planid;
+	
+	@Column(name = "desc")
 	private String desc;
+	@Column(name = "usrPlanid")
 	private String usrPlanid;
+	@Column(name = "usrName")
 	private String usrName;
+	@Column(name = "followed")
 	private boolean followed;
+	@Column(name = "progress")
 	private int progress;
+	@Column(name = "plantype")
+	private int plantype;
+	@Column(name = "user")
+	private String user;
 	
 	public AppPlan(){}
 	
@@ -26,9 +53,10 @@ public class AppPlan implements Serializable{
 		this.duration = duration;
 	}
 
-	public AppPlan(String id, String name, String desc, int duration, Date startDate, Date endDate) {
+	public AppPlan(String appPlanId, String id, String name, String desc, int duration, Date startDate, Date endDate) {
 		super();
-		this.id = id;
+		this.appPlanId= appPlanId;
+		this.planid = id;
 		this.name = name;
 		this.desc = desc;
 		this.duration = duration;
@@ -36,9 +64,14 @@ public class AppPlan implements Serializable{
 		this.endDate = endDate;				
 	}
 	
-	public String getId() {return id;}
 	
-	public void setId(String id) {this.id = id;}
+	public String getAppPlanId() {return appPlanId;}
+
+	public void setAppPlanId(String appPlanId) {this.appPlanId = appPlanId;}
+
+	public String getPlanid() {return planid;}
+
+	public void setPlanid(String id) {this.planid = id;}
 
 	public String getName() {return name;}
 	
@@ -74,6 +107,19 @@ public class AppPlan implements Serializable{
 
 	public int getProgress() {return progress;}
 
-	public void setProgress(int progress) {this.progress = progress;}	
+	public void setProgress(int progress) {this.progress = progress;}
 	
+	public int getPlantype() {return plantype;}
+
+	public void setPlantype(int plantype) {this.plantype = plantype;}
+	
+	public String getUser() {return user;}
+
+	public void setUser(String user) {this.user = user;}
+
+	public static List<AppPlan> getAll(int ptype) {
+	    return new Select()
+	        .from(AppPlan.class).where("plantype = ?", ptype)
+	        .execute();
+	}
 }

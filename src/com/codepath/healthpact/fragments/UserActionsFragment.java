@@ -57,7 +57,7 @@ public class UserActionsFragment extends Fragment{
 	public void populateActions(final AppPlan plan) {		
 		updateActionAdapter(plan);
 		actionarrayadapter.clear();
-		final String planId = plan.getId();
+		final String planId = plan.getPlanid();
 		showProgressBar();
 		ParseQuery<PlanAction> query = ParseUtils.getActionForPlanQuery(planId);		
 		query.findInBackground(new FindCallback<PlanAction>() {

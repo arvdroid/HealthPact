@@ -16,7 +16,7 @@ import com.parse.ParseUser;
 public class FindPlansFragment extends PlanListFragment{
 
 	
-	public void getPlans(){
+	public void getPlans(boolean loadFromDB){
 		//NO default load of plans
 	}
 
@@ -35,12 +35,15 @@ public class FindPlansFragment extends PlanListFragment{
 						AppPlan ap = new AppPlan();
 						ap.setName(plan.getPlanName());
 						ap.setDuration(plan.getPlanDuration());
-						ap.setId(plan.getPlanId());
+						ap.setPlanid(plan.getPlanId());
 						ap.setCreatedDate(plan.getCreatedAt());
 						appPlans.add(ap);
 					}
 					clearProgressBar();
-					populatePlans(appPlans);
+					if(appPlans.size() == 0)
+						Toast.makeText(getActivity(), "No Plans Found", Toast.LENGTH_SHORT).show();
+					else
+						populatePlans(appPlans, true);
 				}else{
 					clearProgressBar();
 					Toast.makeText(getActivity(), "Failed to get data", Toast.LENGTH_SHORT).show();

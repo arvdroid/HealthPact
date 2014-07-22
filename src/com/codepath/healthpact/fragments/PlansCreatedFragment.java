@@ -12,16 +12,21 @@ import com.codepath.healthpact.parseUtils.ParseUtils;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 public class PlansCreatedFragment extends PlanListFragment{
 
 	
-	public void getPlans(){
-		populateUserCreatedPlans();
+	public void getPlans(boolean loadFromDB){
+		List<AppPlan> plans = new ArrayList<AppPlan>();	
+		plans = AppPlan.getAll(2);
+		if(loadFromDB && !plans.isEmpty()){			
+			clearProgressBar();
+			populatePlans(plans, true);
+		}
+		populateUserCreatedPlans(plans);
 	}
 	
-	private void populateUserCreatedPlans()	{
+	private void populateUserCreatedPlans(final List<AppPlan> appPlansFromDB)	{
 		ParseQuery<UserPlan> query = ParseUtils.getPlansCreatedByCurrentUser1();
 		
 		query.findInBackground(new FindCallback<UserPlan>() {
@@ -30,18 +35,31 @@ public class PlansCreatedFragment extends PlanListFragment{
 				if (parseEx == null) {
 					ArrayList<Plan> plans = ParseUtils.getPlansCreatedByCurrentUser();
 					List<AppPlan> appPlans = new ArrayList<AppPlan>();
-					
 					for(Plan plan: plans){
-						AppPlan ap = new AppPlan();
-						ap.setName(plan.getPlanName());
-						ap.setDuration(plan.getPlanDuration());
-						ap.setId(plan.getPlanId());
-						ap.setCreatedDate(plan.getCreatedAt());
-						ap.setUsrName(plan.getCreatedBy());
-						appPlans.add(ap);
+						boolean planLoaded = false;
+						for(AppPlan dbap: appPlansFromDB){
+							if(plan.getPlanId().equals(dbap.getPlanid()))
+							{
+								planLoaded = true;
+								break;
+							}
+						}
+						if(!planLoaded){
+							AppPlan ap = new AppPlan();
+							ap.setAppPlanId(plan.getPlanId()+"__2");
+							ap.setName(plan.getPlanName());
+							ap.setDuration(plan.getPlanDuration());
+							ap.setPlanid(plan.getPlanId());
+							ap.setCreatedDate(plan.getCreatedAt());
+							ap.setUsrName(plan.getCreatedBy());
+							ap.setPlantype(2);
+							ap.setUser(ParseUtils.getUserName());
+							ap.save();
+							appPlans.add(ap);
+						}
 					}
 					clearProgressBar();
-					populatePlans(appPlans);
+					populatePlans(appPlans, false);
 				}else{
 					clearProgressBar();
 					Toast.makeText(getActivity(), "Failed to get data", Toast.LENGTH_SHORT).show();

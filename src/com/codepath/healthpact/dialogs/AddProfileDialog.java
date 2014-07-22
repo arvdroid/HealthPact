@@ -33,7 +33,6 @@ public class AddProfileDialog extends DialogFragment {
 		super.onCreate(savedInstanceState);
 	}
 
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -61,7 +60,6 @@ public class AddProfileDialog extends DialogFragment {
 					ParseUtils.updateProfile(ProfileExpertise.getText().toString(),ProfileLocation.getText().toString(),ProfileDescription.getText().toString());
 					Intent i = new Intent(getActivity(), UserProfileActivity.class);
 					startActivity(i);
-					AddProfileDialog.this.dismiss();
 				} else {
 					Toast.makeText(getActivity(),"Please Enter Expertise", Toast.LENGTH_LONG).show();
 				}

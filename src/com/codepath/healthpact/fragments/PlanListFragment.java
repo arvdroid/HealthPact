@@ -10,14 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import eu.erikw.PullToRefreshListView;
-import eu.erikw.PullToRefreshListView.OnRefreshListener;
 import com.codepath.healthpact.R;
 import com.codepath.healthpact.adapters.PlanArrayAdapter;
 import com.codepath.healthpact.models.AppPlan;
+
+import eu.erikw.PullToRefreshListView;
+import eu.erikw.PullToRefreshListView.OnRefreshListener;
 
 public abstract class PlanListFragment extends Fragment{
 	
@@ -29,7 +29,6 @@ public abstract class PlanListFragment extends Fragment{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		userplanadapter = new PlanArrayAdapter(getActivity(),appPlans);
 	}
 	
@@ -41,20 +40,21 @@ public abstract class PlanListFragment extends Fragment{
 		pb = (ProgressBar)v.findViewById(R.id.pbLoading);
 		lvUserPlans.setAdapter(userplanadapter);
 		showProgressBar();
-		getPlans();
+		getPlans(true);
 	    lvUserPlans.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-            	getPlans();
+            	getPlans(false);
             }
         });
 		return v;
 	}
 	
-	public abstract void getPlans();
+	public abstract void getPlans(boolean loadFromDB);
 	
-	public void populatePlans(List<AppPlan> plans){
-		userplanadapter.clear();
+	public void populatePlans(List<AppPlan> plans, boolean fromDB){
+		if(fromDB)
+			userplanadapter.clear();
 		userplanadapter.addAll(plans);
 		lvUserPlans.onRefreshComplete();
 	}

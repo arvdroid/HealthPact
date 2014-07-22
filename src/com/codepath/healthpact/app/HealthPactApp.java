@@ -16,12 +16,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.parse.Parse;
 import com.parse.ParseACL;
-import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.PushService;
-import com.parse.SignUpCallback;
 
 /*
  * This is the Android application itself and is used to configure various settings
@@ -47,7 +45,7 @@ public class HealthPactApp extends com.activeandroid.app.Application {
         
         // Parse initialize
         parseInit();
-        parseSignUp();
+        //parseSignUp();
         //parseLogin(strUser, strPwd);
         registerParseAppTables();
         
@@ -79,26 +77,6 @@ public class HealthPactApp extends com.activeandroid.app.Application {
 		// default Activity to handle push notifications,
 		PushService.setDefaultPushCallback(this, ParseStarterProjectActivity.class);
 		ParseInstallation.getCurrentInstallation().saveInBackground();
-	}
-
-	private void parseSignUp() {
-		ParseUser user = new ParseUser();
-		user.setUsername(strUser);
-		user.setPassword(strPwd);
-		user.setEmail(strEmailAddress);
-
-		user.put("phone", "650-253-0000");
-		
-		user.signUpInBackground(new SignUpCallback() {
-			public void done(ParseException e) {
-				if (e == null) {
-					Toast.makeText(getApplicationContext(), "Signed in successfully", Toast.LENGTH_SHORT).show();
-				} else {
-					// Sign up didn't succeed. Look at the ParseException
-					// to figure out what went wrong
-				}
-			}
-		});
 	}
 	
 	private void registerParseAppTables() {

@@ -65,7 +65,7 @@ public class PlanViewActivity extends FragmentActivity {
 					int dayOfMonth) {
 				calender.set(year, monthOfYear, dayOfMonth, 0, 0);
 				if(!OndateSet){
-					ParseUtils.updatePlanFollowedByUser(result.getId(), calender.getTime(), result.getDuration(), actionsFragment.getActions());
+					ParseUtils.updatePlanFollowedByUser(result.getPlanid(), calender.getTime(), result.getDuration(), actionsFragment.getActions());
 					Toast.makeText(PlanViewActivity.this, "Plan followed" ,Toast.LENGTH_LONG).show();
 				}
 				OndateSet = true;
@@ -109,7 +109,7 @@ public class PlanViewActivity extends FragmentActivity {
 			FragmentManager fm = getSupportFragmentManager();		
 			ShareUserDialog shareDialog = new ShareUserDialog();
 			Bundle args = new Bundle();
-			args.putString("planid", result.getId());
+			args.putString("planid", result.getPlanid());
 			args.putString("usrplanid", result.getUsrPlanid());
 			shareDialog.setArguments(args);
 			shareDialog.show(fm, "");
