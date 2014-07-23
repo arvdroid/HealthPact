@@ -18,7 +18,7 @@ public class PlansCreatedFragment extends PlanListFragment{
 	
 	public void getPlans(boolean loadFromDB){
 		List<AppPlan> plans = new ArrayList<AppPlan>();	
-		plans = AppPlan.getAll(2);
+		plans = AppPlan.getAll(2, ParseUtils.getUserName());
 		if(loadFromDB && !plans.isEmpty()){			
 			clearProgressBar();
 			populatePlans(plans, true);
@@ -46,7 +46,7 @@ public class PlansCreatedFragment extends PlanListFragment{
 						}
 						if(!planLoaded){
 							AppPlan ap = new AppPlan();
-							ap.setAppPlanId(plan.getPlanId()+"__2");
+							ap.setAppPlanId(plan.getPlanId()+"__"+ParseUtils.getUserName()+"__2");
 							ap.setName(plan.getPlanName());
 							ap.setDuration(plan.getPlanDuration());
 							ap.setPlanid(plan.getPlanId());

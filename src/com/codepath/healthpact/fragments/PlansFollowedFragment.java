@@ -26,7 +26,7 @@ public class PlansFollowedFragment extends PlanListFragment{
 	
 	public void getPlans(boolean loadFromDB){
 		List<AppPlan> plans = new ArrayList<AppPlan>();	
-		plans = AppPlan.getAll(0);
+		plans = AppPlan.getAll(0, ParseUtils.getUserName());
 		if(loadFromDB && !plans.isEmpty()){			
 			clearProgressBar();
 			populatePlans(plans, true);
@@ -55,7 +55,7 @@ public class PlansFollowedFragment extends PlanListFragment{
 							Plan p = ParseUtils.getPlanDetail(null, plan_id);
 							int progress = (int)ParseUtils.getPlanCompleted(plan_id);
 							if(up.getPlan_start_date()!=null){
-								AppPlan ap = new AppPlan(p.getPlanId()+"__0", p.getPlanId(), p.getPlanName(), p.getPlanDesc(), p.getPlanDuration(), up.getPlan_start_date(), up.getPlan_end_date());
+								AppPlan ap = new AppPlan(p.getPlanId()+"__"+ParseUtils.getUserName()+"__0", p.getPlanId(), p.getPlanName(), p.getPlanDesc(), p.getPlanDuration(), up.getPlan_start_date(), up.getPlan_end_date());
 								ap.setFollowed(true);
 								ap.setCreatedDate(p.getCreatedAt());
 								ap.setUsrPlanid(up.getObjectId());
