@@ -55,7 +55,7 @@
                 android:layout_height="40dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:text="Action"
+                android:text="Activity"
                 android:onClick="onAddAction"
                 android:background="@drawable/action_button_layout"
                 android:drawableLeft="@drawable/ic_add" />
