@@ -28,7 +28,7 @@
     </style>
     
     <style name="HealthPactTheme.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:background">@color/metatallic</item>
+        <item name="android:background">@color/azure</item>
         <item name="android:titleTextStyle">@style/HealthPactTheme.ActionBarText</item>
     </style>
     
