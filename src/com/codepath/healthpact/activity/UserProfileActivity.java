@@ -60,6 +60,7 @@ public class UserProfileActivity extends FragmentActivity implements OnMapClickL
 		TextView createdDate = (TextView)findViewById(R.id.uptvCreatedDate);
 		TextView updatedDate = (TextView)findViewById(R.id.uptvUpdatedDate);
 		TextView location = (TextView)findViewById(R.id.uptvLocation);
+		TextView description = (TextView)findViewById(R.id.uptvDescription);
 
 		usrPlansCnt = (TextView)findViewById(R.id.uptvPlansCnt);
 		usrPlansFollowingCnt = (TextView)findViewById(R.id.uptvFollowingCnt);
@@ -70,6 +71,7 @@ public class UserProfileActivity extends FragmentActivity implements OnMapClickL
 		createdDate.setText("Posted: " + format.format(user.getCreatedAt()));
 		updatedDate.setText("Updated: "+format.format(user.getUpdatedAt()));		
 		userName.setText("Name: "+user.getUsername());
+		description.setText(user.getString("desc"));
 		location.setText("Location: "+zipcode);
 
 		populateUserProfileCounts();
