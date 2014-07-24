@@ -12,8 +12,8 @@
     
     <LinearLayout
         android:id="@+id/linearLayout1"
-        android:layout_width="fill_parent"
-       android:layout_height="250dp"
+        android:layout_width="match_parent"
+       android:layout_height="wrap_content"
        android:layout_alignParentBottom="true"
        android:layout_alignParentLeft="true"
        android:alpha="0.7"
@@ -27,10 +27,9 @@
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
             android:ems="10"
-            android:drawableLeft="@drawable/user"
+            android:drawableLeft="@drawable/ic_userprofile"
             android:textCursorDrawable="@null"
             android:hint="Email"
-            android:padding="10dp"
             android:textColorHint="#bbbbbb" />
 
         <EditText
@@ -40,9 +39,8 @@
             android:textColor="#FFFFFF"
             android:ems="10"
             android:textCursorDrawable="@null"
-            android:drawableLeft="@drawable/password"
+            android:drawableLeft="@drawable/ic_userprofile"
             android:hint="Username"
-            android:padding="10dp"
             android:textColorHint="#bbbbbb" />
 
         <EditText
@@ -54,7 +52,7 @@
             android:hint="Password"
             android:inputType="textPassword"
             android:textCursorDrawable="@null"
-            android:drawableLeft="@drawable/password"
+            android:drawableLeft="@drawable/ic_passwordlock"
             android:textColorHint="#bbbbbb" />
 
         <EditText
@@ -66,7 +64,7 @@
             android:hint="Password"
             android:inputType="textPassword"
             android:textCursorDrawable="@null"
-            android:drawableLeft="@drawable/password"
+            android:drawableLeft="@drawable/ic_passwordlock"
             android:textColorHint="#bbbbbb" />
         
         <Button 

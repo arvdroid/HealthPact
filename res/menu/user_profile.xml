@@ -8,4 +8,10 @@
         android:icon="@drawable/ic_edit"
         android:showAsAction="always"
         android:title="EditUserProfile"/>
+        
+    <item 
+        android:id="@+id/userprofile_home"
+        android:icon="@drawable/ic_home"
+        android:showAsAction="always"
+        android:title="Home View"/>   
 </menu>

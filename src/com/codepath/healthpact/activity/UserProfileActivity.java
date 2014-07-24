@@ -112,6 +112,11 @@ public class UserProfileActivity extends FragmentActivity implements OnMapClickL
 			AddProfileDialog compose = new AddProfileDialog();
 			compose.show(fm, "");
 			return true;
+		} 
+		if(id == R.id.userprofile_home) {
+			Intent i = new Intent(this, HomeViewActivity.class);
+			startActivity(i);
+			return true;			
 		}
 		return super.onOptionsItemSelected(item);
 	}

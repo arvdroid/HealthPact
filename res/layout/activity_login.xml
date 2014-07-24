@@ -11,8 +11,8 @@
     
    <LinearLayout
        android:id="@+id/linearLayout1"
-       android:layout_width="fill_parent"
-       android:layout_height="150dp"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
        android:layout_alignParentBottom="true"
        android:layout_alignParentLeft="true"
        android:alpha="0.7"
@@ -26,7 +26,7 @@
             android:textColor="#FFFFFF"
             android:ems="10"
             android:textCursorDrawable="@null"
-            android:drawableLeft="@drawable/user"
+            android:drawableLeft="@drawable/ic_userprofile"
             android:hint="UserName" />
                 
        
@@ -39,10 +39,10 @@
             android:hint="Password"
             android:textCursorDrawable="@null"
             android:inputType="textPassword" 
-            android:drawableLeft="@drawable/password"/>
+            android:drawableLeft="@drawable/ic_passwordlock"/>
         
        <LinearLayout android:id="@+id/linearLayout2"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:background="#000040"
         android:layout_height="match_parent"
         android:orientation="horizontal">
@@ -50,6 +50,7 @@
           <Button
             android:id="@+id/btnSingIn"
             android:layout_width="145dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:background="@drawable/action_button_layout" 
             android:onClick="parseLogin"
@@ -64,7 +65,8 @@
 
     <Button
         android:id="@+id/btnSignUp"
-        android:layout_width="match_parent"
+        android:layout_width="145dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:background="@drawable/action_button_layout"
         android:onClick="onSignUp"
