@@ -1,6 +1,7 @@
 package com.codepath.healthpact.fragments;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.os.Bundle;
@@ -50,6 +51,12 @@ public class UserActionsFragment extends Fragment{
 	}
 	
 	private void updateActionAdapter(AppPlan plan){
+		if(plan.getFollowed()){
+			Date startD = plan.getStartDate();
+			Date today = new Date(); 
+			if(today.compareTo(startD)>=0)
+				((ActionArrayAdapter)actionarrayadapter).setStartedToFollow(true);
+		}
 		((ActionArrayAdapter)actionarrayadapter).setFollowed(plan.getFollowed());
 		((ActionArrayAdapter)actionarrayadapter).setUsrPlanid(plan.getUsrPlanid());
 	}

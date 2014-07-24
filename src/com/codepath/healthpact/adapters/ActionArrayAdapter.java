@@ -23,6 +23,7 @@ import com.codepath.healthpact.parseUtils.ParseUtils;
 public class ActionArrayAdapter extends ArrayAdapter<Action> {
 	private boolean followed;
 	private String usrPlanId;
+	private boolean startedToFollow;
 	
 	public ActionArrayAdapter(Context context,List<Action> userplans) {
 		super(context, R.layout.action_item, userplans);
@@ -46,7 +47,7 @@ public class ActionArrayAdapter extends ArrayAdapter<Action> {
 		tvUserActionName.setText(useraction.getActionName());
 		tvPerDay.setText("PerDay: "+ useraction.getActionServing() + " min");
 				
-		if(followed){
+		if(followed && startedToFollow){
 			final Drawable onD = (Drawable) view.getResources().getDrawable(R.drawable.custom_action_done_pressed);
 			if(useraction.getUpdated())
 				tbActionDone.setBackground(onD);
@@ -83,6 +84,8 @@ public class ActionArrayAdapter extends ArrayAdapter<Action> {
 	}
 	
 	public void setFollowed(boolean followed){this.followed = followed;	}
+	
+	public void setStartedToFollow(boolean startedToFollow){this.startedToFollow = startedToFollow;	}
 	
 	public String getUsrPlanid() {return usrPlanId;}
 

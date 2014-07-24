@@ -51,7 +51,7 @@ public class PlanViewActivity extends FragmentActivity implements DatePickerDial
 		pCreatedBy.setText("Created By: " + result.getUsrName());
 		
 		if(result.getFollowed()){
-			pCreatedAt.setText("Started On: "+format.format(result.getStartDate()));
+			pCreatedAt.setText("Start Date: "+format.format(result.getStartDate()));
 			pToday.setVisibility(View.VISIBLE);
 			pToday.setText("Today: "+format.format(new Date()));
 		}
