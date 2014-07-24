@@ -965,7 +965,7 @@ public class ParseUtils {
 */
 	}
 
-	private static Date removeTimeFromDate(Date date) {
+	public static Date removeTimeFromDate(Date date) {
 		GregorianCalendar gcal = new GregorianCalendar();
 
 		// remove the time portion of the date to get data by Query
