@@ -27,6 +27,7 @@ import com.parse.ParseUser;
 public class CreatePlanActivity extends FragmentActivity implements AddActionDialogListener, SetDurationDialogListener{
 	EditText etPlanName; 
 	TextView tvduration;
+	EditText tvDesc;
 	Menu menu;
 
 	
@@ -43,6 +44,7 @@ public class CreatePlanActivity extends FragmentActivity implements AddActionDia
             
 		etPlanName = (EditText) findViewById(R.id.lblcPPlanNameEditText);
 		tvduration = (TextView)findViewById(R.id.lblcPDuration);
+		tvDesc =  (EditText)findViewById(R.id.tv_cPTvDescEdit);
 	}
 	
 	private void PlanSave() {
@@ -55,7 +57,7 @@ public class CreatePlanActivity extends FragmentActivity implements AddActionDia
 		Plan plan = new Plan();
 		plan.setPlanName(planName);
 		plan.setPlanDuration(duration);
-		plan.setPlanDesc(planName+ " descrip");
+		plan.setPlanDesc(tvDesc.getText().toString());
 		ParseUtils.createPlan(plan, actions);
 		Toast.makeText(this, "Plan create", Toast.LENGTH_SHORT).show();
 	}
