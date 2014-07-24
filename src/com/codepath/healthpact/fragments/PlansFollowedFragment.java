@@ -43,17 +43,18 @@ public class PlansFollowedFragment extends PlanListFragment{
 					List<AppPlan> plans = new ArrayList<AppPlan>();					
 					for (UserPlan up : userplans) {
 						String plan_id = up.getPlanId();						
-						boolean planLoaded = false;
+						AppPlan appPlanFromDb = null;
 						for(AppPlan dbap: appPlans){
 							if(plan_id.equals(dbap.getPlanid()))
 							{
-								planLoaded = true;
+								appPlanFromDb = dbap;
 								break;
 							}
 						}
-						if(!planLoaded){
+						int progress = (int)ParseUtils.getPlanCompleted(plan_id);
+						
+						if(appPlanFromDb==null){
 							Plan p = ParseUtils.getPlanDetail(null, plan_id);
-							int progress = (int)ParseUtils.getPlanCompleted(plan_id);
 							if(up.getPlan_start_date()!=null){
 								AppPlan ap = new AppPlan(p.getPlanId()+"__"+ParseUtils.getUserName()+"__0", p.getPlanId(), p.getPlanName(), p.getPlanDesc(), p.getPlanDuration(), up.getPlan_start_date(), up.getPlan_end_date());
 								ap.setFollowed(true);
@@ -70,6 +71,10 @@ public class PlansFollowedFragment extends PlanListFragment{
 									plans.add(ap);
 								}
 							}
+						} else if(appPlanFromDb!=null && progress!=appPlanFromDb.getProgress()){
+							appPlanFromDb.setProgress(progress);
+							appPlanFromDb.save();
+							updateAdapter(appPlanFromDb);
 						}
 					}
 					clearProgressBar();

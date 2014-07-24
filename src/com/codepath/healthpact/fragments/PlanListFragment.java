@@ -59,6 +59,16 @@ public abstract class PlanListFragment extends Fragment{
 		lvUserPlans.onRefreshComplete();
 	}
 	
+	public void updateAdapter(AppPlan appPlan){
+		for(int i=0;i<userplanadapter.getCount();i++){
+			if(appPlan.getId().equals(userplanadapter.getItem(i).getId())){
+				userplanadapter.getItem(i).setProgress(appPlan.getProgress());
+				userplanadapter.notifyDataSetChanged();
+				break;
+			}
+		}
+	}
+	
 	public void showProgressBar(){
 		pb.setVisibility(ProgressBar.VISIBLE);
 	}
