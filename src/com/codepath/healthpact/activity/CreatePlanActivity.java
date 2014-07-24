@@ -106,9 +106,8 @@ public class CreatePlanActivity extends FragmentActivity implements AddActionDia
 			}  else if(duration == 0) {
 				Toast.makeText(CreatePlanActivity.this, "Please Enter Duration", Toast.LENGTH_SHORT).show();
 			} else {
-				
-			    menu.findItem(R.id.action_share).setVisible(true);
-			    menu.findItem(R.id.action_follow).setVisible(true);
+			    menu.findItem(R.id.action_share).setVisible(false);
+			    menu.findItem(R.id.action_follow).setVisible(false);
 			    menu.findItem(R.id.action_save).setVisible(false);
 				PlanSave();
 			}
