@@ -123,7 +123,6 @@ public class AppPlan extends Model implements Serializable{
 
 	public static List<AppPlan> getAll(int ptype, String loggedInuser) {
 	    return new Select()
-	        .from(AppPlan.class).where("plantype = ?", ptype).where("user = ?", loggedInuser)
-	        .execute();
+	        .from(AppPlan.class).where("plantype = ? and user = ?", ptype, loggedInuser).execute();
 	}
 }

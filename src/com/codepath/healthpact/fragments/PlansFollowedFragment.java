@@ -61,10 +61,14 @@ public class PlansFollowedFragment extends PlanListFragment{
 								ap.setUsrPlanid(up.getObjectId());
 								ap.setProgress(progress);
 								ap.setUsrName(p.getCreatedBy());
+								ap.setStartDate(up.getPlan_start_date());
+								ap.setEndDate(up.getPlan_end_date());
 								ap.setPlantype(0);
 								ap.setUser(ParseUtils.getUserName());
-								ap.save();
-								plans.add(ap);
+								if (ap.getStartDate() != null) {
+									ap.save();
+									plans.add(ap);
+								}
 							}
 						}
 					}
