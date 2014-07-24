@@ -12,18 +12,18 @@ import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.healthpact.R;
 import com.codepath.healthpact.dialogs.ShareUserDialog;
-import com.codepath.healthpact.fragments.DatePickerFragment;
 import com.codepath.healthpact.fragments.UserActionsFragment;
 import com.codepath.healthpact.models.AppPlan;
 import com.codepath.healthpact.parseUtils.ParseUtils;
+import com.doomonafireball.betterpickers.datepicker.DatePickerBuilder;
+import com.doomonafireball.betterpickers.datepicker.DatePickerDialogFragment;
 
-public class PlanViewActivity extends FragmentActivity {
+public class PlanViewActivity extends FragmentActivity implements DatePickerDialogFragment.DatePickerDialogHandler {
 	Calendar calender = Calendar.getInstance();
 	OnDateSetListener ondate;
 	AppPlan result;
@@ -56,22 +56,7 @@ public class PlanViewActivity extends FragmentActivity {
 			pToday.setText("Today: "+format.format(new Date()));
 		}
 		else
-			pCreatedAt.setText("Created On: "+format.format(result.getCreatedDate()));
-				
-		ondate = new OnDateSetListener() {
-			boolean OndateSet;
-			@Override
-			public void onDateSet(DatePicker view, int year, int monthOfYear,
-					int dayOfMonth) {
-				calender.set(year, monthOfYear, dayOfMonth, 0, 0);
-				if(!OndateSet){
-					ParseUtils.updatePlanFollowedByUser(result.getPlanid(), calender.getTime(), result.getDuration(), actionsFragment.getActions());
-					Toast.makeText(PlanViewActivity.this, "Plan followed" ,Toast.LENGTH_LONG).show();
-				}
-				OndateSet = true;
-			}
-		};
-		
+			pCreatedAt.setText("Created On: "+format.format(result.getCreatedDate()));		
 		actionsFragment = (UserActionsFragment) 
                 getSupportFragmentManager().findFragmentById(R.id.actionViewFragment);
 		
@@ -114,21 +99,27 @@ public class PlanViewActivity extends FragmentActivity {
 			shareDialog.setArguments(args);
 			shareDialog.show(fm, "");
 		} if(id == R.id.action_follow) {
-			DatePickerFragment date = new DatePickerFragment();
-			/**
-			 * Set Up Current Date Into dialog
-			 */
-			Bundle args = new Bundle();
-			args.putInt("year", calender.get(Calendar.YEAR));
-			args.putInt("month", calender.get(Calendar.MONTH));
-			args.putInt("day", calender.get(Calendar.DAY_OF_MONTH));
-			date.setArguments(args);
-			/**
-			 * Set Call back to capture selected date
-			 */
-			date.setCallBack(ondate);
-			date.show(getSupportFragmentManager(), "Date Picker");
+			 DatePickerBuilder dpb = new DatePickerBuilder()
+			 .setFragmentManager(getSupportFragmentManager())
+            .setStyleResId(R.style.BetterPickersDialogFragment_Light);
+             dpb.show();
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onDialogDateSet(int reference, int year, int monthOfYear,
+			int dayOfMonth) {
+		boolean OndateSet = false;
+		calender.set(year, monthOfYear+1, dayOfMonth, 0, 0);
+		Calendar Present = Calendar.getInstance();
+		if(calender.compareTo(Present) < 0) {
+			Toast.makeText(this, "Cannot Select a Previous Date", Toast.LENGTH_SHORT).show();
+		} else {
+			if(!OndateSet){
+				ParseUtils.updatePlanFollowedByUser(result.getPlanid(), calender.getTime(), result.getDuration(), actionsFragment.getActions());
+			}
+			OndateSet = true;
+		}
 	}
 }
