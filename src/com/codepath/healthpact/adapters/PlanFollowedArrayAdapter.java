@@ -43,7 +43,9 @@ public class PlanFollowedArrayAdapter extends ArrayAdapter<AppPlan>{
 		//To-do get plan details
       
 		tvUserPlanName.setText(userPlan.getName());
-		tvUserPlanStartDate.setText("Start date: "+ String.valueOf(format.format(userPlan.getStartDate())));
+		if (userPlan.getStartDate() != null) {
+			tvUserPlanStartDate.setText("Start date: "+ String.valueOf(format.format(userPlan.getStartDate())));
+		}
 		
 		long today_date = System.currentTimeMillis();
 		long end_date = userPlan.getEndDate().getTime();
