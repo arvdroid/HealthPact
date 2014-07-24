@@ -111,7 +111,7 @@ public class PlanViewActivity extends FragmentActivity implements DatePickerDial
 	public void onDialogDateSet(int reference, int year, int monthOfYear,
 			int dayOfMonth) {
 		boolean OndateSet = false;
-		calender.set(year, monthOfYear+1, dayOfMonth, 0, 0);
+		calender.set(year, monthOfYear, dayOfMonth, 0, 0);
 		Calendar Present = Calendar.getInstance();
 		if(calender.compareTo(Present) < 0) {
 			Toast.makeText(this, "Cannot Select a Previous Date", Toast.LENGTH_SHORT).show();

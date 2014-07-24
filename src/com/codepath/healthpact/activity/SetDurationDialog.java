@@ -30,7 +30,7 @@ public class SetDurationDialog extends DialogFragment {
 		
 		np.setMinValue(1);
 	    np.setMaxValue(52);
-	    np.setValue(10);
+	    np.setValue(4);
 	    np.setWrapSelectorWheel(false);
 	    
 	    Button bDone = (Button)view.findViewById((R.id.pdDonebutton));
