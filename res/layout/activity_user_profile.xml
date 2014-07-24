@@ -4,9 +4,6 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.testproj.UserProfileActivity" >
     
     <LinearLayout
@@ -101,12 +98,14 @@
         android:orientation="horizontal"
         android:layout_below="@+id/upLevelOneLayout"
         android:background="@drawable/profile_stats_layout"
-        android:layout_marginTop="5dp">
+        >
 
         <TextView
             android:id="@+id/uptvCreatedBy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="2dp"
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:text="Name:"
@@ -116,7 +115,9 @@
             android:id="@+id/upplanCreatedDateLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginRight="2dp"
             android:layout_gravity="right"
             android:layout_weight="1"
             android:orientation="vertical" >
@@ -125,6 +126,7 @@
                 android:id="@+id/uptvCreatedDate"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
                 android:gravity="end"
                 android:text="Posted: mm/dd/yy"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -133,6 +135,7 @@
                 android:id="@+id/uptvUpdatedDate"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:gravity="end"
                 android:text="Updated: mm/dd/yy"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -144,6 +147,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/upleveltwoLayout"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:text="Description"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -152,6 +156,7 @@
         android:id="@+id/uptvDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
         android:layout_below="@+id/uplblDescription"
         android:lines="3"
         android:maxHeight="50dp"
@@ -164,6 +169,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/uptvDescription"
+        android:layout_marginLeft="5dp"
         android:text="Location"
         android:textAppearance="?android:attr/textAppearanceSmall" />
     <fragment
@@ -172,6 +178,7 @@
 	   android:layout_below="@id/uptvLocation"
 	   android:layout_width="match_parent"
 	   android:layout_height="match_parent"
+	   android:layout_marginLeft="5dp"
 	   android:layout_marginTop="5dp"/>
     
 </RelativeLayout>

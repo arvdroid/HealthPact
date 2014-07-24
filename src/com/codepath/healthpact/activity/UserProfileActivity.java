@@ -67,8 +67,8 @@ public class UserProfileActivity extends FragmentActivity implements OnMapClickL
 		
 		ParseUser user = ParseUser.getCurrentUser();
 		zipcode = user.getString("location");
-		createdDate.setText(format.format(user.getCreatedAt()));
-		updatedDate.setText(format.format(user.getUpdatedAt()));		
+		createdDate.setText("Posted: " + format.format(user.getCreatedAt()));
+		updatedDate.setText("Updated: "+format.format(user.getUpdatedAt()));		
 		userName.setText("Name: "+user.getUsername());
 		location.setText("Location: "+zipcode);
 

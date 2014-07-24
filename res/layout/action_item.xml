@@ -31,17 +31,12 @@
 
     <ToggleButton
         android:id="@+id/tbactionDone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/tvUserActionName"
         android:background="@drawable/custom_action_done"
         android:checked="false"
-        android:maxHeight="20dp"
-        android:maxWidth="20dp"
-        android:minHeight="20dp"
-        android:minWidth="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="7dp"
         android:layout_marginRight="2dp"
         android:textOff=""
         android:textOn="" />
