@@ -3,6 +3,7 @@ package com.codepath.healthpact.activity;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
@@ -24,7 +25,8 @@ import com.doomonafireball.betterpickers.datepicker.DatePickerBuilder;
 import com.doomonafireball.betterpickers.datepicker.DatePickerDialogFragment;
 
 public class PlanViewActivity extends FragmentActivity implements DatePickerDialogFragment.DatePickerDialogHandler {
-	Calendar calender = Calendar.getInstance();
+	//Calendar calender = Calendar.getInstance();
+    Calendar calender = GregorianCalendar.getInstance();
 	OnDateSetListener ondate;
 	AppPlan result;
 	Menu menu;
@@ -112,14 +114,16 @@ public class PlanViewActivity extends FragmentActivity implements DatePickerDial
 			int dayOfMonth) {
 		boolean OndateSet = false;
 		calender.set(year, monthOfYear, dayOfMonth, 0, 0);
-		Calendar Present = Calendar.getInstance();
-		if(calender.compareTo(Present) < 0) {
-			Toast.makeText(this, "Cannot Select a Previous Date", Toast.LENGTH_SHORT).show();
-		} else {
+		Date serD = calender.getTime();		
+		Date current = ParseUtils.removeTimeFromDate(new Date());
+		//Calendar Present = Calendar.getInstance();
+		if(serD.compareTo(current) >= 0) {
 			if(!OndateSet){
-				ParseUtils.updatePlanFollowedByUser(result.getPlanid(), calender.getTime(), result.getDuration(), actionsFragment.getActions());
+				ParseUtils.updatePlanFollowedByUser(result.getPlanid(), serD, result.getDuration(), actionsFragment.getActions());
 			}
 			OndateSet = true;
+		} else {
+			Toast.makeText(this, "Cannot Select a Previous Date", Toast.LENGTH_SHORT).show();
 		}
 	}
 }
