@@ -25,4 +25,4 @@ User Stories
 * User can share customplan.
 * Expert can also share their plans.
 
-![video walkthrough](healthPactViews.gif)
+![video walkthrough](HealthPact.gif)
