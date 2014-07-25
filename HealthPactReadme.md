@@ -17,6 +17,7 @@ User Stories
 * Ability to choose predefined plans.
 * User can find a plan based on predefined health condition.
 * Expert (also normal user) can create a custom plan/pick an existing plan and assign/share to another user.
+  (presented at the end of the raw gif file)
 * User can see how many people are following a plan.
 * User can also create custom plan.
 * User to update activities of plan.
@@ -25,5 +26,9 @@ User Stories
 * User can track progress for self assessment.
 * Show progress of plan based on status of actions in visualization.
 * User can find plans based on expertise.
+
+BackEnd Database
+=================
+Parse with Application model
 
 ![video walkthrough](HealthPact.gif)
